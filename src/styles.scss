@@ -1,0 +1,10 @@
+@import '~ngx-toastr/toastr';
+
+.disableDiv{
+    pointer-events:none;
+    opacity: 0.2;
+}
+.enabledDiv{
+    pointer-events:all;
+    opacity: 1;
+}

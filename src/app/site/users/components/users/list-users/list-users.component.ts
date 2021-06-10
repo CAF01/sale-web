@@ -3,8 +3,9 @@ import { HelperService } from 'src/app/site/services/helper.service';
 import * as Feather from 'feather-icons';
 import { UserService } from '../../../services/user.service';
 import { PaginationListResponse } from 'src/app/site/models/pagination-list-response';
-import { user } from 'src/app/site/user-components/models/entitys/user';
 import { User } from '../../../models/entitys/user';
+import * as moment from 'moment';
+
 
 
 
@@ -14,7 +15,7 @@ import { User } from '../../../models/entitys/user';
   styleUrls: ['./list-users.component.scss'],
 })
 export class ListUsersComponent implements OnInit {
-
+  
   users:PaginationListResponse<User> | undefined;
 
   constructor(
@@ -25,28 +26,39 @@ export class ListUsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadJs();
+
+    Feather.replace();
 
     this.getUsers();
+
+    moment().locale('es');
   }
 
    getUsers() {
     this.usersService.getUsers().subscribe(response=>{
       this.users=response;
-      console.log(this.users.data[0])
     },error=>{
  
     });
 
-  
+  }
+  getAddresbyIDuser(id:number)
+  {
+    this.usersService.getAddressbyID(id).subscribe(response=>
+      {
+        if (response) {
+          console.log(response);
+        }
+      },error=>
+      {
 
+      }); 
   }
 
-  loadJs(): void {
-    this.helperService
-      .loadScript('../../../../assets/js/scripts.js')
-      .subscribe((response) => {
-        Feather.replace();
-      });
+  
+
+  formatDate(date:Date){
+    
+    return new Date(date);
   }
 }

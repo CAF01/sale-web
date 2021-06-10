@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './site/home-components/home/home.component';
 
 const routes: Routes = [
+  { path: "", redirectTo: "/home/users", pathMatch: "full" },
   // { path: 'user', loadChildren: () => import('./site/user-components/user-components.module').then(m => m.UserComponentsModule) },
   {
     path: 'home',
@@ -36,7 +37,8 @@ const routes: Routes = [
     path: 'sales',
     loadChildren: () =>
       import('./site/sales/sales.module').then((m) => m.SalesModule),
-  }
+  },
+  { path: 'shared-components', loadChildren: () => import('./site/shared-components/shared-components.module').then(m => m.SharedComponentsModule) }
 ];
 
 @NgModule({

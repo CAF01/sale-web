@@ -2,8 +2,8 @@
 
 
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
-    <h2 style="color: rgb(0, 98, 255);font-weight: bold;margin-left: 5px;margin-right: 5px;">Punto de venta</h2>
     <!-- User Dropdown-->
+    <h2 style="color: rgb(0, 98, 255);font-weight: bold;margin-left: 5px;margin-right: 5px;"><a [routerLink]="['/home']">Punto de venta</a></h2>
     <ul class="navbar-nav align-items-center ms-auto">
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
             <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></a>
@@ -115,6 +115,29 @@
 
                             <a class="nav-link">
                                 <div class="nav-link-icon"><i data-feather="plus-circle"></i></div>
+                                Agregar Nuevo 
+                            </a>
+
+                        </nav>
+                    </div>
+
+
+                    <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseusers"
+                        aria-expanded="false" aria-controls="collapseusers">
+                        <div class="nav-link-icon"><i data-feather="meh"></i></div>
+                        Usuarios
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+
+                    <div class="collapse" id="collapseusers" data-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" [routerLink]="[ '/home/users','list']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="book-open"></i></div>
+                                Lista
+                            </a>
+
+                            <a class="nav-link"  [routerLink]="[ '/home/users/','new-user']" routerLinkActive="active" >
+                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
                                 Agregar Nuevo 
                             </a>
 

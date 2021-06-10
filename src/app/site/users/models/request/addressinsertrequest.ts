@@ -1,4 +1,4 @@
-export interface AddressInsertRequest {
+export class AddressInsertRequest {
     country: string;
     state: string;
     city: string;
