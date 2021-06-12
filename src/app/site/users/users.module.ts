@@ -9,7 +9,13 @@ import { NewAddressComponent } from './components/address/new-address/new-addres
 import { UpdateAddressComponent } from './components/address/update-address/update-address.component';
 import { MomentModule } from 'ngx-moment';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
+import {LottieModule} from 'ngx-lottie';
+import player from 'lottie-web';
 
+export function playerFactory()
+{
+  return player;
+}
 
 @NgModule({
   declarations: [
@@ -24,9 +30,9 @@ import { SharedComponentsModule } from '../shared-components/shared-components.m
     CommonModule,
     UsersRoutingModule,
     MomentModule,
-    SharedComponentsModule
+    SharedComponentsModule,
+    LottieModule.forRoot({player:playerFactory})
   ]
 })
 export class UsersModule {
-  
  }

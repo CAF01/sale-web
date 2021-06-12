@@ -8,7 +8,9 @@ import { ValidateForm } from 'src/app/site/helpers/validate-formfields-helper';
 import { AddressInsertRequest } from '../../../models/request/addressinsertrequest';
 import { userInsertRequest } from '../../../models/request/userinsertrequest';
 import { UserService } from '../../../services/user.service';
-
+import {AnimationOptions} from 'ngx-lottie';
+import { AnimationItem } from 'lottie-web';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-new-user',
@@ -16,7 +18,11 @@ import { UserService } from '../../../services/user.service';
   styleUrls: ['./new-user.component.scss'],
 })
 export class NewUserComponent implements OnInit {
-
+  // private animation : AnimationItem;
+  // options:AnimationOptions = 
+  // {
+  //   path:'assets/animations/1.json'
+  // }
   telephone:string;
   formSubmitAttempt: boolean;
   flag?: boolean;
@@ -33,13 +39,30 @@ export class NewUserComponent implements OnInit {
   redirectHelper = RedirectHelper;
   validateForm = ValidateForm;
 
-  constructor(private _formBuilder: FormBuilder,private usersService: UserService,private toastr: ToastrService) {}
+  constructor(private ngZone:NgZone,private _formBuilder: FormBuilder,private usersService: UserService,private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.SetValidatorsUser();
     this.SetValidatorsAddress();
     this.setTrueFlags();
   }
+
+  // created(animation:AnimationItem)
+  // {
+  //   console.log(animation);
+  //   this.animation=animation;
+  // }
+
+  // play()
+  // {
+  //   this.ngZone.runOutsideAngular(()=>this.animation.show());
+  //   this.ngZone.runOutsideAngular(()=>this.animation.play());
+  // }
+  // pause()
+  // {
+  //   this.ngZone.runOutsideAngular(()=>this.animation.hide());
+  //   this.ngZone.runOutsideAngular(()=>this.animation.pause());
+  // }
 
   setTrueFlags() {
     this.formSubmitAttempt = true;
@@ -186,11 +209,11 @@ export class NewUserComponent implements OnInit {
       lineAddress1: new FormControl('', [
         Validators.required,
         Validators.maxLength(80),
-        Validators.pattern(/^[A-Za-z0-9 ]{8,80}$/),
+        Validators.pattern(/^[A-Za-z0-9  , . ñ ( )]{8,80}$/),
       ]),
       lineAddress2: new FormControl('', [
         Validators.maxLength(80),
-        Validators.pattern(/^[A-Za-z0-9  . ñ ( )]{0,80}$/),
+        Validators.pattern(/^[A-Za-z0-9  . ñ ( ) ,]{0,80}$/),
       ]),
       postalCode: new FormControl('', [
         Validators.required,

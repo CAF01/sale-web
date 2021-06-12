@@ -1,4 +1,6 @@
-export interface User {
+import { UserAddressInfo } from "./user-address-info";
+
+export class User extends UserAddressInfo {
   userID: number;
   firstName: string;
   lastName: string;

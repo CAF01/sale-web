@@ -7,12 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './site/home-components/home/home.component';
 import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule } from 'ngx-toastr';
-import { LottieModule } from 'ngx-lottie';
-import player from 'lottie-web';
 
-export function playerFactory() {
-  return player;
-}
 
 @NgModule({
   declarations: [
@@ -26,8 +21,7 @@ export function playerFactory() {
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    ToastNoAnimationModule.forRoot(),
-    LottieModule.forRoot({ player: playerFactory })
+    ToastNoAnimationModule.forRoot()
     ],
   providers: [],
   bootstrap: [AppComponent]

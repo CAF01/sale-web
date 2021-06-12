@@ -8,6 +8,9 @@ import { PaginationListResponse } from '../../models/pagination-list-response';
 import { User } from '../models/entitys/user';
 import { userInsertRequest } from '../models/request/userinsertrequest';
 import { UserAddressInfo } from '../models/entitys/user-address-info';
+import { userUpdateRequest } from '../models/request/userupdaterequest';
+import { AddressUpdateRequest } from '../models/request/addressupdaterequest';
+import { AddressInsertRequest } from '../models/request/addressinsertrequest';
 
 @Injectable({
   providedIn: 'root',
@@ -23,15 +26,15 @@ export class UserService {
     );
   }
 
-  getAddressbyID(id:number): Observable<UserAddressInfo>
-  {
-    let headerss = new HttpHeaders();
-      headerss.append('Content-Type', 'application/json');
-      headerss.append('id', id.toString());
-    let params = new HttpParams().set('id', id.toPrecision());
-    return this._http.get<UserAddressInfo>(
-      `${environment.url_api}${this.controllerAddress}`,{headers:headerss,params:params});
-  }
+  // getAddressbyID(id:number): Observable<UserAddressInfo>
+  // {
+  //   let headerss = new HttpHeaders();
+  //     headerss.append('Content-Type', 'application/json');
+  //     headerss.append('id', id.toString());
+  //   let params = new HttpParams().set('id', id.toPrecision());
+  //   return this._http.get<UserAddressInfo>(
+  //     `${environment.url_api}${this.controllerAddress}`,{headers:headerss,params:params});
+  // }
 
   newUser(user: userInsertRequest): Observable<number> {
     return this._http.post<number>(
@@ -42,6 +45,27 @@ export class UserService {
   newUserWithAddress(userWithAddress: userInsertRequest):Observable<number> {
     return this._http.post<number>(
       `${environment.url_api}${this.controller}/user-insert-address`,userWithAddress
+    );
+  }
+
+  updateUser(user: userUpdateRequest):Observable<boolean>
+  {
+    return this._http.put<boolean>(
+      `${environment.url_api}${this.controller}`,user
+    );
+  }
+
+  updateAddress(address:AddressUpdateRequest):Observable<boolean>
+  {
+    return this._http.put<boolean>(
+      `${environment.url_api}${this.controllerAddress}`,address
+    );
+  }
+
+  InsertAddress(address:AddressInsertRequest):Observable<number>
+  {
+    return this._http.post<number>(
+      `${environment.url_api}${this.controllerAddress}`,address
     );
   }
 }

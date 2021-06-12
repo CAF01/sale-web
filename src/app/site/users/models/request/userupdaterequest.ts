@@ -1,4 +1,4 @@
-export interface userUpdateRequest {
+export class userUpdateRequest {
     userID: number;
     firstName: string;
     lastName: string;
