@@ -1,0 +1,319 @@
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container-xl px-4">
+        <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-auto mt-4">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i data-feather="user-plus"></i></div>
+                        Registro de usuario
+                    </h1>
+                    <div class="page-header-subtitle">Completa los siguientes pasos para crear una cuenta de usuario.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-xl px-4 mt-n10">
+    <div class="card">
+        <div class="card-header border-bottom">
+            <div class="nav nav-pills nav-justified flex-column flex-xl-row nav-wizard" id="cardTab" role="tablist">
+                <a class="nav-item nav-link active" id="wizard1-tab" href="#wizard1" data-bs-toggle="tab" role="tab" aria-controls="wizard1" aria-selected="true">
+                    <div class="wizard-step-icon">1</div>
+                    <div class="wizard-step-text">
+                        <div class="wizard-step-text-name">Configuración de cuenta</div>
+                        <div class="wizard-step-text-details">Información de usuario</div>
+                    </div>
+                </a>
+                <a  class="nav-item nav-link disableDiv " [ngClass]="{'enabledDiv':flag}" id="wizard2-tab" href="#wizard2" data-bs-toggle="tab" role="tab" aria-controls="wizard2" aria-selected="true">
+                    <div class="wizard-step-icon">2</div>
+                    <div class="wizard-step-text">
+                        <div class="wizard-step-text-name">Detalles de dirección</div>
+                        <div class="wizard-step-text-details">Domicilio fiscal o domicilio</div>
+                    </div>
+                </a>
+                <a class="nav-item nav-link disableDiv" [ngClass]="{'enabledDiv':flag&&(flagAddressSkipped||addressSubmited)}" id="wizard4-tab" href="#wizard4" data-bs-toggle="tab" role="tab" aria-controls="wizard4" aria-selected="true">
+                    <div class="wizard-step-icon">3</div>
+                    <div class="wizard-step-text">
+                        <div class="wizard-step-text-name">Confirmación</div>
+                        <div class="wizard-step-text-details">Visualiza tu información y registra</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="cardTabContent">
+                <!-- Wizard tab pane item 1-->
+                <div class="tab-pane py-5 py-xl-10 fade show active" id="wizard1" role="tabpanel" aria-labelledby="wizard1-tab">
+                    <div class="row justify-content-center">
+                        <div class="col-xxl-6 col-xl-8">
+                            <h3 class="text-primary">Completa la siguiente información</h3>
+                            <!-- <h5 class="card-title mb-4"></h5> -->
+                            <br>
+                            <form [formGroup]="userForm">
+                                <div class="row gx-3">
+                                    <div class="mb-3 col-md-6">
+                                        <!-- <ng-lottie [options]='options' (animationCreated)='created($event)'></ng-lottie>
+                                        <button (click)="play()">Play</button>
+                                        <button (click)="pause()">Stop</button> -->
+                                        <label class="small mb-1" for="firstName">Nombre <span style="color:red">*</span></label>
+                                        <input class="form-control" id="firstName"  formControlName="firstName" type="text" placeholder="Valerie"/>
+                                        <app-field-error-display *ngIf="!formSubmitAttempt"
+                                            [displayError]="validationInput('firstName')" 
+                                            errorMsg="Completa este campo">
+                                        </app-field-error-display>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1" for="lastName">Apellidos  <span style="color:red">*</span></label>
+                                        <input class="form-control" id="lastName" formControlName="lastName" type="text" placeholder="Luna"/>   
+                                        <app-field-error-display *ngIf="!formSubmitAttempt"
+                                            [displayError]="validationInput('lastName')" 
+                                            errorMsg="Completa este campo">
+                                        </app-field-error-display>
+                                    </div>
+                          
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="email">Correo electrónico <span style="color:red">*</span></label>
+                                    <input class="form-control" id="email" type="email" formControlName="email" placeholder="example@gmail.com" />
+                                    <app-field-error-display *ngIf="!formSubmitAttempt"  
+                                        [displayError]="validationInput('email')" 
+                                        errorMsg="Ingresa un correo electrónico válido">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="col-md-6 mb-md-0">
+                                        <label class="small mb-1" for="password">Contraseña  <span style="color:red">* </span></label>
+                                        <input class="form-control" id="password" type="password" formControlName="password" placeholder="******" />
+                                        <app-field-error-display *ngIf="!formSubmitAttempt" 
+                                        [displayError]="validationInput('password')" 
+                                        errorMsg="Ingresa una contraseña válida">
+                                        </app-field-error-display>
+                                        <small>Utiliza seis caracteres como mínimo con una combinación de letras y números</small>
+                                        <!-- <div *ngIf="userForm.get('password')?.hasError('required')">
+                                            NO VACIO
+                                        </div> -->
+                                    </div>
+                                    <div class="col-md-6 mb-0">
+                                        <label class="small mb-1" for="phone">Número de teléfono  <span style="color:red">*</span></label>
+                                        <input class="form-control" id="phone" type="tel" formControlName="phone" name="phone" placeholder="5551234567" [maxlength]=10 />
+                                        <app-field-error-display *ngIf="!formSubmitAttempt" 
+                                        [displayError]="validationInput('phone')" 
+                                        errorMsg="Ingresa un número de teléfono válido">
+                                        </app-field-error-display>
+                                    </div>
+                                </div>
+                                <hr class="my-4" />
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-outline-warning" type="reset" (click)="reset(1)">Limpiar</button>
+                                    <button (click)="onSubmit(1)" class="btn btn-primary" type="button">Siguiente</button>
+                                    <!-- [disabled]="!userForm.valid" -->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Wizard tab pane item 2-->
+                <div class="tab-pane py-5 py-xl-10 fade" id="wizard2" role="tabpanel" aria-labelledby="wizard2-tab">
+                    <div class="row justify-content-center">
+                        <div class="col-xxl-6 col-xl-8">
+                            <h3 class="text-primary">Ingresa tu dirección</h3>
+                            <br>
+                            <!-- <h5 class="card-title mb-4"></h5> -->
+                            <form [formGroup]="addressForm">
+                                <div class="row gx-3">
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1" for="lineAddress1">Línea de dirección 1 <span style="color:red">*</span></label>
+                                        <input class="form-control" id="lineAddress1" formControlName="lineAddress1" type="text" placeholder="Calle Centenario N.87"/>
+                                        <app-field-error-display *ngIf="!formAddressSubmitIsValid" 
+                                            [displayError]="validationInputAddress('lineAddress1')" 
+                                            errorMsg="Completa este campo">
+                                        </app-field-error-display>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1" for="lineAddress2">Línea de dirección 2</label>
+                                        <input class="form-control" id="lineAddress2" type="text"  formControlName="lineAddress2" placeholder="Col. Bénito Juárez, San Agustín Atzompa."/>
+                                        <app-field-error-display *ngIf="!formAddressSubmitIsValid" 
+                                            [displayError]="validationInputAddress('lineAddress2')" 
+                                            errorMsg="No puede contener más de 80 caracteres">
+                                        </app-field-error-display>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1" for="inputCountry">País <span style="color:red">*</span></label>
+                                        <select id="country" name="country" class="form-control" formControlName="country">
+                                            <option value="Afghanistan">Afghanistan</option>
+                                            <option value="Albania">Albania</option>
+                                            <option value="Algeria">Algeria</option>
+                                            <option value="Antarctica">Antarctica</option>
+                                            <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                                            <option value="Argentina">Argentina</option>
+                                            <option value="Australia">Australia</option>
+                                            <option value="Austria">Austria</option>
+                                            <option value="Azerbaijan">Azerbaijan</option>
+                                            <option value="Barbados">Barbados</option>
+                                            <option value="Belarus">Belarus</option>
+                                            <option value="Belgium">Belgium</option>
+                                            <option value="Belize">Belize</option>
+                                            <option value="Bolivia">Bolivia</option>
+                                            <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                                            <option value="Botswana">Botswana</option>
+                                            <option value="Bouvet Island">Bouvet Island</option>
+                                            <option value="Brazil">Brazil</option>
+                                            <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                                            <option value="Brunei Darussalam">Brunei Darussalam</option>
+                                            <option value="Bulgaria">Bulgaria</option>
+                                            <option value="Burundi">Burundi</option>
+                                            <option value="Cambodia">Cambodia</option>
+                                            <option value="Cameroon">Cameroon</option>
+                                            <option value="Canada">Canada</option>
+                                            <option value="Chad">Chad</option>
+                                            <option value="Chile">Chile</option>
+                                            <option value="China">China</option>
+                                            <option value="Christmas Island">Christmas Island</option>
+                                            <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                                            <option value="Colombia">Colombia</option>
+                                            <option value="Comoros">Comoros</option>
+                                            <option value="Congo">Congo</option>
+                                            <option value="Congo, The Democratic Republic of The">Congo, The Democratic Republic of The</option>
+                                            <option value="Cook Islands">Cook Islands</option>
+                                            <option value="Costa Rica">Costa Rica</option>
+                                            <option value="Djibouti">Djibouti</option>
+                                            <option value="Dominica">Dominica</option>
+                                            <option value="Dominican Republic">Dominican Republic</option>
+                                            <option value="Ecuador">Ecuador</option>
+                                            <option value="Egypt">Egypt</option>
+                                            <option value="El Salvador">El Salvador</option>
+                                            <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                            <option value="Eritrea">Eritrea</option>
+                                            <option value="Estonia">Estonia</option>
+                                            <option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya</option>
+                                            <option value="Liechtenstein">Liechtenstein</option>
+                                            <option value="Lithuania">Lithuania</option>
+                                            <option value="Luxembourg">Luxembourg</option>
+                                            <option value="Macao">Macao</option>
+                                            <option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of</option>
+                                            <option value="Madagascar">Madagascar</option>
+                                            <option value="Maldives">Maldives</option>
+                                            <option value="Mali">Mali</option>
+                                            <option value="Malta">Malta</option>
+                                            <option value="Marshall Islands">Marshall Islands</option>
+                                            <option value="Martinique">Martinique</option>
+                                            <option value="Mauritania">Mauritania</option>
+                                            <option value="Mauritius">Mauritius</option>
+                                            <option value="Mayotte">Mayotte</option>
+                                            <option value="Mexico">Mexico</option>
+                                            <option value="United Kingdom">United Kingdom</option>
+                                            <option value="United States">United States</option>
+                                            <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+                                            <option value="Uruguay">Uruguay</option>
+                                            <option value="Uzbekistan">Uzbekistan</option>
+                                            <option value="Vanuatu">Vanuatu</option>
+                                            <option value="Venezuela">Venezuela</option>
+                                        </select>
+                                        <app-field-error-display *ngIf="!formAddressSubmitIsValid" 
+                                            [displayError]="validationInputAddress('country')" 
+                                            errorMsg="Selecciona un país">
+                                        </app-field-error-display>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1" for="state">Estado <span style="color:red">*</span></label>
+                                        <input class="form-control" id="state" type="text" formControlName="state" placeholder="Ingresa tu estado"/>
+                                        <app-field-error-display *ngIf="!formAddressSubmitIsValid" 
+                                            [displayError]="validationInputAddress('state')" 
+                                            errorMsg="Completa este campo">
+                                        </app-field-error-display>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1" for="city">Ciudad <span style="color:red">*</span></label>
+                                        <input class="form-control" id="city" type="text" formControlName="city" placeholder="Ingresa tu ciudad"/>
+                                        <app-field-error-display *ngIf="!formAddressSubmitIsValid" 
+                                        [displayError]="validationInputAddress('city')" 
+                                        errorMsg="Completa este campo">
+                                    </app-field-error-display>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1" for="postalCode">Código Postal <span style="color:red">*</span></label>
+                                        <input class="form-control" id="postalCode" type="number" formControlName="postalCode" placeholder="Ingresa tu C.P" value="78488" maxlength="5" />
+                                        <app-field-error-display *ngIf="!formAddressSubmitIsValid" 
+                                            [displayError]="validationInputAddress('postalCode')" 
+                                            errorMsg="Ingresa un código postal válido">
+                                        </app-field-error-display>
+                                    </div>
+                                </div>
+                                <hr class="my-4" />
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-light" type="button" (click)='Redirect("#wizard1")'>Regresar</button>
+                                    <button class="btn btn-orange" type="button" (click)="Skip()">Omitir dirección</button>
+                                    <button class="btn btn-primary" (click)="onSubmit(2)" type="button">Siguiente</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+         
+                <!-- Wizard tab pane item 4-->
+                <div class="tab-pane py-5 py-xl-10 fade" id="wizard4" role="tabpanel" aria-labelledby="wizard4-tab">
+                    <div class="row justify-content-center">
+                        <div class="col-xxl-6 col-xl-8">
+                            <h3 class="text-primary">Revisa la siguiente información y finaliza</h3>
+                            <br>
+                            <!-- <h5 class="card-title mb-4"></h5> -->
+                            <div class="row small text-muted">
+                                <div class="col-sm-4 text-truncate"><em>Nombre (s):</em></div>
+                                <div class="col text-primary">{{user?.firstName}}</div>
+                            </div>
+                            <div class="row small text-muted">
+                                <div class="col-sm-4 text-truncate"><em>Apellido:</em></div>
+                                <div class="col text-primary">{{user?.lastName}}</div>
+                            </div>
+                            <div class="row small text-muted">
+                                <div class="col-sm-4 text-truncate"><em>Correo electrónico:</em></div>
+                                <div class="col text-primary">{{user?.email}}</div>
+                            </div>
+                            <div class="row small text-muted">
+                                <div class="col-sm-4 text-truncate"><em>Núm. de Teléfono:</em></div>
+                                <div class="col text-primary">{{telephone}}</div>
+                            </div>
+                            <div *ngIf="!flagAddressSkipped || addressSubmited">
+                                <div class="row small text-muted" >
+                                    <div class="col-sm-4 text-truncate"><em>País:</em></div>
+                                    <div class="col text-primary">{{userAddress?.country}}</div>
+                                </div>
+                                <div class="row small text-muted" >
+                                    <div class="col-sm-4 text-truncate"><em>Estado:</em></div>
+                                    <div class="col text-primary">{{userAddress?.state}}</div>
+                                </div>
+                                <div class="row small text-muted" >
+                                    <div class="col-sm-4 text-truncate"><em>Ciudad:</em></div>
+                                    <div class="col text-primary">{{userAddress?.city}}</div>
+                                </div>
+                                <div class="row small text-muted" >
+                                    <div class="col-sm-4 text-truncate"><em>Linea de dirección 1:</em></div>
+                                    <div class="col text-primary">{{userAddress?.lineAddress1}}</div>
+                                </div>
+                                <div class="row small text-muted" >
+                                    <div class="col-sm-4 text-truncate"><em>Linea de dirección 2:</em></div>
+                                    <div class="col text-primary">{{userAddress?.lineAddress2}}</div>
+                                </div>
+                                <div class="row small text-muted" >
+                                    <div class="col-sm-4 text-truncate"><em>Código postal</em></div>
+                                    <div class="col text-primary">{{userAddress?.postalCode}}</div>
+                                </div>        
+                            </div>
+                           
+                            <hr class="my-4" />
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-light" type="button" (click)="Redirect('#wizard2')">Regresar</button>
+                                <button class="btn btn-primary" type="button" (click)="InsertUser()">Finalizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

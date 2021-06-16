@@ -1,0 +1,150 @@
+<header class="page-header page-header-dark bg-orange pb-10">
+    <div class="container-xl px-4">
+        <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-auto mt-4">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i data-feather="truck"></i></div>
+                        Registro de proveedor
+                    </h1>
+                    <div class="page-header-subtitle">Completa los siguientes campos para añadir a un nuevo proveedor.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-xl px-4 mt-n10">
+    <div class="card">
+        <div class="card-header border-bottom">
+            <div class="nav nav-pills nav-justified flex-column flex-xl-row nav-wizard" id="cardTab" role="tablist">
+                <a class="nav-item nav-link active" id="wizard1-tab" href="#wizard1" data-bs-toggle="tab" role="tab" aria-controls="wizard1" aria-selected="true">
+                    <div class="wizard-step-icon bg-blue text-white">1</div>
+                    <div class="wizard-step-text">
+                        <div class="wizard-step-text-name">Agregar nuevo proveedor</div>
+                        <div class="wizard-step-text-details">Información de proveedor</div>
+                    </div>
+                </a>
+                <a class="nav-item nav-link disableDiv" [ngClass]="{'enabledDiv':correctSubmit}" id="wizard4-tab" href="#wizard4" data-bs-toggle="tab" role="tab" aria-controls="wizard4" aria-selected="true">
+                    <div class="wizard-step-icon bg-blue text-white">2</div>
+                    <div class="wizard-step-text">
+                        <div class="wizard-step-text-name">Confirmación</div>
+                        <div class="wizard-step-text-details">Visualiza la información y registra</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="cardTabContent">
+                <!-- Wizard tab pane item 1-->
+                <div class="tab-pane py-5 py-xl-10 fade show active" id="wizard1" role="tabpanel" aria-labelledby="wizard1-tab">
+                    <div class="row justify-content-center">
+                        <div class="col-xxl-6 col-xl-8">
+                            <h3 class="text-primary">Ingresa la información del proveedor</h3>
+                            <!-- <h5 class="card-title mb-4"></h5> -->
+                            <form [formGroup]="providerForm">
+                                <div class="row gx-3">
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1" for="CompanyName">Nombre de la empresa<span style="color:red"> * </span></label>
+                                        <input class="form-control" id="CompanyName"  formControlName="companyName" type="text" placeholder="Grupo FEMSA"/>
+                                        <app-field-error-display *ngIf="!formSubmitAttempt"
+                                        [displayError]="validationInput('companyName')" 
+                                        errorMsg="Completa este campo">
+                                        </app-field-error-display>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1" for="RFC">RFC</label>
+                                        <input class="form-control" id="RFC" formControlName="RFC" type="text" placeholder="CUPU800825569" maxlength="13"/>   
+                                        <app-field-error-display *ngIf="!formSubmitAttempt"
+                                        [displayError]="validationInput('RFC')" 
+                                        errorMsg="Ingresa un formato válido de RFC">
+                                        </app-field-error-display>
+                                    </div>
+                          
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="email">Correo electrónico<span style="color:red"> * </span></label>
+                                    <input class="form-control" id="email" type="email" formControlName="email" placeholder="microsoft@google.com" />
+                                    <app-field-error-display *ngIf="!formSubmitAttempt"
+                                    [displayError]="validationInput('email')" 
+                                    errorMsg="Ingresa un e-mail válido">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1" for="Contactname">Nombre de contacto<span style="color:red"> *</span></label>
+                                        <input class="form-control" id="Contactname" type="text" formControlName="contactName" placeholder="Julión Alvarez" />
+                                        <app-field-error-display *ngIf="!formSubmitAttempt"
+                                        [displayError]="validationInput('contactName')" 
+                                        errorMsg="Completa este campo">
+                                        </app-field-error-display>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1" for="phone">Teléfono de contacto<span style="color:red"> * </span></label>
+                                        <input class="form-control" id="phone" type="tel" formControlName="phone" placeholder="2228495312" maxlength="10" />
+                                        <app-field-error-display *ngIf="!formSubmitAttempt"
+                                        [displayError]="validationInput('phone')" 
+                                        errorMsg="Ingresa un número de teléfono válido">
+                                        </app-field-error-display>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-2" for="notes">Notas (información adicional)</label>
+                                    <input class="form-control" id="notes" type="text" formControlName="notes" maxlength="100" />
+                                </div>
+                                <hr class="my-4" />
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-danger" type="reset" (click)="reset()">Limpiar</button>
+                                    <button class="btn btn-orange" type="button" (click)="onSubmit()">Siguiente</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Wizard tab pane item 2-->
+                <!-- Wizard tab pane item 4-->
+                <div class="tab-pane py-5 py-xl-10 fade" id="wizard4" role="tabpanel" aria-labelledby="wizard4-tab">
+                    <div class="row justify-content-center">
+                        <div class="col-xxl-6 col-xl-8">
+                            <h3 class="text-primary">Revisa la siguiente información y finaliza</h3>
+                            <br>
+                            <!-- <h5 class="card-title mb-4"></h5> -->
+                            <div class="row small text-muted">
+                                <div class="col-sm-4 text-truncate"><em>Nombre de la empresa: </em></div>
+                                <div class="col text-primary">{{company?.companyName}}</div>
+                            </div>
+                            <div class="row small text-muted">
+                                <div class="col-sm-4 text-truncate"><em>RFC: </em></div>
+                                <div class="col text-primary">{{company?.RFC}}</div>
+                            </div>
+                            <div class="row small text-muted">
+                                <div class="col-sm-4 text-truncate"><em>Correo electrónico: </em></div>
+                                <div class="col text-primary">{{company?.email}}</div>
+                            </div>
+                            <div class="row small text-muted">
+                                <div class="col-sm-4 text-truncate"><em>Nombre de contacto: </em></div>
+                                <div class="col text-primary">{{company?.contactName}}</div>
+                            </div>
+                            <div>
+                                <div class="row small text-muted" >
+                                    <div class="col-sm-4 text-truncate"><em>Núm. Telefónico de contacto: </em></div>
+                                    <div class="col text-primary">{{telephone}}</div>
+                                </div>
+                                <div class="row small text-muted" >
+                                    <div class="col-sm-4 text-truncate"><em>Notas: </em></div>
+                                    <div class="col text-primary">{{company?.notes}}</div>
+                                </div>        
+                            </div>
+                           
+                            <hr class="my-4" />
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-danger" type="button" (click)="back()">Regresar</button>
+                                <button class="btn btn-orange" type="button" (click)="addProvider()">Finalizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,119 @@
+<header
+  class="page-header page-header-dark bg-gradient-primary-to-secondary pb-3"
+>
+  <div class="container-xl px-4">
+    <div class="page-header-content pt-4">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-auto mt-4">
+          <h1 class="page-header-title">
+            <div class="page-header-icon"><i data-feather="list"></i></div>
+            Usuarios
+          </h1>
+          <div class="page-header-subtitle">
+            Gestiona a los usuarios registrados de forma sencilla.
+          </div>
+
+        </div>
+        <div class="dropdown col-auto mt-8">
+          <button class="btn btn-warning dropdown-toggle" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar estado de usuarios</button>
+          <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
+            <a class="dropdown-item" (click)="SetStat(1)">Todos</a>
+            <a class="dropdown-item" (click)="SetStat(2)">Activos</a>
+            <a class="dropdown-item" (click)="SetStat(3)">Inactivos</a>
+          </div>
+        </div>
+        
+
+      </div>
+    </div>
+  </div>
+  
+</header>
+<div class="card mb-4">
+  <div class="card-header">
+    <span style="float: right"
+      ><a [routerLink]="['/home/users/new-user']"
+        ><i data-feather="user-plus" style="width: 30px; height: 35px"></i></a
+    ></span>
+  </div>
+  <div class="card-body">
+    <table id="datatablesSimple" class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Correo electrónico</th>
+          <th>Télefono</th>
+          <th>Fecha de registro</th>
+          <th>Cambio de contraseña</th>
+          <th>Status</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Correo electrónico</th>
+          <th>Télefono</th>
+          <th>Fecha de registro</th>
+          <th>Cambio de contraseña</th>
+          <th>Status</th>
+          <th>Acciones</th>
+        </tr>
+      </tfoot>
+      <tbody *ngIf="users">
+        <tr *ngFor="let user of users.data; let i = index;">
+          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.userID }}</td>
+          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.firstName }}</td>
+          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.lastName }}</td>
+          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.email }}</td>
+          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.phone }}</td>
+          <td *ngIf="user.status==statusUsers || statusUsers==undefined">
+            {{ formatDate(user.registerDate) | amDateFormat: "DD" }} de
+            {{
+              formatDate(user.registerDate)
+                | amLocale: "es"
+                | amDateFormat: "MMMM YYYY"
+            }}
+          </td>
+          <td *ngIf="user.changePassword && (user.status==statusUsers || statusUsers==undefined)">Permitido</td>
+          <td *ngIf="!user.changePassword && (user.status==statusUsers || statusUsers==undefined)" >Deshabilitado</td>
+          <td *ngIf="user.status && (user.status==statusUsers || statusUsers==undefined)">
+            <div class="badge bg-success text-white rounded-pill">Activo</div>
+          </td>
+          <td *ngIf="!user.status && (user.status==statusUsers || statusUsers==undefined)">
+            <div class="badge bg-danger text-white rounded-pill">Inactivo</div>
+          </td>
+          <td class="d-flex justify-content-between" *ngIf="user.status==statusUsers || statusUsers==undefined">
+            <a href="javascript:void(0);" (click)="edit(user)" *ngIf="user.status==statusUsers || statusUsers==undefined" >
+                <i class="fas fa-user-edit"></i>
+            </a>
+            <a href="javascript:void(0);" (click)="getAddres(user)" *ngIf="user.addressID && (user.status==statusUsers || statusUsers==undefined)">
+                <i class="fas fa-map-marked-alt mapIcon"></i>
+            </a>
+            <a href="javascript:void(0);" (click)="getAddres(user)" *ngIf="!user.addressID && (user.status==statusUsers || statusUsers==undefined)">
+                <i class="fas fa-map-marked-alt hasNoMap"></i>
+            </a>
+            <a href="javascript:void(0);"(click)="DelSelected(user)" *ngIf="user.status && (user.status==statusUsers || statusUsers==undefined)" >
+              <i class="fas fa-trash-alt redIcon"></i>
+            </a>
+            <a href="javascript:void(0);"(click)="RestoreUser(user)" *ngIf="!user.status && (user.status==statusUsers || statusUsers==undefined)" >
+              <i class="fas fa-undo greenIcon"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ngb-pagination
+    *ngIf="users?.totalPages >1"
+     [(page)]="page"
+     (pageChange)="pageChange($event)"
+     [pageSize]="users?.pageSize"
+     [collectionSize]="users?.totalPages"></ngb-pagination>
+
+  </div>
+</div>
