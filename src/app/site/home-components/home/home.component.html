@@ -67,33 +67,6 @@
                         </nav>
                     </div>
 
-                    <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseprov"
-                        aria-expanded="false" aria-controls="collapseprov">
-                        <div class="nav-link-icon"><i data-feather="user"></i></div>
-                        Proveedores
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-
-                    <div class="collapse" id="collapseprov" data-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link">
-                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
-                                Agregar nuevo
-                            </a>
-
-                            <a class="nav-link">
-                                <div class="nav-link-icon"><i data-feather="book-open"></i></div>
-                                Lista
-                            </a>
-
-                            <a class="nav-link">
-                                <div class="nav-link-icon"><i data-feather="edit"></i></div>
-                                Actualizar registros
-                            </a>
-
-                        </nav>
-                    </div>
-
                     <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseprod"
                         aria-expanded="false" aria-controls="collapseprod">
                         <div class="nav-link-icon"><i data-feather="shopping-bag"></i></div>
@@ -121,6 +94,33 @@
                         </nav>
                     </div>
 
+
+                    <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseprov"
+                        aria-expanded="false" aria-controls="collapseprov">
+                        <div class="nav-link-icon"><i data-feather="truck"></i></div>
+                        Proveedores
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+
+                    <div class="collapse" id="collapseprov" data-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" [routerLink]="['/home/providers','list']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="book-open"></i></div>
+                                Lista
+                            </a>
+
+                            <a class="nav-link" [routerLink]="['/home/providers/','new-provider']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
+                                Agregar nuevo
+                            </a>
+
+                            <!-- <a class="nav-link">
+                                <div class="nav-link-icon"><i data-feather="edit"></i></div>
+                                Actualizar registros
+                            </a> -->
+
+                        </nav>
+                    </div>
 
                     <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseusers"
                         aria-expanded="false" aria-controls="collapseusers">
@@ -160,8 +160,8 @@
 
     <div id="layoutSidenav_content">
         <main>
-         
             <router-outlet></router-outlet>
+            <app-display-lottie></app-display-lottie>
         </main>
     </div>
 

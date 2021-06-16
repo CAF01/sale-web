@@ -1,6 +1,6 @@
-export interface insertProviderRequest {
+export class insertProviderRequest {
     companyName: string;
-    rFC: string;
+    RFC: string;
     phone: string;
     email: string;
     contactName: string;

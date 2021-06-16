@@ -1,1 +1,146 @@
-<p>get-providers works!</p>
+<header
+  class="page-header page-header-dark bg-orange pb-3"
+>
+  <div class="container-xl px-4">
+    <div class="page-header-content pt-4">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-auto mt-4">
+          <h1 class="page-header-title">
+            <div class="page-header-icon"><i data-feather="list"></i></div>
+            Proveedores
+          </h1>
+          <div class="page-header-subtitle">
+            Gestiona a todos tus proveedores de manera sencilla.
+          </div>
+
+        </div>
+        
+
+      </div>
+    </div>
+  </div>
+  
+</header>
+<div class="card mb-4">
+  <div class="card-header">
+    <span style="float: right"
+      ><a [routerLink]="['/home/providers/new-provider']"
+        ><i data-feather="plus-circle" style="width: 50px; height: 45px"></i></a
+    ></span>
+  </div>
+  <div class="card-body">
+    <table id="datatablesSimple" class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre de empresa</th>
+          <th>RFC</th>
+          <th>Correo electrónico</th>
+          <th>Fecha de registro</th>
+          <th>Nombre de contacto</th>
+          <th>Teléfono de contacto</th>
+          <th>Status</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+            <th>#</th>
+            <th>Nombre de empresa</th>
+            <th>RFC</th>
+            <th>Correo electrónico</th>
+            <th>Fecha de registro</th>
+            <th>Nombre de contacto</th>
+            <th>Teléfono de contacto</th>
+            <th>Status</th>
+            <th>Acciones</th>
+        </tr>
+      </tfoot>
+      <tbody *ngIf="providers">
+          <tr *ngFor="let provider of providers.data; let i = index;">
+              <td>{{provider.providerID}}</td>  
+              <td>{{provider.companyName}}</td>  
+              <td>{{provider.rfc}}</td>  
+              <td>{{provider.email}}</td>
+              <td>{{ formatDate(provider.registerDate) | amDateFormat: "DD" }} de
+                {{
+                  formatDate(provider.registerDate)
+                    | amLocale: "es"
+                    | amDateFormat: "MMMM YYYY"
+                }}</td> 
+              <td>{{provider.contactName}}</td> 
+              <td>{{provider.phone}}</td>   
+              <td *ngIf="provider.status">
+                <div class="badge bg-success text-white rounded-pill">Activo</div>
+              </td>
+              <td *ngIf="!provider.status">
+                <div class="badge bg-danger text-white rounded-pill">Inactivo</div>
+              </td> 
+              <td class="d-flex justify-content-between">
+                <a href="javascript:void(0);" (click)="edit(provider)">
+                  <i class="far fa-edit"></i>
+                </a>
+                <a href="javascript:void(0);">
+                  <i class="fas fa-book bookIcon"></i>
+                </a>
+                <a href="javascript:void(0);" *ngIf="provider.status" >
+                  <i class="fas fa-trash-alt redIcon"></i>
+                </a>
+                <a href="javascript:void(0);" *ngIf="!provider.status" >
+                  <i class="fas fa-undo greenIcon"></i>
+                </a>
+              </td>
+          </tr>
+        <!-- <tr *ngFor="let user of users.data; let i = index;"> -->
+          <!-- <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.userID }}</td>
+          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.firstName }}</td>
+          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.lastName }}</td>
+          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.email }}</td>
+          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.phone }}</td>
+          <td *ngIf="user.status==statusUsers || statusUsers==undefined">
+            {{ formatDate(user.registerDate) | amDateFormat: "DD" }} de
+            {{
+              formatDate(user.registerDate)
+                | amLocale: "es"
+                | amDateFormat: "MMMM YYYY"
+            }}
+          </td>
+          <td *ngIf="user.changePassword && (user.status==statusUsers || statusUsers==undefined)">Permitido</td>
+          <td *ngIf="!user.changePassword && (user.status==statusUsers || statusUsers==undefined)" >Deshabilitado</td>
+          <td *ngIf="user.status && (user.status==statusUsers || statusUsers==undefined)">
+            <div class="badge bg-success text-white rounded-pill">Activo</div>
+          </td>
+          <td *ngIf="!user.status && (user.status==statusUsers || statusUsers==undefined)">
+            <div class="badge bg-danger text-white rounded-pill">Inactivo</div>
+          </td>
+          <td class="d-flex justify-content-between" *ngIf="user.status==statusUsers || statusUsers==undefined">
+            <a href="javascript:void(0);" (click)="edit(user)" *ngIf="user.status==statusUsers || statusUsers==undefined" >
+                <i class="fas fa-user-edit"></i>
+            </a>
+            <a href="javascript:void(0);" (click)="getAddres(user)" *ngIf="user.addressID && (user.status==statusUsers || statusUsers==undefined)">
+                <i class="fas fa-map-marked-alt mapIcon"></i>
+            </a>
+            <a href="javascript:void(0);" (click)="getAddres(user)" *ngIf="!user.addressID && (user.status==statusUsers || statusUsers==undefined)">
+                <i class="fas fa-map-marked-alt hasNoMap"></i>
+            </a>
+            <a href="javascript:void(0);"(click)="DelSelected(user)" *ngIf="user.status && (user.status==statusUsers || statusUsers==undefined)" >
+              <i class="fas fa-trash-alt redIcon"></i>
+            </a>
+            <a href="javascript:void(0);"(click)="RestoreUser(user)" *ngIf="!user.status && (user.status==statusUsers || statusUsers==undefined)" >
+              <i class="fas fa-undo greenIcon"></i>
+            </a>
+          </td>
+        </tr> -->
+      </tbody>
+    </table>
+
+    <!-- <ngb-pagination
+    *ngIf="users?.totalPages >1"
+     [(page)]="page"
+     (pageChange)="pageChange($event)"
+     [pageSize]="users?.pageSize"
+     [collectionSize]="users?.totalPages"></ngb-pagination> -->
+
+  </div>
+</div>
+

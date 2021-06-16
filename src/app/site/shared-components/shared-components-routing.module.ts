@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 // import { SharedComponentsComponent } from './shared-components.component';
 
-const routes: Routes = [{ path: ''/*, component: SharedComponentsComponent */}];
+const routes: Routes = [];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

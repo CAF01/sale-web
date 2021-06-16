@@ -1,0 +1,77 @@
+
+  <div *ngIf="numModal==0">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+      </div>
+      <div class="modal-body" style="font-size: large;">{{message}}</div>
+      <div class="modal-footer">
+        <button
+        type="button"
+        class="btn btn-danger"
+        (click)="modal.close(false)"
+        >
+        Cancelar
+      </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="modal.close(true)"
+        >
+          Aceptar
+        </button>
+      </div>
+  </div>
+
+  <div *ngIf="numModal==1">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+      </div>
+      <div class="modal-body">
+    
+        <p *ngIf="!userAddress">El usuario seleccionado no tiene ninguna dirección asignada.</p> 
+              <div class="row justify-content-center" *ngIf="userAddress">
+                        <div class="row gx-3" >
+                            <div class="mb-3 col-md-6">
+                                <label class="small mb-1">Línea de dirección 1</label>
+                                <input class="form-control"type="text" disabled value={{userAddress?.lineAddress1}}/>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="small mb-1">Línea de dirección 2</label>
+                                <input class="form-control" type="text" disabled value={{userAddress?.lineAddress2}}/>
+                            </div>
+                        </div>
+                        <div class="row gx-3">
+                            <div class="mb-3 col-md-6">
+                                <label class="small mb-1">País</label>
+                                <input type="text" class="form-control" disabled value={{userAddress?.country}}>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="small mb-1">Estado</label>
+                                <input class="form-control" type="text" disabled value={{userAddress?.state}}/>
+                            </div>
+                        </div>
+                        <div class="row gx-3">
+                            <div class="mb-3 col-md-6">
+                                <label class="small mb-1">Ciudad</label>
+                                <input class="form-control" type="text" disabled value={{userAddress?.city}}/>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="small mb-1">Código Postal</label>
+                                <input class="form-control"  type="number"maxlength="5" disabled  value={{userAddress?.postalCode}}/>
+                            </div>
+                        </div>
+                </div>
+
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="modal.close(false)"
+        >
+          Cerrar
+        </button>
+      </div>
+  </div>
+  
+

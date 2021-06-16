@@ -1,6 +1,6 @@
-export interface updateProviderRequest {
+export class updateProviderRequest {
     companyName: string;
-    rFC: string;
+    RFC: string;
     phone: string;
     email: string;
     contactName: string;

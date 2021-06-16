@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HelperService } from '../../services/helper.service';
+import { HelperService } from '../../core/services/helper.service';
 import * as Feather from "feather-icons";
 
 

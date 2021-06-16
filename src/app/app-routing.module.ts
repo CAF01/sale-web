@@ -13,7 +13,12 @@ const routes: Routes = [
         path: 'users',
         loadChildren: () =>
           import('./site/users/users.module').then((m) => m.UsersModule),
-      }
+      },{
+        path:'providers',
+        loadChildren:()=>
+        import('./site/providers/providers.module').then((m)=>m.ProvidersModule),
+      },
+
     ],
   },
   {

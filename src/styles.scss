@@ -12,3 +12,35 @@
     pointer-events:none;
     opacity: 0.5;
 }
+.bookIcon
+{
+    color:rgba(131, 29, 29, 0.966);
+}
+
+.redIcon
+{
+    color:red;
+}
+
+.greenIcon
+{
+    color:green;
+    font-size: medium;
+    text-transform: uppercase;
+}
+
+.mapIcon
+{
+    color:rgb(34, 160, 233);
+}
+
+.hasNoMap
+{
+    opacity: 0.3;
+    color: rgb(158, 158, 158);
+}
+
+
+
+/* Importing Bootstrap SCSS file. */
+//@import '~bootstrap/scss/bootstrap';

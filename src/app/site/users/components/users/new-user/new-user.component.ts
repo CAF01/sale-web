@@ -2,9 +2,9 @@ import { Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { RedirectHelper } from 'src/app/site/helpers/redirect-helper';
-import { SubstringHelper } from 'src/app/site/helpers/substring-helper';
-import { ValidateForm } from 'src/app/site/helpers/validate-formfields-helper';
+import { RedirectHelper } from 'src/app/site/core/helpers/redirect-helper';
+import { SubstringHelper } from 'src/app/site/core/helpers/substring-helper';
+import { ValidateForm } from 'src/app/site/core/helpers/validate-formfields-helper';
 import { AddressInsertRequest } from '../../../models/request/addressinsertrequest';
 import { userInsertRequest } from '../../../models/request/userinsertrequest';
 import { UserService } from '../../../services/user.service';
@@ -18,11 +18,11 @@ import { NgZone } from '@angular/core';
   styleUrls: ['./new-user.component.scss'],
 })
 export class NewUserComponent implements OnInit {
-  // private animation : AnimationItem;
-  // options:AnimationOptions = 
-  // {
-  //   path:'assets/animations/1.json'
-  // }
+  private animation : AnimationItem;
+  options:AnimationOptions = 
+  {
+    path:'assets/animations/1.json'
+  }
   telephone:string;
   formSubmitAttempt: boolean;
   flag?: boolean;
@@ -226,6 +226,9 @@ export class NewUserComponent implements OnInit {
     });
   }
   showSuccess() {
+    this.toastr.toastrConfig.timeOut=30;
+    this.toastr.toastrConfig.extendedTimeOut=60;
+    this.toastr.toastrConfig.progressBar = true;
     this.toastr.success('Muy bien!', 'Nuevo usuario agregado!');
   }
 }

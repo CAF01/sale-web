@@ -11,13 +11,13 @@ import { GetReturnproviderComponent } from './components/return-provider/get-ret
 import { InsertInvoiceComponent } from './components/invoice/insert-invoice/insert-invoice.component';
 import { GetContentInvoiceComponent } from './components/invoice/get-content-invoice/get-content-invoice.component';
 import { GetInvoiceComponent } from './components/invoice/get-invoice/get-invoice.component';
-// import { ProvidersComponent } from './providers.component';
+import { SharedComponentsModule } from '../shared-components/shared-components.module';
+import { MomentModule } from 'ngx-moment';
 
 
 @NgModule({
   declarations: [
     // ProvidersComponent
-  
     InsertProviderComponent,
     UpdateProviderComponent,
     SetStatusProviderComponent,
@@ -30,7 +30,9 @@ import { GetInvoiceComponent } from './components/invoice/get-invoice/get-invoic
   ],
   imports: [
     CommonModule,
-    ProvidersRoutingModule
+    ProvidersRoutingModule,
+    SharedComponentsModule,
+    MomentModule,
   ]
 })
 export class ProvidersModule { }

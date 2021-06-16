@@ -2,11 +2,14 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReplaySubject } from 'rxjs';
+import { DisplayLottieComponent } from '../../shared-components/display-lottie/display-lottie.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HelperService {
+
+  private loader: DisplayLottieComponent;
 
   loadedLibraries: { [url: string]: ReplaySubject<void> } = {};
 
@@ -31,4 +34,22 @@ export class HelperService {
 
       return this.loadedLibraries[url].asObservable();
   }
+
+
+  setLoader(loader: DisplayLottieComponent): void {
+    this.loader = loader;
+  }
+
+
+  beginWorking(): void {
+    if (this.loader) this.loader.isWorking(true);
+  }
+
+  stopWorking(): void {
+    if (this.loader)  this.loader.isWorking(false);
+  }
+
+
+
+
 }
