@@ -18,6 +18,21 @@ const routes: Routes = [
         loadChildren:()=>
         import('./site/providers/providers.module').then((m)=>m.ProvidersModule),
       },
+      {
+        path:'clients',
+        loadChildren:()=>
+        import('./site/clients/clients.module').then((m)=>m.ClientsModule),
+      },
+      {
+        path:'products',
+        loadChildren:()=>
+        import('./site/products/products.module').then((m)=>m.ProductsModule),
+      },
+      {
+        path:'catalogs',
+        loadChildren:()=>
+        import('./site/catalogs/catalogs.module').then((m)=>m.CatalogsModule),
+      }
 
     ],
   },
@@ -43,7 +58,8 @@ const routes: Routes = [
     loadChildren: () =>
       import('./site/sales/sales.module').then((m) => m.SalesModule),
   },
-  { path: 'shared-components', loadChildren: () => import('./site/shared-components/shared-components.module').then(m => m.SharedComponentsModule) }
+  { path: 'shared-components', loadChildren: () => import('./site/shared-components/shared-components.module').then(m => m.SharedComponentsModule) },
+  { path: 'products', loadChildren: () => import('./site/products/products.module').then(m => m.ProductsModule) }
 ];
 
 @NgModule({

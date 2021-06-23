@@ -1,4 +1,6 @@
-export interface client {
+import { addressClient } from "./addressclient";
+
+export class client extends addressClient {
   clientID: number;
   firstName: string;
   lastName: string;
@@ -6,5 +8,6 @@ export interface client {
   phone: string;
   email: string;
   notes: string;
+  status:boolean;
   registerDate: Date;
 }

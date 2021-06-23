@@ -1,4 +1,4 @@
-export interface brandSetStatusRequest {
+export class brandSetStatusRequest {
     brandID: number;
-    status: boolean;
+    Status: boolean;
 }

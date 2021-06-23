@@ -18,17 +18,15 @@ import { GetReasonreturnclientComponent } from './components/reasonreturnclients
 import { InsertReasonreturnproviderComponent } from './components/reasonreturnproviders/insert-reasonreturnprovider/insert-reasonreturnprovider.component';
 import { UpdateReasonreturnproviderComponent } from './components/reasonreturnproviders/update-reasonreturnprovider/update-reasonreturnprovider.component';
 import { GetReasonreturnproviderComponent } from './components/reasonreturnproviders/get-reasonreturnprovider/get-reasonreturnprovider.component';
-// import { UpdateBrandComponent } from './components/brands/update-brand/update-brand.component';
-// import { CatalogsComponent } from './catalogs.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { MomentModule } from 'ngx-moment';
+import { SharedComponentsModule } from '../shared-components/shared-components.module';
+import { UpdateBrandComponent } from './components/brands/update-brand/update-brand.component';
+
 
 
 @NgModule({
   declarations: [
-    // CatalogsComponent
-  
-    // InsertBrandComponent,
-    // UpdateBrandComponent
-  
     SetStatusBrandComponent,
     GetBrandsComponent,
     InsertCategoryComponent,
@@ -44,11 +42,15 @@ import { GetReasonreturnproviderComponent } from './components/reasonreturnprovi
     GetReasonreturnclientComponent,
     InsertReasonreturnproviderComponent,
     UpdateReasonreturnproviderComponent,
-    GetReasonreturnproviderComponent
+    GetReasonreturnproviderComponent,
+    UpdateBrandComponent
   ],
   imports: [
     CommonModule,
-    CatalogsRoutingModule
+    CatalogsRoutingModule,
+    MomentModule,
+    SharedComponentsModule,
+    NgbPaginationModule
   ]
 })
 export class CatalogsModule { }

@@ -11,6 +11,9 @@ import { UpdateAddressComponent } from './components/address/update-address/upda
 import { GetAddressComponent } from './components/address/get-address/get-address.component';
 import { InsertReturnComponent } from './components/returnclients/insert-return/insert-return.component';
 import { GetReturnsComponent } from './components/returnclients/get-returns/get-returns.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { MomentModule } from 'ngx-moment';
+import { SharedComponentsModule } from '../shared-components/shared-components.module';
 
 
 @NgModule({
@@ -28,7 +31,10 @@ import { GetReturnsComponent } from './components/returnclients/get-returns/get-
   ],
   imports: [
     CommonModule,
-    ClientsRoutingModule
+    ClientsRoutingModule,
+    MomentModule,
+    SharedComponentsModule,
+    NgbPaginationModule
   ]
 })
 export class ClientsModule { }

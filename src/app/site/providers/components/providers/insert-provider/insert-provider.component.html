@@ -1,4 +1,4 @@
-<header class="page-header page-header-dark bg-orange pb-10">
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
     <div class="container-xl px-4">
         <div class="page-header-content pt-4">
             <div class="row align-items-center justify-content-between">
@@ -44,7 +44,7 @@
                             <form [formGroup]="providerForm">
                                 <div class="row gx-3">
                                     <div class="mb-3 col-md-6">
-                                        <label class="small mb-1" for="CompanyName">Nombre de la empresa<span style="color:red"> * </span></label>
+                                        <label class="medium mb-1 text-blue" for="CompanyName">Nombre de la empresa<span style="color:red"> * </span></label>
                                         <input class="form-control" id="CompanyName"  formControlName="companyName" type="text" placeholder="Grupo FEMSA"/>
                                         <app-field-error-display *ngIf="!formSubmitAttempt"
                                         [displayError]="validationInput('companyName')" 
@@ -52,7 +52,7 @@
                                         </app-field-error-display>
                                     </div>
                                     <div class="mb-3 col-md-6">
-                                        <label class="small mb-1" for="RFC">RFC</label>
+                                        <label class="medium mb-1 text-blue" for="RFC">RFC</label>
                                         <input class="form-control" id="RFC" formControlName="RFC" type="text" placeholder="CUPU800825569" maxlength="13"/>   
                                         <app-field-error-display *ngIf="!formSubmitAttempt"
                                         [displayError]="validationInput('RFC')" 
@@ -62,7 +62,7 @@
                           
                                 </div>
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="email">Correo electrónico<span style="color:red"> * </span></label>
+                                    <label class="medium mb-1 text-blue" for="email">Correo electrónico<span style="color:red"> * </span></label>
                                     <input class="form-control" id="email" type="email" formControlName="email" placeholder="microsoft@google.com" />
                                     <app-field-error-display *ngIf="!formSubmitAttempt"
                                     [displayError]="validationInput('email')" 
@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="row gx-3">
                                     <div class="mb-3 col-md-6">
-                                        <label class="small mb-1" for="Contactname">Nombre de contacto<span style="color:red"> *</span></label>
+                                        <label class="medium mb-1 text-blue" for="Contactname">Nombre de contacto<span style="color:red"> *</span></label>
                                         <input class="form-control" id="Contactname" type="text" formControlName="contactName" placeholder="Julión Alvarez" />
                                         <app-field-error-display *ngIf="!formSubmitAttempt"
                                         [displayError]="validationInput('contactName')" 
@@ -79,7 +79,7 @@
                                         </app-field-error-display>
                                     </div>
                                     <div class="mb-3 col-md-6">
-                                        <label class="small mb-1" for="phone">Teléfono de contacto<span style="color:red"> * </span></label>
+                                        <label class="medium mb-1 text-blue" for="phone">Teléfono de contacto<span style="color:red"> * </span></label>
                                         <input class="form-control" id="phone" type="tel" formControlName="phone" placeholder="2228495312" maxlength="10" />
                                         <app-field-error-display *ngIf="!formSubmitAttempt"
                                         [displayError]="validationInput('phone')" 
@@ -88,13 +88,14 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="small mb-2" for="notes">Notas (información adicional)</label>
-                                    <input class="form-control" id="notes" type="text" formControlName="notes" maxlength="100" />
+                                    <label class="medium mb-2 text-blue" for="notes">Notas (información adicional)</label>
+                                    <textarea class="form-control" formControlName="notes" maxlength="100" id="notes" rows="2" placeholder="Máximo 100 caracteres"></textarea>
+                                    <!-- <input class="form-control" id="notes" type="text" formControlName="notes" maxlength="100" /> -->
                                 </div>
                                 <hr class="my-4" />
                                 <div class="d-flex justify-content-between">
-                                    <button class="btn btn-danger" type="reset" (click)="reset()">Limpiar</button>
-                                    <button class="btn btn-orange" type="button" (click)="onSubmit()">Siguiente</button>
+                                    <button class="btn btn-warning" type="reset" (click)="reset()">Limpiar</button>
+                                    <button class="btn btn-primary" type="button" (click)="onSubmit()">Siguiente</button>
                                 </div>
                             </form>
                         </div>
@@ -137,8 +138,8 @@
                            
                             <hr class="my-4" />
                             <div class="d-flex justify-content-between">
-                                <button class="btn btn-danger" type="button" (click)="back()">Regresar</button>
-                                <button class="btn btn-orange" type="button" (click)="addProvider()">Finalizar</button>
+                                <button class="btn btn-warning" type="button" (click)="back()">Regresar</button>
+                                <button class="btn btn-primary" type="button" (click)="addProvider()">Finalizar</button>
                             </div>
                         </div>
                     </div>

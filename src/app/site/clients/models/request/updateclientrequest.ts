@@ -1,4 +1,4 @@
-export interface updateClientRequest {
+export class updateClientRequest {
     firstName: string;
     lastName: string;
     workPhone: string;

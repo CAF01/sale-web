@@ -7,6 +7,7 @@ import { DisplayLottieComponent } from './display-lottie/display-lottie.componen
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { AlertModalComponent } from './alert-modal/alert-modal.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 
 export function playerFactory()
@@ -20,7 +21,8 @@ export function playerFactory()
   declarations: [
     FieldErrorDisplayComponentComponent,
     DisplayLottieComponent,
-    AlertModalComponent
+    AlertModalComponent,
+    FileUploadComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ export function playerFactory()
     FormsModule,
     ReactiveFormsModule,
     DisplayLottieComponent,
-    AlertModalComponent
+    AlertModalComponent,
+    FileUploadComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -1,4 +1,4 @@
-export interface paymentSetStatusRequest {
-    status: boolean;
-    paymentMethodID: number;
+export class paymentSetStatusRequest {
+    Status: boolean;
+    PaymentMethodID: number;
 }

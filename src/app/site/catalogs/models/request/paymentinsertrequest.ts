@@ -1,3 +1,3 @@
-export interface paymentInsertRequest {
-    description: string;
+export class paymentInsertRequest {
+    Description: string;
 }

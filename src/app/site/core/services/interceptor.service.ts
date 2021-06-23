@@ -17,6 +17,17 @@ export class InterceptorService implements HttpInterceptor{
    
     this.helperService.beginWorking();
 
+
+          request = request.clone({
+            headers: request.headers
+              .set('Content-Disposition', 'multipart/form-data')
+              .set('Accept', 'application/json')
+          });
+   
+
+  
+
+
     return next.handle(request).pipe(
       tap((error) => {
        

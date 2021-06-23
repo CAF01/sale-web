@@ -1,4 +1,4 @@
-export interface brandInsertRequest {
+export class brandInsertRequest {
     name: string;
-    imageUrl: string;
+    ImageUrl: string;
 }

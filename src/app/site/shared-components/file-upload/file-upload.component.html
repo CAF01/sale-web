@@ -1,0 +1,17 @@
+
+  <div class="small font-italic text-muted mb-4">JPG o PNG no mayores a {{MaxSize/1000000}} MB</div>
+<div class="container">
+  <div class="custom-file">
+    <input
+      id="inputGroupFile01"
+      type="file"
+      class="custom-file-input"
+      accept="image/png, image/jpeg"
+      (change)="uploadFile($event.target.files)"
+    />
+    <label class="custom-file-label" for="inputGroupFile01">{{
+      file == null ? Placeholder : file.name
+    }}</label>
+  </div>
+
+</div>

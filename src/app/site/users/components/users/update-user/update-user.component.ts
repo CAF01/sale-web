@@ -5,15 +5,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { debug } from 'console';
-import { error } from 'protractor';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ValidateForm } from 'src/app/site/core/helpers/validate-formfields-helper';
 import { User } from '../../../models/entitys/user';
 import { AddressInsertRequest } from '../../../models/request/addressinsertrequest';
 import { AddressUpdateRequest } from '../../../models/request/addressupdaterequest';
 import { userUpdateRequest } from '../../../models/request/userupdaterequest';
 import { UserService } from '../../../services/user.service';
+import * as Feather from 'feather-icons';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-user',
@@ -29,6 +29,8 @@ export class UpdateUserComponent implements OnInit {
   concentratedForm: FormGroup;
   userid : number;
 
+  bothCorrect:boolean=false;
+
   userUpdateRequest: userUpdateRequest;
   addressUpdateRequest : AddressUpdateRequest;
   addressInsertRequest : AddressInsertRequest;
@@ -38,10 +40,13 @@ export class UpdateUserComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _formBuilder: FormBuilder,
-    private usersService: UserService
+    private usersService: UserService,
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
+    Feather.replace();
     this._route.queryParams.subscribe((params) => {
       if (params.user) {
         this.user = JSON.parse(params.user) as User;
@@ -49,6 +54,12 @@ export class UpdateUserComponent implements OnInit {
         this.SetValidatorsUser();
       }
     });
+  }
+
+  finalize()
+  {
+    this.toastr.success('Usuario actualizado correctamente','Correcto!');
+    this.router.navigate(['home/users/list']);
   }
 
   onSubmit() {
@@ -62,32 +73,44 @@ export class UpdateUserComponent implements OnInit {
             this.asignValuetoUserRequest();
             this.asignValuetoAddressUpdateRequest();
             this.usersService.updateUser(this.userUpdateRequest).subscribe(response=>{
-              console.log(response);
               this.modAddress=false;
-            }),(error=>{
+              this.bothCorrect=true;
+            },
+            (error=>{
               console.log(error);
-            });
+              this.bothCorrect=false;
+            }));
             this.usersService.updateAddress(this.addressUpdateRequest).subscribe(response=>{
-              console.log(response);
-            }),(error=>{
+              if(this.bothCorrect)
+              {
+                this.finalize();
+              }
+            },
+            (error=>{
               console.log(error);
-            });
+            }));
           }
           else
           {
             this.asignValuetoUserRequest();
             this.asignValuetoAddressInsertRequest();
             this.usersService.updateUser(this.userUpdateRequest).subscribe(response=>{
-              console.log(response);
-            }),(error=>{
+              this.bothCorrect=true;
+            },
+            (error=>{
               console.log(error);
-            });
+              this.bothCorrect=false;
+            }));
             this.usersService.InsertAddress(this.addressInsertRequest).subscribe(response=>{
-              console.log(response);
+              if(this.bothCorrect)
+              {
+                this.finalize();
+              }
               this.modAddress=false;
-            }),(error=>{
+            },
+            (error=>{
               console.log(error);
-            });
+            }));
           }
           this.concentratedForm.reset();
           this.formSubmitAttempt = true;
@@ -103,14 +126,14 @@ export class UpdateUserComponent implements OnInit {
         this.SetValidatorsUserNew();
         if (this.concentratedForm.valid)
         {
-          console.log('es valido');  
           this.asignValuetoUserRequest();
           this.usersService.updateUser(this.userUpdateRequest).subscribe(response=>{
-            console.log(response);
             this.concentratedForm.reset();
-          }),(error=>{
+            this.finalize();
+          },
+          (error=>{
             console.log(error);
-          });
+          }));
         }
       }
       this.userUpdateRequest = undefined;
@@ -120,6 +143,11 @@ export class UpdateUserComponent implements OnInit {
 
   validationInput(field: string): boolean {
     return this.concentratedForm.get(field).errors != undefined;
+  }
+
+  back()
+  {
+    this.router.navigate(['home/users/list']);
   }
 
   SetValidatorsUser() {

@@ -1,5 +1,5 @@
 <header
-  class="page-header page-header-dark bg-orange pb-3"
+  class="page-header page-header-dark bg-gradient-primary-to-secondary  pb-3"
 >
   <div class="container-xl px-4">
     <div class="page-header-content pt-4">
@@ -13,6 +13,14 @@
             Gestiona a todos tus proveedores de manera sencilla.
           </div>
 
+        </div>
+        <div class="dropdown col-auto mt-8">
+          <button class="btn btn-warning dropdown-toggle" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar estado de usuarios</button>
+          <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
+            <a class="dropdown-item" (click)="SetStat(1)">Todos</a>
+            <a class="dropdown-item" (click)="SetStat(2)">Activos</a>
+            <a class="dropdown-item" (click)="SetStat(3)">Inactivos</a>
+          </div>
         </div>
         
 
@@ -58,88 +66,48 @@
       </tfoot>
       <tbody *ngIf="providers">
           <tr *ngFor="let provider of providers.data; let i = index;">
-              <td>{{provider.providerID}}</td>  
-              <td>{{provider.companyName}}</td>  
-              <td>{{provider.rfc}}</td>  
-              <td>{{provider.email}}</td>
-              <td>{{ formatDate(provider.registerDate) | amDateFormat: "DD" }} de
+              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{provider.providerID}}</td>  
+              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{provider.companyName}}</td>  
+              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{provider.rfc}}</td>  
+              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{provider.email}}</td>
+              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{ formatDate(provider.registerDate) | amDateFormat: "DD" }} de
                 {{
                   formatDate(provider.registerDate)
                     | amLocale: "es"
                     | amDateFormat: "MMMM YYYY"
                 }}</td> 
-              <td>{{provider.contactName}}</td> 
-              <td>{{provider.phone}}</td>   
-              <td *ngIf="provider.status">
+              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{provider.contactName}}</td> 
+              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{provider.phone}}</td>   
+              <td *ngIf="provider.status && (provider.status==viewOptions || viewOptions==undefined)">
                 <div class="badge bg-success text-white rounded-pill">Activo</div>
               </td>
-              <td *ngIf="!provider.status">
+              <td *ngIf="!provider.status && (provider.status==viewOptions || viewOptions==undefined)">
                 <div class="badge bg-danger text-white rounded-pill">Inactivo</div>
               </td> 
-              <td class="d-flex justify-content-between">
-                <a href="javascript:void(0);" (click)="edit(provider)">
+              <td class="d-flex justify-content-between" *ngIf="provider.status==viewOptions || viewOptions==undefined">
+                <a href="javascript:void(0);" (click)="edit(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar información">
                   <i class="far fa-edit"></i>
                 </a>
-                <a href="javascript:void(0);">
+                <a href="javascript:void(0);" (click)="showNotesProvider(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Notas del proveedor" *ngIf="provider.status==viewOptions || viewOptions==undefined">
                   <i class="fas fa-book bookIcon"></i>
                 </a>
-                <a href="javascript:void(0);" *ngIf="provider.status" >
+                <a href="javascript:void(0);" *ngIf="provider.status && (provider.status==viewOptions || viewOptions==undefined)" (click)="deleteProvider(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Borrar proveedor" >
                   <i class="fas fa-trash-alt redIcon"></i>
                 </a>
-                <a href="javascript:void(0);" *ngIf="!provider.status" >
+                <a href="javascript:void(0);" *ngIf="!provider.status && (provider.status==viewOptions || viewOptions==undefined)" (click)="restoreProvider(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Restaurar proveedor">
                   <i class="fas fa-undo greenIcon"></i>
                 </a>
               </td>
           </tr>
-        <!-- <tr *ngFor="let user of users.data; let i = index;"> -->
-          <!-- <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.userID }}</td>
-          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.firstName }}</td>
-          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.lastName }}</td>
-          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.email }}</td>
-          <td *ngIf="user.status==statusUsers || statusUsers==undefined">{{ user.phone }}</td>
-          <td *ngIf="user.status==statusUsers || statusUsers==undefined">
-            {{ formatDate(user.registerDate) | amDateFormat: "DD" }} de
-            {{
-              formatDate(user.registerDate)
-                | amLocale: "es"
-                | amDateFormat: "MMMM YYYY"
-            }}
-          </td>
-          <td *ngIf="user.changePassword && (user.status==statusUsers || statusUsers==undefined)">Permitido</td>
-          <td *ngIf="!user.changePassword && (user.status==statusUsers || statusUsers==undefined)" >Deshabilitado</td>
-          <td *ngIf="user.status && (user.status==statusUsers || statusUsers==undefined)">
-            <div class="badge bg-success text-white rounded-pill">Activo</div>
-          </td>
-          <td *ngIf="!user.status && (user.status==statusUsers || statusUsers==undefined)">
-            <div class="badge bg-danger text-white rounded-pill">Inactivo</div>
-          </td>
-          <td class="d-flex justify-content-between" *ngIf="user.status==statusUsers || statusUsers==undefined">
-            <a href="javascript:void(0);" (click)="edit(user)" *ngIf="user.status==statusUsers || statusUsers==undefined" >
-                <i class="fas fa-user-edit"></i>
-            </a>
-            <a href="javascript:void(0);" (click)="getAddres(user)" *ngIf="user.addressID && (user.status==statusUsers || statusUsers==undefined)">
-                <i class="fas fa-map-marked-alt mapIcon"></i>
-            </a>
-            <a href="javascript:void(0);" (click)="getAddres(user)" *ngIf="!user.addressID && (user.status==statusUsers || statusUsers==undefined)">
-                <i class="fas fa-map-marked-alt hasNoMap"></i>
-            </a>
-            <a href="javascript:void(0);"(click)="DelSelected(user)" *ngIf="user.status && (user.status==statusUsers || statusUsers==undefined)" >
-              <i class="fas fa-trash-alt redIcon"></i>
-            </a>
-            <a href="javascript:void(0);"(click)="RestoreUser(user)" *ngIf="!user.status && (user.status==statusUsers || statusUsers==undefined)" >
-              <i class="fas fa-undo greenIcon"></i>
-            </a>
-          </td>
-        </tr> -->
       </tbody>
     </table>
 
-    <!-- <ngb-pagination
-    *ngIf="users?.totalPages >1"
+    <ngb-pagination
+    *ngIf="providers?.totalPages > 1"
      [(page)]="page"
      (pageChange)="pageChange($event)"
-     [pageSize]="users?.pageSize"
-     [collectionSize]="users?.totalPages"></ngb-pagination> -->
+     [pageSize]="providers?.pageSize"
+     [collectionSize]="providers?.totalRows"></ngb-pagination>
 
   </div>
 </div>

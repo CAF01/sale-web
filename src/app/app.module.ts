@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './site/home-components/home/home.component';
 import { SharedComponentsModule } from './site/shared-components/shared-components.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgxCurrencyModule } from 'ngx-currency';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     ToastNoAnimationModule.forRoot(),
     SharedComponentsModule,
-    NgbModule
+    NgbModule,
+    // NgxCurrencyModule
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true} 

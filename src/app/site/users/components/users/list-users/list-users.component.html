@@ -108,12 +108,12 @@
       </tbody>
     </table>
 
-    <ngb-pagination
-    *ngIf="users?.totalPages >1"
-     [(page)]="page"
-     (pageChange)="pageChange($event)"
-     [pageSize]="users?.pageSize"
-     [collectionSize]="users?.totalPages"></ngb-pagination>
+
+    <ngb-pagination *ngIf="users?.totalPages > 1"
+    [(page)]="page"
+    [pageSize]="users?.pageSize"
+    (pageChange)="pageChange($event)"
+    [collectionSize]="users?.totalRows"></ngb-pagination>
 
   </div>
 </div>

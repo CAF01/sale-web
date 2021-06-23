@@ -13,6 +13,7 @@ import { GetContentInvoiceComponent } from './components/invoice/get-content-inv
 import { GetInvoiceComponent } from './components/invoice/get-invoice/get-invoice.component';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
 import { MomentModule } from 'ngx-moment';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { MomentModule } from 'ngx-moment';
     ProvidersRoutingModule,
     SharedComponentsModule,
     MomentModule,
+    NgbPaginationModule
   ]
 })
 export class ProvidersModule { }

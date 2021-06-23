@@ -1,1 +1,155 @@
-<p>get-clients works!</p>
+<header
+  class="page-header page-header-dark bg-gradient-primary-to-secondary pb-3"
+>
+  <div class="container-xl px-4">
+    <div class="page-header-content pt-4">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-auto mt-4">
+          <h1 class="page-header-title">
+            <div class="page-header-icon"><i data-feather="list"></i></div>
+            Clientes
+          </h1>
+          <div class="page-header-subtitle">
+            Gestiona a los clientes registrados de forma sencilla.
+          </div>
+
+        </div>
+        <div class="dropdown col-auto mt-8">
+          <button class="btn btn-warning dropdown-toggle" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar estado de usuarios</button>
+          <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
+            <!-- <a class="dropdown-item" (click)="SetStat(1)">Todos</a>
+            <a class="dropdown-item" (click)="SetStat(2)">Activos</a>
+            <a class="dropdown-item" (click)="SetStat(3)">Inactivos</a> -->
+          </div>
+        </div>
+        
+
+      </div>
+    </div>
+  </div>
+  
+</header>
+
+<div class="card mb-4">
+  <br>
+  <div>
+    <div class=row>
+      <div class="col-md-4"></div>
+      <div class="col-md-2">
+        <form class="form-inline me-auto d-none d-lg-block me-3">
+          <div class="input-group input-group-joined input-group-solid">
+              <input class="form-control pe-0" type="search" placeholder="Buscar cliente" aria-label="Search" />
+              <div class="input-group-text"><i data-feather="search"></i></div>
+          </div>
+        </form>
+      </div>
+      <div class="dropdown col-auto mt-8">
+        <button class="btn btn-primary dropdown-toggle" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar tipo de busqueda</button>
+        <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
+          <a class="dropdown-item">Nombre</a>
+          <a class="dropdown-item">Correo electrónico</a>
+          <a class="dropdown-item">Teléfono</a>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+  <div class="card-header">
+    <span style="float: right"
+      ><a [routerLink]="['/home/clients/new-client']">
+        <i style="width: 30px; height: 35px"></i></a
+    ></span>
+  </div>
+  <div class="card-body">
+    <table id="datatablesSimple" class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <!-- <th>Apellido</th> -->
+          <th>Teléfono</th>
+          <th>Correo electrónico</th>
+          <th>Teléfono de trabajo</th>  
+          <th>Fecha de registro</th>
+          <!-- <th>Status</th> -->
+          <th>Transacciones</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+         <th>#</th>
+         <th>Nombre</th>
+         <!-- <th>Apellido</th> -->
+         <th>Teléfono</th>
+         <th>Correo electrónico</th>
+         <th>Teléfono de trabajo</th>  
+         <th>Fecha de registro</th>
+         <!-- <th>Status</th> -->
+         <th>Transacciones</th>
+         <th>Acciones</th>
+        </tr>
+      </tfoot>
+      <tbody *ngIf="clients">
+        <ng-container *ngFor="let client of clients.data; let i = index;">
+          <tr [ngClass]="{'clienteactivo':client.status,'clienteinactivo':!client.status}" >
+            <td>{{ client.clientID }}</td>
+            <td>{{ client.firstName}} {{client.lastName}}</td>
+            <!-- <td>{{ client.lastName }}</td> -->
+            <td>{{ client.phone }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.workPhone }}</td>
+            <td>
+              {{ formatDate(client.registerDate) | amDateFormat: "DD" }} de
+              {{
+                formatDate(client.registerDate)
+                  | amLocale: "es"
+                  | amDateFormat: "MMMM YYYY"
+              }}
+            </td>
+            <!-- <td *ngIf="client.status">
+              <div class="badge bg-success text-white rounded-pill">Activo</div>
+            </td>
+            <td *ngIf="!client.status">
+              <div class="badge bg-danger text-white rounded-pill">Inactivo</div>
+            </td> -->
+            <td class="">
+              <a href="javascript:void(0);">
+                <i class="fas fa-cart-plus"></i>
+              </a>
+              <a href="javascript:void(0);">
+                <i class="fas fa-file-invoice-dollar"></i>
+              </a>
+            </td>
+            <td class="d-flex justify-content-between">
+              <a href="javascript:void(0);" (click)="edit(client)">
+                  <i class="fas fa-user-edit"></i>
+              </a>
+              <a href="javascript:void(0);" (click)="getAddres(client)" *ngIf="client.addressID">
+                <i class="fas fa-map-marked-alt mapIcon"></i>
+              </a>
+              <a href="javascript:void(0);" (click)="getAddres(client)" *ngIf="!client.addressID">
+                <i class="fas fa-map-marked-alt hasNoMap"></i>
+              </a>
+              <a href="javascript:void(0);"(click)="DelSelected(client)" *ngIf="client.status " >
+                <i class="fas fa-trash-alt redIcon"></i>
+              </a>
+              <a href="javascript:void(0);"(click)="Restoreclient(client)" *ngIf="!client.status " >
+                <i class="fas fa-undo greenIcon"></i>
+              </a>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+
+    <!-- <ngb-pagination *ngIf="clients?.totalPages > 1"
+    [(page)]="page"
+    [pageSize]="clients?.pageSize"
+    (pageChange)="pageChange($event)"
+    [collectionSize]="clients?.totalRows"></ngb-pagination> -->
+
+  </div>
+</div>
+

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProviderInfo } from '../../../models/entitys/provider';
 import { updateProviderRequest } from '../../../models/request/updateproviderrequest';
 import { ProviderService } from '../../../services/provider.service';
+import * as Feather from 'feather-icons';
 
 @Component({
   selector: 'app-update-provider',
@@ -23,6 +24,7 @@ export class UpdateProviderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    Feather.replace();
     this._route.queryParams.subscribe((params) => {
       if (params.provider) {
         this.provider =JSON.parse(params.provider) as ProviderInfo;

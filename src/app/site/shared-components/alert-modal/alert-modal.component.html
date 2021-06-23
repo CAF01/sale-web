@@ -73,5 +73,22 @@
         </button>
       </div>
   </div>
+
+<!-- INFORMACIÓN -->
+  <div *ngIf="numModal==2">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+      </div>
+      <div class="modal-body" style="font-size: large;">{{message}}</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="modal.close(true)"
+        >
+          Cerrar
+        </button>
+      </div>
+  </div>
   
 

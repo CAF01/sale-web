@@ -48,20 +48,17 @@
                     </a>
 
                     <div class="collapse" id="collapseAdmin" data-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link">
-                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
-                                Agregar nuevo
-                            </a>
 
-                            <a class="nav-link">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" [routerLink]="['/home/clients','list']" routerLinkActive="active">
                                 <div class="nav-link-icon"><i data-feather="book-open"></i></div>
                                 Lista
                             </a>
 
-                            <a class="nav-link">
-                                <div class="nav-link-icon"><i data-feather="edit"></i></div>
-                                Actualizar registros
+
+                            <a class="nav-link" [routerLink]="['/home/clients','insert-client']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
+                                Agregar nuevo
                             </a>
 
                         </nav>
@@ -76,7 +73,12 @@
 
                     <div class="collapse" id="collapseprod" data-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link">
+                            <a class="nav-link" [routerLink]="['/home/products','new-product']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="plus-circle"></i></div>
+                                Agregar Nuevo 
+                            </a>
+
+                            <a class="nav-link" [routerLink]="['/home/products','list']" routerLinkActive="active">
                                 <div class="nav-link-icon"><i data-feather="list"></i></div>
                                 Lista
                             </a>
@@ -84,11 +86,6 @@
                             <a class="nav-link">
                                 <div class="nav-link-icon"><i data-feather="archive"></i></div>
                                 Inventario
-                            </a>
-
-                            <a class="nav-link">
-                                <div class="nav-link-icon"><i data-feather="plus-circle"></i></div>
-                                Agregar Nuevo 
                             </a>
 
                         </nav>
@@ -143,6 +140,47 @@
 
                         </nav>
                     </div>
+
+
+                    <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseCatalog"
+                        aria-expanded="false" aria-controls="collapseCatalog">
+                        <div class="nav-link-icon"><i data-feather="paperclip"></i></div>
+                        Catálogos
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+
+                    <div class="collapse" id="collapseCatalog" data-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+        
+
+                            <a class="nav-link" [routerLink]="[ '/home/catalogs','brands']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="tag"></i></div>
+                                Marcas
+                            </a>
+
+                            <a class="nav-link"  [routerLink]="[ '/home/catalogs/','categories']" routerLinkActive="active" >
+                                <div class="nav-link-icon"><i data-feather="package"></i></div>
+                                Categorias
+                            </a>
+
+                            <a class="nav-link"  [routerLink]="[ '/home/catalogs/','paymentmethods']" routerLinkActive="active" >
+                                <div class="nav-link-icon"><i data-feather="credit-card"></i></div>
+                                Métodos de pago
+                            </a>
+
+                            <a class="nav-link"  [routerLink]="[ '/home/users/','new-user']" routerLinkActive="active" >
+                                <div class="nav-link-icon"><i data-feather="trending-down"></i></div>
+                                Razones de devolución cliente
+                            </a>
+
+                            <a class="nav-link"  [routerLink]="[ '/home/users/','new-user']" routerLinkActive="active" >
+                                <div class="nav-link-icon"><i data-feather="thumbs-down"></i></div>
+                                Razones de devolución proveedor
+                            </a>
+
+                        </nav>
+                    </div>
+
 
 
 

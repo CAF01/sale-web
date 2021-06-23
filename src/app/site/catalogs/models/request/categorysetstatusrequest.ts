@@ -1,4 +1,4 @@
-export interface categorySetStatusRequest {
+export class categorySetStatusRequest {
     status: boolean;
     categoryID: number;
 }

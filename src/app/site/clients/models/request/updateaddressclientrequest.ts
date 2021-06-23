@@ -1,4 +1,4 @@
-export interface updateAddressClientRequest {
+export class updateAddressClientRequest {
     country: string;
     state: string;
     city: string;

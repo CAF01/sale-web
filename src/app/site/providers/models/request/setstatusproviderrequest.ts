@@ -1,4 +1,4 @@
-export interface setStatusProviderRequest {
+export class setStatusProviderRequest {
     providerID: number;
     status: boolean;
 }

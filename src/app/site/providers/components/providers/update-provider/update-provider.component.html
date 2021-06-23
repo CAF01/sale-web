@@ -1,5 +1,5 @@
 <header
-  class="page-header page-header-dark bg-orange pb-3"
+  class="page-header page-header-dark bg-gradient-primary-to-secondary  pb-3"
 >
   <div class="container-xl px-4">
     <div class="page-header-content pt-4">
@@ -25,7 +25,7 @@
                     <form [formGroup]="providerForm">
                         <div class="row gx-3">
                             <div class="mb-3 col-md-6">
-                                <label class="small mb-1" for="CompanyName">Nombre de la empresa</label>
+                                <label class="medium mb-1 text-blue" for="CompanyName">Nombre de la empresa</label>
                                 <input class="form-control" id="CompanyName"  formControlName="companyName" type="text" placeholder="Grupo FEMSA"/>
                                 <app-field-error-display
                                 [displayError]="validationInput('companyName')" 
@@ -33,7 +33,7 @@
                                 </app-field-error-display>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label class="small mb-1" for="RFC">RFC</label>
+                                <label class="medium mb-1 text-blue" for="RFC">RFC</label>
                                 <input class="form-control" id="RFC" formControlName="RFC" type="text" placeholder="CUPU800825569" maxlength="13"/>   
                                 <app-field-error-display
                                 [displayError]="validationInput('RFC')" 
@@ -43,7 +43,7 @@
                   
                         </div>
                         <div class="mb-3">
-                            <label class="small mb-1" for="email">Correo electrónico</label>
+                            <label class="medium mb-1 text-blue" for="email">Correo electrónico</label>
                             <input class="form-control" id="email" type="email" formControlName="email" placeholder="microsoft@google.com" />
                             <app-field-error-display
                             [displayError]="validationInput('email')" 
@@ -52,7 +52,7 @@
                         </div>
                         <div class="row gx-3">
                             <div class="mb-3 col-md-6">
-                                <label class="small mb-1" for="Contactname">Nombre de contacto</label>
+                                <label class="medium mb-1 text-blue" for="Contactname">Nombre de contacto</label>
                                 <input class="form-control" id="Contactname" type="text" formControlName="contactName" placeholder="Julión Alvarez" />
                                 <app-field-error-display
                                 [displayError]="validationInput('contactName')" 
@@ -60,7 +60,7 @@
                                 </app-field-error-display>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label class="small mb-1" for="phone">Teléfono de contacto</label>
+                                <label class="medium mb-1 text-blue" for="phone">Teléfono de contacto</label>
                                 <input class="form-control" id="phone" type="tel" formControlName="phone" placeholder="2228495312" maxlength="10" />
                                 <app-field-error-display
                                 [displayError]="validationInput('phone')" 
@@ -69,13 +69,13 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="small mb-2" for="notes">Notas (información adicional)</label>
+                            <label class="medium mb-2 text-blue" for="notes">Notas (información adicional)</label>
                             <input class="form-control" id="notes" type="text" formControlName="notes" maxlength="100" />
                         </div>
                         <hr class="my-4" />
                         <div class="d-flex justify-content-between">
-                            <button class="btn btn-success" type="button" [routerLink]="['/home/providers','list']">Cancelar edición</button>   
-                            <button class="btn btn-outline-indigo" type="button" (click)="onSubmit()">Guardar</button>
+                            <button class="btn btn-danger" type="button" [routerLink]="['/home/providers','list']">Cancelar</button>   
+                            <button class="btn btn-primary" type="button" (click)="onSubmit()">Guardar</button>
                         </div>
                     </form>
                 </div>

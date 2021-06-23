@@ -29,7 +29,7 @@
                     <form [formGroup]="concentratedForm">
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
-                                <label class="small mb-1" for="firstName">Nombre</label>
+                                <label class="medium mb-1 text-blue" for="firstName">Nombre</label>
                                 <input class="form-control" id="firstName"  formControlName="firstName" type="text" placeholder="Escribe tu nombre"/>
                                 <app-field-error-display *ngIf="!formSubmitAttempt"
                                 [displayError]="validationInput('firstName')" 
@@ -37,7 +37,7 @@
                                 </app-field-error-display>
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="lastName">Apellido</label>
+                                <label class="medium mb-1 text-blue" for="lastName">Apellido</label>
                                 <input class="form-control" id="lastName"  formControlName="lastName" type="text" placeholder="Escribe tu apellido" />
                                 <app-field-error-display *ngIf="!formSubmitAttempt"
                                     [displayError]="validationInput('lastName')" 
@@ -47,7 +47,7 @@
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
-                                <label class="small mb-1" for="email">Correo electrónico</label>
+                                <label class="medium mb-1 text-blue" for="email">Correo electrónico</label>
                                 <input class="form-control" id="email" formControlName="email" type="email" placeholder="Escribe tu correo electrónico" />
                                 <app-field-error-display *ngIf="!formSubmitAttempt"
                                     [displayError]="validationInput('email')" 
@@ -55,7 +55,7 @@
                                 </app-field-error-display>
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="phone">Número de teléfono</label>
+                                <label class="medium mb-1 text-blue" for="phone">Número de teléfono</label>
                                 <input class="form-control" id="phone" formControlName="phone" maxlength="10" type="tel" placeholder="Escribe tu número de teléfono"/>
                                 <app-field-error-display *ngIf="!formSubmitAttempt"
                                     [displayError]="validationInput('phone')" 
@@ -67,7 +67,7 @@
                         <div class="disableDivAddress" [ngClass]="{'enabledDiv':modAddress}">
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="lineAddress1">Linea de dirección 1</label>
+                                    <label class="medium mb-1 text-blue" for="lineAddress1">Linea de dirección 1</label>
                                     <input class="form-control" id="lineAddress1" formControlName="lineAddress1" type="text" placeholder="Calle Margaritas, Num.32"/>
                                     <app-field-error-display *ngIf="(!formSubmitAttempt && modAddress) || hasAddress "
                                     [displayError]="validationInput('lineAddress1')" 
@@ -75,7 +75,7 @@
                                     </app-field-error-display>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="lineAddress2">Linea de dirección 2</label>
+                                    <label class="medium mb-1 text-blue" for="lineAddress2">Linea de dirección 2</label>
                                     <input class="form-control" id="lineAddress2" formControlName="lineAddress2" type="text" placeholder="Col. Benito Juarez, Puebla" />
                                     <app-field-error-display *ngIf="(!formSubmitAttempt && modAddress) || hasAddress "
                                     [displayError]="validationInput('lineAddress2')" 
@@ -85,7 +85,7 @@
                             </div>
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputCountry">País</label>
+                                    <label class="medium mb-1 text-blue" for="inputCountry">País</label>
                                             <select id="country" name="country" class="form-control" formControlName="country">
                                                 <option value="0">--SELECCIONAR--</option>
                                                 <option value="Afghanistan">Afghanistan</option>
@@ -163,7 +163,7 @@
                                             </app-field-error-display>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="state">Estado</label>
+                                    <label class="medium mb-1 text-blue" for="state">Estado</label>
                                     <input class="form-control" id="state" formControlName="state" type="text" placeholder="Ingresa tu estado" />
                                     <app-field-error-display *ngIf="(!formSubmitAttempt && modAddress) || hasAddress "
                                         [displayError]="validationInput('state')" 
@@ -173,7 +173,7 @@
                             </div>
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="city">Ciudad</label>
+                                    <label class="medium mb-1 text-blue" for="city">Ciudad</label>
                                     <input class="form-control" id="city" formControlName="city" type="text" placeholder="Igresa tu ciudad"/>
                                     <app-field-error-display *ngIf="(!formSubmitAttempt && modAddress) || hasAddress "
                                         [displayError]="validationInput('city')" 
@@ -181,7 +181,7 @@
                                     </app-field-error-display>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="postalCode">Código postal</label>
+                                    <label class="medium mb-1 text-blue" for="postalCode">Código postal</label>
                                     <input class="form-control" id="postalCode" formControlName="postalCode" type="number" name="postalCode"/>
                                     <app-field-error-display *ngIf="(!formSubmitAttempt && modAddress) || hasAddress "
                                         [displayError]="validationInput('postalCode')" 
@@ -191,9 +191,10 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <button (click)="setFlagAddress()" class="btn btn-success" type="button" *ngIf="!modAddress">Modificar dirección</button>
-                            <button (click)="setFlagAddress()" class="btn btn-warning" type="button" *ngIf="modAddress">Cancelar dirección</button>     
-                            <button (click)="onSubmit()" class="btn btn-outline-indigo" type="button">Guardar</button>
+                            <button (click)="back()" class="btn btn-danger" type="button" >Cancelar</button>
+                            <button (click)="setFlagAddress()" class="btn btn-warning" type="button" *ngIf="!modAddress">Modificar dirección</button>
+                            <button (click)="setFlagAddress()" class="btn btn-success" type="button" *ngIf="modAddress">Cancelar dirección</button>     
+                            <button (click)="onSubmit()" class="btn btn-primary" type="button">Guardar</button>
                         </div>
                     </form>
                 </div>

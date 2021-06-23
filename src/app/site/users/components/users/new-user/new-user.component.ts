@@ -11,6 +11,7 @@ import { UserService } from '../../../services/user.service';
 import {AnimationOptions} from 'ngx-lottie';
 import { AnimationItem } from 'lottie-web';
 import { NgZone } from '@angular/core';
+import * as Feather from 'feather-icons';
 
 @Component({
   selector: 'app-new-user',
@@ -18,11 +19,11 @@ import { NgZone } from '@angular/core';
   styleUrls: ['./new-user.component.scss'],
 })
 export class NewUserComponent implements OnInit {
-  private animation : AnimationItem;
-  options:AnimationOptions = 
-  {
-    path:'assets/animations/1.json'
-  }
+  // private animation : AnimationItem;
+  // options:AnimationOptions = 
+  // {
+  //   path:'assets/animations/1.json'
+  // }
   telephone:string;
   formSubmitAttempt: boolean;
   flag?: boolean;
@@ -38,10 +39,11 @@ export class NewUserComponent implements OnInit {
 
   redirectHelper = RedirectHelper;
   validateForm = ValidateForm;
-
-  constructor(private ngZone:NgZone,private _formBuilder: FormBuilder,private usersService: UserService,private toastr: ToastrService) {}
+  // private ngZone:NgZone
+  constructor(private _formBuilder: FormBuilder,private usersService: UserService,private toastr: ToastrService) {}
 
   ngOnInit(): void {
+    Feather.replace();
     this.SetValidatorsUser();
     this.SetValidatorsAddress();
     this.setTrueFlags();

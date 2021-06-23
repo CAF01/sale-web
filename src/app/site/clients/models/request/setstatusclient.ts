@@ -1,4 +1,4 @@
-export interface setStatusClientRequest {
+export class setStatusClientRequest {
     status: boolean;
     clientID: number;
 }

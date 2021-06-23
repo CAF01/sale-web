@@ -1,0 +1,169 @@
+<header
+  class="page-header page-header-dark bg-gradient-primary-to-secondary pb-3"
+>
+  <div class="container-xl px-4">
+    <div class="page-header-content pt-4">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-auto mt-4">
+          <h1 class="page-header-title">
+            <div class="page-header-icon"><i data-feather="tv"></i></div>
+            Añadir nuevo producto
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main page content-->
+<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Imagen de producto</div>
+                <div class="card-body text-center">
+
+                    <img class="img-account-profile rounded-circle mb-2" src='assets/img/illustrations/unknown.png' alt="" />
+                  
+                    <!-- Profile picture upload button-->
+                    <!-- <input type="file" class="custom-file-input" id="inputGroupFile01"
+                    aria-describedby="inputGroupFileAddon01" (change)="uploadFile($event.target.files)"
+                    accept="image/png, image/jpeg"> -->
+
+                    <app-file-upload (onSelectFile)="keepFile($event)" MaxSize="5000000" Accept="'image/png, image/jpeg'"></app-file-upload>
+
+
+                    
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Detalles del producto</div>
+                <div class="card-body">
+                    <form [formGroup]="productForm">
+                        <!-- Form Group (username)-->
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="medium mb-1 text-blue" for="ProductName">Nombre de producto <span style="color:red">*</span></label>
+                                <input class="form-control" id="ProductName" formControlName="ProductName" type="text" />
+                                <app-field-error-display *ngIf="!ValidatedForm"
+                                    [displayError]="validationInput('ProductName')" 
+                                    errorMsg="Completa este campo">
+                                </app-field-error-display>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="medium mb-1 text-blue" for="model">Modelo</label>
+                                <input class="form-control" id="model" type="text" maxlength="150" formControlName="Model" />
+                                <app-field-error-display *ngIf="!ValidatedForm"
+                                    [displayError]="validationInput('Model')" 
+                                    errorMsg="Completa este campo">
+                                </app-field-error-display>
+                            </div>
+                        </div>  
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-9">
+                                <label class="medium mb-1 text-blue" for="Description">Descripción <span style="color:red">*</span></label>
+                                <input class="form-control" id="Description" type="text" formControlName="Description"/>
+                                <app-field-error-display *ngIf="!ValidatedForm"
+                                    [displayError]="validationInput('Description')" 
+                                    errorMsg="Completa este campo">
+                                </app-field-error-display>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="medium mb-1 text-blue" for="code">Código <span style="color:red">*</span></label>
+                                <input class="form-control" id="code" type="text" formControlName="Code"/>
+                                <app-field-error-display *ngIf="!ValidatedForm"
+                                    [displayError]="validationInput('Code')" 
+                                    errorMsg="Completa este campo">
+                                </app-field-error-display>
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3" *ngIf="categories || brands">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-6">
+                                <label class="medium mb-1 text-blue" for="category">Categoria <span style="color:red"> * </span><i class="fas fa-plus-square"></i></label>
+                                <select id="category" name="category" class="form-control" formControlName="CategoryID">
+                                    <option value="{{category.categoryID}}" *ngFor="let category of categories?.data">{{category.description}}</option>
+                                </select>
+                                <app-field-error-display *ngIf="!ValidatedForm"
+                                [displayError]="validationInput('CategoryID')" 
+                                errorMsg="Elige una opción">
+                                </app-field-error-display>
+                                <!-- <input type="text" *ngIf="!categories" class="form-control" placeholder="Escribe la categoria"> -->
+                            </div>
+                            <!-- Form Group (location)-->
+                            <div class="col-md-6">
+                                <label class="medium mb-1 text-blue" for="brand">Marca <span style="color:red"> * </span></label>
+                                <select id="brand" name="brand" class="form-control" formControlName="BrandID">
+                                  
+                                        <option *ngFor="let brand of brands?.data"  value="{{brand.brandID}}">
+                                          <p>  {{brand?.name}}</p>
+                                        </option>
+                                  
+                                </select>
+                                <app-field-error-display *ngIf="!ValidatedForm"
+                                    [displayError]="validationInput('BrandID')" 
+                                    errorMsg="Elige una opción">
+                                </app-field-error-display>
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-4">
+                                <label class="medium mb-1 text-blue" for="NormalPrice">Precio general <span style="color:red">*</span></label>
+                                <input currencyMask formControlName="NormalPrice" class="form-control" id="NormalPrice" [options]="{ prefix: 'MX$ ', thousands: ',', decimal: '.' }"/>
+                                <app-field-error-display *ngIf="!ValidatedForm"
+                                    [displayError]="validationInput('NormalPrice')" 
+                                    errorMsg="Ingresa un monto válido">
+                                </app-field-error-display>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="medium mb-1 text-blue" for="PricePerWholeSale">Precio de mayoreo</label>
+                                <input currencyMask formControlName="PricePerWholeSale" class="form-control" id="PricePerWholeSale" [options]="{ prefix: 'MX$ ', thousands: ',', decimal: '.' }"/>
+                                <app-field-error-display *ngIf="!ValidatedForm"
+                                    [displayError]="validationInput('PricePerWholeSale')" 
+                                    errorMsg="Ingresa un monto válido">
+                                </app-field-error-display>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="medium mb-1 text-blue" for="quantity">C. mínima para mayoreo</label>
+                                <input class="form-control" id="quantity" type="number" formControlName="MinForWholeSale"/>
+                                <app-field-error-display *ngIf="!ValidatedForm"
+                                    [displayError]="validationInput('MinForWholeSale')" 
+                                    errorMsg="Ingresa una cantidad válida">
+                                </app-field-error-display>
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-4">
+                                <label class="medium mb-1 text-blue" for="minstock">Cantidad mínima en stock</label>
+                                <input class="form-control" id="minstock" type="number" formControlName="MinStock"/>
+                                <app-field-error-display *ngIf="!ValidatedForm"
+                                    [displayError]="validationInput('MinStock')" 
+                                    errorMsg="Ingresa una cantidad válida">
+                            </app-field-error-display>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="medium mb-1 text-blue" for="maxstock">Cantidad máxima en stock</label>
+                                <input class="form-control" id="maxstock" type="number" name="maxstock" formControlName="MaxStock"/>
+                                <app-field-error-display *ngIf="!ValidatedForm"
+                                    [displayError]="validationInput('MaxStock')" 
+                                    errorMsg="Ingresa una cantidad válida">
+                                </app-field-error-display>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary" type="button" [disabled]="!categories || !brands" (click)="onSubmit()">Agregar</button>   
+                        </div>  
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

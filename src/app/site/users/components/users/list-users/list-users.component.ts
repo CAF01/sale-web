@@ -9,6 +9,7 @@ import { userSetStatRequest } from '../../../models/request/usersetstatrequest';
 import { ToastrService } from 'ngx-toastr';
 import { UserAddressInfo } from '../../../models/entitys/user-address-info';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as Feather from 'feather-icons';
 import { AlertModalComponent } from 'src/app/site/shared-components/alert-modal/alert-modal.component';
 
 @Component({
@@ -34,6 +35,8 @@ export class ListUsersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    Feather.replace();
+
     this.getUsers();
 
     moment().locale('es');
@@ -143,11 +146,12 @@ export class ListUsersComponent implements OnInit {
       .subscribe((response) => {
         this.users = response;
       });
+
+
   }
 
   SetStat(value : number)
   {
-    console.log('hola');
     if (value==1)
       this.statusUsers=null;
     if(value==2)

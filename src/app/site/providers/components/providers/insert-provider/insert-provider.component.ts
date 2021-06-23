@@ -6,6 +6,7 @@ import { SubstringHelper } from 'src/app/site/core/helpers/substring-helper';
 import { ValidateForm } from 'src/app/site/core/helpers/validate-formfields-helper';
 import { insertProviderRequest } from '../../../models/request/insertproviderrequest';
 import { ProviderService } from '../../../services/provider.service';
+import * as Feather from 'feather-icons';
 
 @Component({
   selector: 'app-insert-provider',
@@ -27,6 +28,7 @@ export class InsertProviderComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder, private providerService : ProviderService,private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    Feather.replace();
     this.formSubmitAttempt=true;
     this.SetValidatorCompany();
   }
@@ -89,7 +91,9 @@ export class InsertProviderComponent implements OnInit {
         Validators.maxLength(100),
       ]),
       contactName: new FormControl('', [
-        Validators.required
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(75)
       ]),
       notes: new FormControl('',[])
     });
