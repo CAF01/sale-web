@@ -17,6 +17,10 @@ import { AlertModalComponent } from 'src/app/site/shared-components/alert-modal/
 })
 export class GetClientsComponent implements OnInit {
   clients : PaginationListResponse<client> | undefined;
+  page: number = 1;
+
+  statusClients?: boolean = true;
+
   constructor(private clientService : ClientService,
     private router: Router,
     private modalService: NgbModal,
@@ -49,6 +53,14 @@ export class GetClientsComponent implements OnInit {
       queryParams: { client: JSON.stringify(client) },
       skipLocationChange: true, //skip location para ocultar el json de la URL
     });
+  }
+
+  pageChange(page: any) {
+    this.clientService
+      .getClientsByPage((page - 1) * this.clients.pageSize)
+      .subscribe((response) => {
+        this.clients = response;
+      });
   }
 
 
@@ -115,5 +127,15 @@ export class GetClientsComponent implements OnInit {
       modal.componentInstance.userAddress = client;
     }
     modal.result;
+  }
+
+  SetStat(value :number)
+  {
+    if (value==1)
+      this.statusClients=null;
+    if(value==2)
+      this.statusClients=true;
+    if(value==3)
+      this.statusClients=false;
   }
 }

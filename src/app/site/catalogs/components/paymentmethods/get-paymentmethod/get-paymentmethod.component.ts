@@ -18,7 +18,7 @@ import { UpdatePaymentmethodComponent } from '../update-paymentmethod/update-pay
   styleUrls: ['./get-paymentmethod.component.scss']
 })
 export class GetPaymentmethodComponent implements OnInit {
-  paymentmethodlist: Array<PaymentMethodInfo>;
+  paymentmethodlist: PaymentMethodInfo[];
   formSubmitAttempt: boolean;
 
   paymentForm: FormGroup;
@@ -92,21 +92,9 @@ export class GetPaymentmethodComponent implements OnInit {
       .catch((err) => {});
   }
 
-  getPayments() {
-    this.catalogService.getPaymentMethods().subscribe(
-      (request) => {
-        var min = 0;
-        this.paymentmethodlist = new Array<PaymentMethodInfo>();
-        while(request[min])
-        {
-          this.paymentmethodlist.push(request[min]);
-          min++;
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  async getPayments() {
+    var response = await this.catalogService.getPaymentMethods().toPromise();
+    this.paymentmethodlist= response;
   }
 
   validationInput(field: string): boolean {

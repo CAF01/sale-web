@@ -9,4 +9,5 @@ export class User extends UserAddressInfo {
   registerDate: Date;
   changePassword: boolean;
   status: boolean;
+  token:string;
 }

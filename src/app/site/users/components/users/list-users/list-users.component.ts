@@ -11,6 +11,8 @@ import { UserAddressInfo } from '../../../models/entitys/user-address-info';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as Feather from 'feather-icons';
 import { AlertModalComponent } from 'src/app/site/shared-components/alert-modal/alert-modal.component';
+import { userInsertRequest } from '../../../models/request/userinsertrequest';
+import { UserLogin } from '../../../models/request/user-login';
 
 @Component({
   selector: 'app-list-users',
@@ -25,7 +27,7 @@ export class ListUsersComponent implements OnInit {
 
   page: number = 1;
 
-  statusUsers?: boolean = undefined;
+  statusUsers?: boolean = true;
 
   constructor(
     private usersService: UserService,
@@ -38,6 +40,10 @@ export class ListUsersComponent implements OnInit {
     Feather.replace();
 
     this.getUsers();
+
+    // this.usersService
+    //   .Login(new UserLogin("evanalcantaraf@gmail.com","Abcd1234"))
+    //   .subscribe((response) => console.log(response));
 
     moment().locale('es');
   }
@@ -91,10 +97,9 @@ export class ListUsersComponent implements OnInit {
         if (user.status)
           this.showSuccess(
             '¡Restauración realizada!',
-            'Usuario restaurado correctamente',
-            
+            'Usuario restaurado correctamente'
           );
-        else this.showSuccess('¡Adios!','Usuario eliminado correctamente');
+        else this.showSuccess('¡Adios!', 'Usuario eliminado correctamente');
       },
       (error) => console.log(error)
     );
@@ -146,17 +151,11 @@ export class ListUsersComponent implements OnInit {
       .subscribe((response) => {
         this.users = response;
       });
-
-
   }
 
-  SetStat(value : number)
-  {
-    if (value==1)
-      this.statusUsers=null;
-    if(value==2)
-      this.statusUsers=true;
-    if(value==3)
-      this.statusUsers=false;
+  SetStat(value: number) {
+    if (value == 1) this.statusUsers = null;
+    if (value == 2) this.statusUsers = true;
+    if (value == 3) this.statusUsers = false;
   }
 }

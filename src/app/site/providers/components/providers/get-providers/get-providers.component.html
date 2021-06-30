@@ -1,114 +1,114 @@
-<header
-  class="page-header page-header-dark bg-gradient-primary-to-secondary  pb-3"
->
-  <div class="container-xl px-4">
-    <div class="page-header-content pt-4">
-      <div class="row align-items-center justify-content-between">
-        <div class="col-auto mt-4">
-          <h1 class="page-header-title">
-            <div class="page-header-icon"><i data-feather="list"></i></div>
-            Proveedores
-          </h1>
-          <div class="page-header-subtitle">
-            Gestiona a todos tus proveedores de manera sencilla.
-          </div>
-
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-3">
+    <div class="container-xl px-4">
+        <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-auto mt-4">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        Proveedores
+                    </h1>
+                    <div class="page-header-subtitle">
+                        Gestiona a todos tus proveedores de manera sencilla.
+                    </div>
+                </div>
+                <div class="dropdown col-auto mt-8">
+                    <button class="btn btn-warning dropdown-toggle" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Seleccionar estado de usuarios
+          </button>
+                    <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
+                        <a class="dropdown-item" (click)="SetStat(1)">Todos</a>
+                        <a class="dropdown-item" (click)="SetStat(2)">Activos</a>
+                        <a class="dropdown-item" (click)="SetStat(3)">Inactivos</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="dropdown col-auto mt-8">
-          <button class="btn btn-warning dropdown-toggle" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar estado de usuarios</button>
-          <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
-            <a class="dropdown-item" (click)="SetStat(1)">Todos</a>
-            <a class="dropdown-item" (click)="SetStat(2)">Activos</a>
-            <a class="dropdown-item" (click)="SetStat(3)">Inactivos</a>
-          </div>
-        </div>
-        
-
-      </div>
     </div>
-  </div>
-  
 </header>
-<div class="card mb-4">
-  <div class="card-header">
-    <span style="float: right"
-      ><a [routerLink]="['/home/providers/new-provider']"
-        ><i data-feather="plus-circle" style="width: 50px; height: 45px"></i></a
-    ></span>
-  </div>
-  <div class="card-body">
-    <table id="datatablesSimple" class="table table-hover">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Nombre de empresa</th>
-          <th>RFC</th>
-          <th>Correo electrónico</th>
-          <th>Fecha de registro</th>
-          <th>Nombre de contacto</th>
-          <th>Teléfono de contacto</th>
-          <th>Status</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tfoot>
-        <tr>
-            <th>#</th>
-            <th>Nombre de empresa</th>
-            <th>RFC</th>
-            <th>Correo electrónico</th>
-            <th>Fecha de registro</th>
-            <th>Nombre de contacto</th>
-            <th>Teléfono de contacto</th>
-            <th>Status</th>
-            <th>Acciones</th>
-        </tr>
-      </tfoot>
-      <tbody *ngIf="providers">
-          <tr *ngFor="let provider of providers.data; let i = index;">
-              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{provider.providerID}}</td>  
-              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{provider.companyName}}</td>  
-              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{provider.rfc}}</td>  
-              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{provider.email}}</td>
-              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{ formatDate(provider.registerDate) | amDateFormat: "DD" }} de
-                {{
-                  formatDate(provider.registerDate)
-                    | amLocale: "es"
-                    | amDateFormat: "MMMM YYYY"
-                }}</td> 
-              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{provider.contactName}}</td> 
-              <td *ngIf="provider.status==viewOptions || viewOptions==undefined">{{provider.phone}}</td>   
-              <td *ngIf="provider.status && (provider.status==viewOptions || viewOptions==undefined)">
-                <div class="badge bg-success text-white rounded-pill">Activo</div>
-              </td>
-              <td *ngIf="!provider.status && (provider.status==viewOptions || viewOptions==undefined)">
-                <div class="badge bg-danger text-white rounded-pill">Inactivo</div>
-              </td> 
-              <td class="d-flex justify-content-between" *ngIf="provider.status==viewOptions || viewOptions==undefined">
-                <a href="javascript:void(0);" (click)="edit(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar información">
-                  <i class="far fa-edit"></i>
-                </a>
-                <a href="javascript:void(0);" (click)="showNotesProvider(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Notas del proveedor" *ngIf="provider.status==viewOptions || viewOptions==undefined">
-                  <i class="fas fa-book bookIcon"></i>
-                </a>
-                <a href="javascript:void(0);" *ngIf="provider.status && (provider.status==viewOptions || viewOptions==undefined)" (click)="deleteProvider(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Borrar proveedor" >
-                  <i class="fas fa-trash-alt redIcon"></i>
-                </a>
-                <a href="javascript:void(0);" *ngIf="!provider.status && (provider.status==viewOptions || viewOptions==undefined)" (click)="restoreProvider(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Restaurar proveedor">
-                  <i class="fas fa-undo greenIcon"></i>
-                </a>
-              </td>
-          </tr>
-      </tbody>
-    </table>
-
-    <ngb-pagination
-    *ngIf="providers?.totalPages > 1"
-     [(page)]="page"
-     (pageChange)="pageChange($event)"
-     [pageSize]="providers?.pageSize"
-     [collectionSize]="providers?.totalRows"></ngb-pagination>
-
-  </div>
+<div class="card">
+    <div class="card-header">
+        <span style="float: right"><a [routerLink]="['/home/providers/new-provider']"
+><i data-feather="plus-circle" style="width: 50px; height: 45px"></i></a
+></span>
+    </div>
 </div>
+<div>
+    <div>
+        <div class="card-body">
+            <div class="
+              dataTable-wrapper dataTable-loading
+              no-footer
+              sortable
+              searchable
+              fixed-columns
+            ">
+                <div class="dataTable-container">
+                    <table id="datatablesSimple" class="dataTable-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre de empresa</th>
+                                <th>RFC</th>
+                                <th>Correo electrónico</th>
+                                <th>Fecha de registro</th>
+                                <th>Nombre de contacto</th>
+                                <th>Teléfono de contacto</th>
+                                <th>Status</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre de empresa</th>
+                                <th>RFC</th>
+                                <th>Correo electrónico</th>
+                                <th>Fecha de registro</th>
+                                <th>Nombre de contacto</th>
+                                <th>Teléfono de contacto</th>
+                                <th>Status</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </tfoot>
+                        <tbody *ngIf="providers">
+                            <ng-container *ngFor="let provider of providers.data; let i = index">
+                                <tr *ngIf="provider.status == viewOptions || viewOptions == null">
+                                    <td>{{ provider.providerID }}</td>
+                                    <td>{{ provider.companyName }}</td>
+                                    <td>{{ provider.rfc }}</td>
+                                    <td>{{ provider.email }}</td>
+                                    <td>{{ formatDate(provider.registerDate) | amDateFormat: "DD" }} de {{ formatDate(provider.registerDate) | amLocale: "es" | amDateFormat: "MMMM YYYY" }}</td>
+                                    <td>{{ provider.contactName }}</td>
+                                    <td>{{ provider.phone }}</td>
+                                    <td *ngIf="provider.status">
+                                        <div class="badge bg-success text-white rounded-pill">Activo</div>
+                                    </td>
+                                    <td *ngIf="!provider.status">
+                                        <div class="badge bg-danger text-white rounded-pill">Inactivo</div>
+                                    </td>
+                                    <td class="d-flex justify-content-between">
+                                        <a href="javascript:void(0);" (click)="edit(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar información">
+                                            <i class="far fa-edit"></i>
+                                        </a>
+                                        <a href="javascript:void(0);" (click)="showNotesProvider(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Notas del proveedor">
+                                            <i class="fas fa-book bookIcon"></i>
+                                        </a>
+                                        <a href="javascript:void(0);" *ngIf="provider.status" (click)="deleteProvider(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Borrar proveedor">
+                                            <i class="fas fa-trash-alt redIcon"></i>
+                                        </a>
+                                        <a href="javascript:void(0);" *ngIf="!provider.status" (click)="restoreProvider(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Restaurar proveedor">
+                                            <i class="fas fa-undo greenIcon"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </ng-container>
 
+                        </tbody>
+                    </table>
+
+                    <ngb-pagination *ngIf="providers?.totalPages > 1" [(page)]="page" (pageChange)="pageChange($event)" [pageSize]="providers?.pageSize" [collectionSize]="providers?.totalRows"></ngb-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

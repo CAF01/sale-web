@@ -1,53 +1,50 @@
 @import '~ngx-toastr/toastr';
-
-.disableDiv{
-    pointer-events:none;
+.disableDiv {
+    pointer-events: none;
     opacity: 0.2;
 }
-.clienteactivo
-{
+
+.clienteactivo {
     background-color: rgb(174, 230, 174);
     color: black;
-    font-size:medium;
+    font-size: medium;
 }
-.clienteinactivo
-{
+
+.clienteinactivo {
     background-color: rgb(230, 160, 160);
     color: black;
-    font-size:medium;
+    font-size: medium;
 }
-.enabledDiv{
-    pointer-events:all !important;
+
+.enabledDiv {
+    pointer-events: all !important;
     opacity: 1 !important;
 }
-.disableDivAddress{
-    pointer-events:none;
+
+.disableDivAddress {
+    pointer-events: none;
     opacity: 0.5;
 }
-.bookIcon
-{
-    color:rgba(131, 29, 29, 0.966);
+
+.bookIcon {
+    color: rgba(131, 29, 29, 0.966);
 }
 
-.redIcon
-{
-    color:red;
+.redIcon {
+    color: red;
 }
 
-.greenIcon
-{
-    color:green;
+.greenIcon {
+    color: green;
     font-size: medium;
     text-transform: uppercase;
 }
 
-.mapIcon
-{
-    color:rgb(34, 160, 233);
+.mapIcon {
+    color: rgb(34, 160, 233);
 }
 
-.hasNoMap
-{
+.hasNoMap {
     opacity: 0.3;
     color: rgb(158, 158, 158);
 }
@@ -58,9 +55,9 @@
     width: 100%;
     height: calc(1.5em + 0.75rem + 2px);
     margin-bottom: 0;
-  }
-  
-  .custom-file-input {
+}
+
+.custom-file-input {
     position: relative;
     z-index: 2;
     width: 100%;
@@ -68,20 +65,19 @@
     margin: 0;
     overflow: hidden;
     opacity: 0;
-  }
-  
-  .custom-file-input:focus ~ .custom-file-label {
+}
+
+.custom-file-input:focus~.custom-file-label {
     border-color: #006cdf;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-  }
-  
-  .custom-file-input[disabled] ~ .custom-file-label,
-  .custom-file-input:disabled ~ .custom-file-label {
-    background-color: #e9ecef;
-  }
+}
 
-  
-  .custom-file-label {
+.custom-file-input[disabled]~.custom-file-label,
+.custom-file-input:disabled~.custom-file-label {
+    background-color: #e9ecef;
+}
+
+.custom-file-label {
     position: absolute;
     top: 0;
     right: 0;
@@ -96,12 +92,9 @@
     background-color: #fff;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
-  }
-  
-
-  
+}
 
 
+/* Importing Bootstrap SCSS file.*/
 
-/* Importing Bootstrap SCSS file. */
-//@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';

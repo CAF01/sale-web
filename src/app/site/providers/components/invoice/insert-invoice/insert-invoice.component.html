@@ -1,1 +1,175 @@
-<p>insert-invoice works!</p>
+<div class="container-xl px-4 mt-4">
+    <form [formGroup]="invoiceForm">
+        <div class="card invoice">
+            <div class="card-header p-4 p-md-5 border-bottom-0 bg-gradient-primary-to-secondary text-white-50">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-12 col-lg-auto mb-5 mb-lg-0 text-center text-lg-start">
+                        <!-- Invoice branding-->
+                        <img class="invoice-brand-img rounded-circle mb-4" src="assets/img/demo/demo-logo.svg" alt="" />
+                        <div class="h2 text-white mb-0">Previsualización de recibo de compra</div>
+                    </div>
+                    <div class="col-12 col-lg-auto text-center text-lg-end">
+                        <!-- Invoice details-->
+                        <div class="h3 text-white">Factura de compra</div>
+                        #0000
+                        <br />
+                    </div>
+                    <div class="d-flex justify-content-end" *ngIf="!provSelected">
+                        <div class="col-md-3">
+                            <label class="medium mb-2 text-white d-flex justify-content-end" for="provider">Proveedor&nbsp;</label>
+                            <div class="d-flex justify-content-end col-md-12">
+                                <select id="provider" name="provider" class="form-control" formControlName="providerID">         
+                                    <option *ngFor="let provider of providers; let i = index;"  value="{{i}}">
+                                        <p>{{provider.companyName}}</p>
+                                    </option>
+                            </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-4 p-md-2">
+                <nav class="sidenav sidenav-light">
+                    <div class="sidenav-menu">
+                        <div class="nav">
+                            <div class="sidenav-menu-heading"><span><i class="fas fa-search"></i></span>&nbsp; Buscar productos por</div>
+                            <a class="nav-link col-md-1 text-blue" href="javascript:void(0);" (click)="searchByName()">
+                                <div class="nav-link-icon">
+                                    <i class="fas fa-font"></i>
+                                </div>
+                                Nombre
+                            </a>
+                            <a class="nav-link col-md-1 text-blue" href="javascript:void(0);" (click)="searchByCode()">
+                                <div class="nav-link-icon">
+                                    <i class="fas fa-barcode"></i>
+                                </div>
+                                Código
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+                <!-- <div class="d-flex justify-content-center">
+                    <div class="col-md-1">
+                        <a href="javascript:void(0);" style="font-size: 25px; color:indigo;" *ngIf="!isSearching" (click)="SetsearchStatus()">
+                            <i class="fas fa-search"></i>
+                        </a>
+                        <a href="javascript:void(0);" style="font-size: 25px; color:red;" *ngIf="isSearching" (click)="SetsearchStatus()">
+                            <i class="far fa-window-close"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-3" *ngIf="isSearching">por nombre de producto:
+                        <input type="text" class="form-control" placeholder="Nombre de producto">
+                        <a href="javascript:void(0);" class="d-flex justifiy-content-end" (click)="byname()">Buscar</a>
+                    </div>
+                    <div class="col-md-1" *ngIf="isSearching"></div>
+                    <div class="col-md-3" *ngIf="isSearching">por código:
+                        <input type="text" class="form-control" placeholder="Código">
+                        <a href="javascript:void(0);" class="d-flex justifiy-content-end" (click)="bycode()">Buscar</a>
+                    </div>
+                </div> -->
+                <div class="table-responsive">
+                    <table class="table table-borderless mb-0">
+                        <thead class="border-bottom">
+                            <tr class="small text-uppercase text-muted ">
+                                <th scope="col ">Producto adquirido</th>
+                                <th class="text-end" scope="col">Cantidad</th>
+                                <th class="text-end" scope="col">Precio U.</th>
+                                <th class="text-end" scope="col">Importe</th>
+                                <th class="text-end" scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-bottom">
+                                <td class="col-md-4 text-end fw-bold">
+                                    <div *ngIf="products">
+                                        <select id="product" name="product" class="form-control " formControlName="productID">         
+                                            <option *ngFor="let product of products; let i=index"  value="{{i}}">
+                                                <p>{{product.productName}} - {{product.model}}</p>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="col-md-1 text-end fw-bold">
+                                    <div class="">
+                                        <input currencyMask formControlName="quantity" class="form-control" id="quantity" [options]="{ allowNegative:false,align: 'center', max: '10000',precision:0, prefix: '' } " />
+                                    </div>
+                                </td>
+                                <td class="co-md-3 text-end fw-bold">
+                                    <div class="">
+                                        <input currencyMask formControlName="unitPrice" class="form-control" id="unitPrice" [options]="{ prefix: 'MX$ ', thousands: ',', decimal: '.', allowNegative:false,align: 'center', max: '100000.00' } " />
+                                    </div>
+                                </td>
+                                <td class="col-md-3 text-end fw-bold">
+                                    <div class="">
+                                        <input currencyMask formControlName="amount" class="form-control" id="amount" [options]="{ prefix: 'MX$ ', thousands: ',', decimal: '.', allowNegative:false,align: 'center', max: '1000000.00' } " [attr.disabled]="true" />
+                                    </div>
+                                </td>
+                                <td class="col-md-1 text-end fw-bold">
+                                    <div class="d-flex justify-content-center">
+                                        <!-- <a href="javascript:void(0);" (click)="calc()" [ngStyle]="{'font-size': '25px'}" data-bs-toggle="tooltip" data-bs-placement="left" title="Precio U. X Cantidad">
+                                            <i class="fas fa-calculator"></i>
+                                        </a> -->
+                                        <a href="javascript:void(0);" (click)="onSubmit()" [ngStyle]="{'font-size': '25px'}">
+                                            <i class="fas fa-plus"></i>
+                                        </a>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr class="border-bottom" *ngFor="let item of listContentInvoice; let i=index;">
+                                <td>
+                                    <div class="fw-bold ">{{item?.productName}} - {{item?.model}}</div>
+                                    <div class="small text-muted d-none d-md-block ">{{item?.description}}</div>
+                                </td>
+                                <td class="text-end fw-bold ">{{item?.quantity}}</td>
+                                <td class="text-end fw-bold ">${{item?.unitPrice}}</td>
+                                <td class="text-end fw-bold ">${{item?.amount}}</td>
+                                <td class="text-end fw-bold">
+                                    <div class="d-flex justify-content-center">
+                                        <a href="javascript:void(0);" class="redIcon" [ngStyle]="{'font-size': '20px'}" (click)="delItem(i)">
+                                            <i class="fas fa-minus-circle"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br><br>
+                    <div class="col-lx-12">
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-danger" type="reset" *ngIf="provSelected && submitAproduct && longProds>=1" (click)="cancel()">Cancelar</button>
+                            <button class="btn btn-pink" type="reset" *ngIf="BackuplistContentInvoice && BackupProvID" (click)="restore()">Deshacer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer p-4 p-lg-5 border-top-0 ">
+                <div class="row ">
+                    <!-- <div class="col-md-6 col-lg-3 mb-4 mb-lg-0 ">
+                    <div class="small text-muted text-uppercase fw-700 mb-2 ">To</div>
+                    <div class="h6 mb-1 ">Company Name</div>
+                    <div class="small ">1234 Company Dr.</div>
+                    <div class="small ">Yorktown, MA 39201</div>
+                </div> -->
+                    <div class="col-md-6 col-lg-4 mb-4 mb-lg-0" *ngIf="ProviderInfo">
+                        <!-- Invoice - sent from info-->
+                        <div class="small text-muted text-uppercase fw-700 mb-2 ">Acerca de Proveedor</div>
+                        <div class="h6 mb-0 ">{{ProviderInfo?.companyName}}</div>
+                        <div class="small ">{{ProviderInfo?.email}}</div>
+                        <div class="small ">{{ProviderInfo?.phone}}</div>
+                    </div>
+                    <div class="col-lg-6 col-lg-6 mb-lg-0">
+                        <!-- Invoice - additional notes-->
+                        <div class="small text-muted text-uppercase fw-700 mb-2 ">Extra</div>
+                        <div class="small mb-0 ">Payment is due 15 days after receipt of this invoice. Please make checks or money orders out to Company Name, and include the invoice number in the memo. We appreciate your business, and hope to be working with you again very soon!</div>
+                    </div>
+                    <div class="col-lg-2 mb-lg-0 col-lg-2">
+                        <br>
+                        <br>
+                        <button class="btn btn-success" type="submit" *ngIf="submitAproduct && longProds>=1" (click)="saveInvoice()">Generar entrada</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

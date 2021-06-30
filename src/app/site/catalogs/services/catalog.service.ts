@@ -43,9 +43,9 @@ export class CatalogService {
     );
   }
 
-  getPaymentMethods():Observable<PaginationListResponse<PaymentMethodInfo>>
+  getPaymentMethods():Observable<PaymentMethodInfo[]>
   {
-    return this._http.get<PaginationListResponse<PaymentMethodInfo>>(
+    return this._http.get<PaymentMethodInfo[]>(
       `${environment.url_api}${this.paymentController}`
     );
   }

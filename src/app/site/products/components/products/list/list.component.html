@@ -1,0 +1,103 @@
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container-xl px-4">
+        <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-auto mt-4">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i class="fas fa-cash-register"></i></div>
+                        Productos
+                    </h1>
+                    <div class="page-header-subtitle">
+                        Consulta las existencias de tus productos.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main page content-->
+<div class="container-xl px-4 mt-n10">
+    <div class="card mb-4">
+        <div class="card-header">Inventario</div>
+        <div class="card-body">
+            <div class="
+          dataTable-wrapper dataTable-loading
+          no-footer
+          sortable
+          searchable
+          fixed-columns
+        ">
+                <div class="dataTable-top">
+                    <div class="dataTable-search">
+                        <input class="dataTable-input" placeholder="Buscar producto..." type="text" />
+                    </div>
+                </div>
+                <div class="dataTable-container">
+                    <table id="datatablesSimple" class="dataTable-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Producto</th>
+                                <th>Descripción</th>
+                                <th>Modelo</th>
+                                <th>Categoria</th>
+                                <th>Marca</th>
+                                <th>Precio</th>
+                                <th>Precio a mayoreo</th>
+                                <th>C. a mayoreo</th>
+                                <th>Existencias</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Código</th>
+                                <th>Producto</th>
+                                <th>Descripción</th>
+                                <th>Modelo</th>
+                                <th>Categoria</th>
+                                <th>Marca</th>
+                                <th>Precio</th>
+                                <th>Precio a mayoreo</th>
+                                <th>C. a mayoreo</th>
+                                <th>Existencias</th>
+                            </tr>
+                        </tfoot>
+                        <tbody *ngIf="products">
+                            <ng-container *ngFor="let product of products.data; let i = index">
+                                <tr>
+                                    <td>{{product.code}}</td>
+                                    <td>{{product.productName}}</td>
+                                    <td>{{product.description}}</td>
+                                    <td>{{product.model}}</td>
+                                    <td>{{product.categoria}}</td>
+                                    <td>{{product.marca}}</td>
+                                    <td>${{product.normalPrice}}</td>
+                                    <td>${{product.pricePerWholeSale}}</td>
+                                    <td>{{product.minForWholeSale}}</td>
+                                    <!-- <td class="d-flex justify-content-between">
+                                    </td> -->
+                                    <td>{{product.stock}}</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <div class="dataTable-bottom">
+                    <div class="dataTable-info">Showing 1 to 10 of 57 entries</div>
+                    <nav class="dataTable-pagination">
+                        <ul class="dataTable-pagination-list">
+                            <li class="pager"><a href="#" data-page="1">‹</a></li>
+                            <li class="active"><a href="#" data-page="1">1</a></li>
+                            <li class=""><a href="#" data-page="2">2</a></li>
+                            <li class=""><a href="#" data-page="3">3</a></li>
+                            <li class=""><a href="#" data-page="4">4</a></li>
+                            <li class=""><a href="#" data-page="5">5</a></li>
+                            <li class=""><a href="#" data-page="6">6</a></li>
+                            <li class="pager"><a href="#" data-page="2">›</a></li>
+                        </ul>
+                    </nav>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

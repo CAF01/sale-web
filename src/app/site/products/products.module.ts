@@ -8,13 +8,15 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { MomentModule } from 'ngx-moment';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { AllProductsComponent } from './components/products/all-products/all-products.component';
 
 
 @NgModule({
   declarations: [
     ListComponent,
     NewProductComponent,
-    UpdateProductComponent
+    UpdateProductComponent,
+    AllProductsComponent
   ],
   imports: [
     CommonModule,

@@ -11,6 +11,9 @@ import { userUpdateRequest } from '../models/request/userupdaterequest';
 import { AddressUpdateRequest } from '../models/request/addressupdaterequest';
 import { AddressInsertRequest } from '../models/request/addressinsertrequest';
 import { userSetStatRequest } from '../models/request/usersetstatrequest';
+import { Token } from '../models/request/token';
+import { UserLogin } from '../models/request/user-login';
+import { UserInfo } from 'os';
 
 @Injectable({
   providedIn: 'root',
@@ -75,5 +78,9 @@ export class UserService {
       `${environment.url_api}${this.controller}/user-status`,
       request
     );
+  }
+
+  Login(user:UserLogin): Observable<User> {
+    return this._http.post<User>(`${environment.url_api}${this.controller}/login`,user);
   }
 }
