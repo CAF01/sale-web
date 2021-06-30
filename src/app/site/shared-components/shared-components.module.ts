@@ -8,6 +8,7 @@ import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { AlertModalComponent } from './alert-modal/alert-modal.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { SearchModalComponent } from './search-modal/search-modal.component';
 
 
 export function playerFactory()
@@ -22,7 +23,8 @@ export function playerFactory()
     FieldErrorDisplayComponentComponent,
     DisplayLottieComponent,
     AlertModalComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    SearchModalComponent
   ],
   imports: [
     CommonModule,

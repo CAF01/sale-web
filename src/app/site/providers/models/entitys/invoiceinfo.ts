@@ -1,4 +1,4 @@
-export interface InvoiceInfo {
+export class InvoiceInfo {
     invoiceID: number;
     total: number;
     registerDate: string;

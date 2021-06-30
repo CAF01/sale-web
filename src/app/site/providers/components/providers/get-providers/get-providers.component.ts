@@ -17,7 +17,7 @@ import { setStatusProviderRequest } from '../../../models/request/setstatusprovi
 })
 export class GetProvidersComponent implements OnInit {
   providers: PaginationListResponse<ProviderInfo> | undefined;
-  viewOptions? : boolean = undefined;
+  viewOptions? : boolean = true;
 
   page: number = 1;
 
@@ -104,7 +104,7 @@ export class GetProvidersComponent implements OnInit {
   SetStat(option:number)
   {
     if(option==1)
-      this.viewOptions=undefined;
+      this.viewOptions=null;
     if(option==2)
       this.viewOptions=true;
     if(option==3)

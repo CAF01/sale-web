@@ -14,6 +14,8 @@ import * as Feather from 'feather-icons';
 import { InsertProductRequest } from '../../../models/insertproductrequest';
 import { ProductService } from '../../../services/product.service';
 import { Toast, ToastrService } from 'ngx-toastr';
+import { InsertCategoryComponent } from 'src/app/site/catalogs/components/categories/insert-category/insert-category.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-new-product',
@@ -28,7 +30,7 @@ export class NewProductComponent implements OnInit {
   productForm: FormGroup;
   validateForm = ValidateForm;
 
-  imageUrl:string;
+  imageUrl: string;
 
   file: File;
 
@@ -38,7 +40,8 @@ export class NewProductComponent implements OnInit {
     private catalogService: CatalogService,
     private _formBuilder: FormBuilder,
     private productService: ProductService,
-    private toastr : ToastrService
+    private toastr: ToastrService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -47,82 +50,84 @@ export class NewProductComponent implements OnInit {
     this.getBrands();
     this.getCategories();
     this.SetValidatorProduct();
+
   }
 
-  onSubmit() 
-  {
-    if (this.productForm.valid) 
-    {
-      this.uploadFile(this.file);
+  onSubmit() {
+    if (this.productForm.valid) {
+      if(this.file)
+        this.uploadFile(this.file);
       this.ValidatedForm = true;
       this.product = this.productForm.value;
-      this.product.ImageUrl=this.imageUrl;
+      this.product.ImageUrl = this.imageUrl;
       this.productService.newProduct(this.product).subscribe(
         (request) => {
-          this.toastr.success('Nuevo producto agregado','¡Correcto!');
-          this.imageUrl=undefined;
+          this.toastr.success('Nuevo producto agregado', '¡Correcto!');
+          this.imageUrl = undefined;
           this.productForm.reset();
-          this.file=undefined;
-
+          this.file = undefined;
         },
         (error) => {
           console.log(error);
         }
       );
-    } 
-    else 
-    {
+    } else {
       this.ValidatedForm = false;
       this.validateForm.validateAllFormFields(this.productForm);
     }
   }
 
-  keepFile(file:File):void
-  {
-    this.file=file;
+  keepFile(file: File): void {
+    this.file = file;
   }
 
   uploadFile(file: File): void {
-    if(file)
-    {
+    if (file) {
       var formData = new FormData();
-      formData.append('File',file,file.name);
-      this.productService.Upload(formData).subscribe(request=>
-        {
-          this.imageUrl=request;
-        },(error=>
-        {
+      formData.append('File', file, file.name);
+      this.productService.Upload(formData).subscribe(
+        (request) => {
+          this.imageUrl = request;
+        },
+        (error) => {
           console.log(error);
-        }));
+        }
+      );
     }
   }
 
-  getBrands() {
-    this.catalogService.getBrands().subscribe(
-      (request) => {
-        this.brands = request;
+  addCategory() {
+    let modal = this.modalService.open(InsertCategoryComponent, {
+      centered: true,
+    });
 
-        this.productForm.get('BrandID').setValue(this.brands.data[0].brandID);
-      },
-      (error) => {
-        console.log(error.statusText);
-      }
-    );
+    modal.componentInstance.title = 'Insertar nueva categoria';
+    modal.componentInstance.categoryList = this.categories;
+
+    modal.result
+      .then((result) => {
+        if (result) {
+        }
+      })
+      .catch((err) => {});
   }
 
-  getCategories() {
-    this.catalogService.getCategories().subscribe(
-      (request) => {
-        this.categories = request;
+  async getBrands() {
+    var response = await this.catalogService.getBrands().toPromise();
+    if(response.data)
+    {
+      this.brands=response;
+      this.productForm.get('BrandID').setValue(this.brands.data[0].brandID);
+    }
+  }
 
-        this.productForm
-          .get('CategoryID')
-          .setValue(this.categories.data[0].categoryID);
-      },
-      (error) => {
-        console.log(error.statusText);
-      }
-    );
+  async getCategories() {
+    var response = await this.catalogService.getCategories().toPromise();
+    if(response.data)
+    {
+      this.categories=response;
+      this.productForm.get('CategoryID').setValue(this.categories.data[0].categoryID);
+    }
   }
 
   validationInput(field: string): boolean {
@@ -146,16 +151,20 @@ export class NewProductComponent implements OnInit {
       CategoryID: new FormControl('', [Validators.required, Validators.min(1)]),
       Model: new FormControl('', [Validators.maxLength(50)]),
       BrandID: new FormControl('', [Validators.required, Validators.min(1)]),
-      MinForWholeSale: new FormControl('', [Validators.min(1)]),
-      PricePerWholeSale: new FormControl('', [
-        Validators.pattern(/^(\d+(\.\d{0,2})?|\.?\d{1,2})$/),
-      ]),
+      MinForWholeSale: new FormControl('', []),
+      PricePerWholeSale: new FormControl('', []),
       NormalPrice: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^(\d+(\.\d{0,2})?|\.?\d{1,2})$/),
       ]),
-      MinStock: new FormControl('', [Validators.pattern(/^[0-9]+$/)]),
-      MaxStock: new FormControl('', [Validators.pattern(/^[0-9]+$/)]),
+      MinStock: new FormControl('', [
+        Validators.pattern(/^[0-9]+$/),
+        // Validators.min(1),
+      ]),
+      MaxStock: new FormControl('', [
+        Validators.pattern(/^[0-9]+$/),
+        // Validators.min(1),
+      ]),
     });
   }
+
 }

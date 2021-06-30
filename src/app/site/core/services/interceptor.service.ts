@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HelperService } from './helper.service';
 import { finalize, tap } from "rxjs/operators";
+import { SecurityHelper } from '../helpers/security-helper';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,11 +19,23 @@ export class InterceptorService implements HttpInterceptor{
     this.helperService.beginWorking();
 
 
-          request = request.clone({
-            headers: request.headers
-              .set('Content-Disposition', 'multipart/form-data')
-              .set('Accept', 'application/json')
-          });
+    if(request.url.includes('/login')){
+
+      request = request.clone({
+        headers: request.headers
+          .set('Content-Disposition', 'multipart/form-data')
+          .set('Accept', 'application/json')
+      });
+    }else{
+      request = request.clone({
+        headers: request.headers
+          .set('Content-Disposition', 'multipart/form-data')
+          .set('Accept', 'application/json')
+          .set('Authorization', `Bearer ${SecurityHelper.getToken()}`)
+      });
+    }
+
+    
    
 
   

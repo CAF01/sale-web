@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -65,6 +65,12 @@ export class ClientService {
       );
     }
 
+    getClientsByPage(page: number): Observable<PaginationListResponse<client>> {
+      let params = new HttpParams().set('skip', page.toString());
+      return this._http.get<PaginationListResponse<client>>(
+        `${environment.url_api}${this.controller}`,{ params: params }
+      );
+    }
  
 
 }

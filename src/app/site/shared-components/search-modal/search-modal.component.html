@@ -1,0 +1,40 @@
+<div>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="row justify-content-center">
+            <form [formGroup]="searchForm">
+                <div class="row gx-3">
+                    <div class="mb-3 col-md-8">
+                        <input class="form-control" type="text" formControlName="searching" placeholder="{{message}}" *ngIf="numModal==0" maxlength="75" />
+                        <input class="form-control" type="text" formControlName="searching" placeholder="{{message}}" *ngIf="numModal==1" maxlength="25" />
+                    </div>
+                    <div class="mb-3 col-md-4">
+                        <button type="submit" class="form-control btn btn-purple" (click)="searchInfo()">Buscar</button>
+                    </div>
+                </div>
+                <div class="row gx-3" *ngIf="listResponse">
+                    <label class="medium mb-2 text-blue" for="result">Resultados</label>
+                    <div class="mb-3 col-md-9">
+                        <select id="result" name="result" class="form-control" formControlName="result">         
+                            <option *ngFor="let producto of listResponse; let i = index;"  value="{{i}}">
+                                <p>{{producto.productName}} - {{producto.model}}</p>
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3 col-md-3 d-flex justify-content-center">
+                        <button type=" submit " class="form-control btn btn-primary " (click)="bringResult() ">Seleccionar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="modal-footer ">
+        <button type="button " class="btn btn-danger " (click)="modal.close(false) ">
+          Cerrar
+        </button>
+    </div>
+</div>

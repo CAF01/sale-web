@@ -9,4 +9,9 @@ export class ProductInfo {
     normalPrice: number;
     minForWholeSale: number;
     pricePerWholeSale: number;
+    stock:number;
+    maxstock:number;
+    minstock:number;
+    imageUrl:string;
+    status:boolean;
 }

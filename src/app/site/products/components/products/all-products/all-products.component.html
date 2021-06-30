@@ -1,0 +1,101 @@
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container-xl px-4">
+        <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-auto mt-4">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i class="fas fa-cash-register"></i></div>
+                        Lista de productos
+                    </h1>
+                    <div class="page-header-subtitle">
+                        Gestiona los productos registrados.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main page content-->
+<div class="container-xl px-4 mt-n10">
+    <div class="card mb-4">
+        <div class="card-header">Productos</div>
+        <div class="card-body">
+            <div class="
+          dataTable-wrapper dataTable-loading
+          no-footer
+          sortable
+          searchable
+          fixed-columns
+        ">
+                <div class="dataTable-container">
+                    <table id="datatablesSimple" class="dataTable-table">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Código</th>
+                                <th>Producto</th>
+                                <th>Descripción</th>
+                                <th>Modelo</th>
+                                <th>Categoria</th>
+                                <th>Marca</th>
+                                <th>Precio</th>
+                                <th>Precio a mayoreo</th>
+                                <th>C. a mayoreo</th>
+                                <!-- <th>Stock Max-Min</th> -->
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Código</th>
+                                <th>Producto</th>
+                                <th>Descripción</th>
+                                <th>Modelo</th>
+                                <th>Categoria</th>
+                                <th>Marca</th>
+                                <th>Precio</th>
+                                <th>Precio a mayoreo</th>
+                                <th>C. a mayoreo</th>
+                                <!-- <th>Stock Max-Min</th> -->
+                                <th>Acciones</th>
+                            </tr>
+                        </tfoot>
+                        <tbody *ngIf="products">
+                            <ng-container *ngFor="let product of products?.data; let i = index">
+                                <tr>
+                                    <td *ngIf="product?.imageUrl"><img src="https://res.cloudinary.com/dj3kprcui/image/upload/v1624897246/{{product.imageUrl}}" class="img-fluid" alt=""></td>
+                                    <td *ngIf="!product?.imageUrl"><img src="assets/img/illustrations/Image folder-rafiki.svg" class="img-fluid" alt=""></td>
+                                    <td>{{product?.code}}</td>
+                                    <td>{{product?.productName}}</td>
+                                    <td>{{product?.description}}</td>
+                                    <td>{{product?.model}}</td>
+                                    <td>{{product?.categoria}}</td>
+                                    <td>{{product?.marca}}</td>
+                                    <td>${{product?.normalPrice}}</td>
+                                    <td>${{product?.pricePerWholeSale}}</td>
+                                    <td>{{product?.minForWholeSale}}</td>
+                                    <!-- <td>
+                                        {{product?.maxstock}} - {{product?.minstock}}
+                                    </td> -->
+                                    <td style="font-size: 20px;">
+                                        <a href="javascript:void(0);" (click)="edit(product)">
+                                            <i class="far fa-edit"></i>
+                                        </a>
+                                        <a href="javascript:void(0);" *ngIf="product?.status" (click)="DelSelected(product)">
+                                            <i class="far fa-trash-alt redIcon"></i>
+                                        </a>
+                                        <a href="javascript:void(0);" *ngIf="!product?.status" (click)="RestoreProduct(product)">
+                                            <i class="fas fa-undo-alt greenIcon"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <ngb-pagination *ngIf="products?.totalPages > 1" [(page)]="page" [pageSize]="products?.pageSize" (pageChange)="pageChange($event)" [collectionSize]="products?.totalRows"></ngb-pagination>
+            </div>
+        </div>
+    </div>
+</div>

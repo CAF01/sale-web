@@ -1,0 +1,46 @@
+<div id="layoutAuthentication" class="bg-primary">
+    <div id="layoutAuthentication_content">
+        <div class="container-xl px-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <!-- Basic login form-->
+                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                        <div class="card-header justify-content-center">
+                            <h3 class="fw-light my-4">Iniciar sesión</h3>
+                        </div>
+                        <div class="card-body">
+                            <form [formGroup]="loginForm">
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="email">Correo electrónico &nbsp;<span style="color: red;">*</span></label>
+                                    <input class="form-control" id="email" formControlName="email" type="email" placeholder="example@gmail.com" />
+                                    <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('email')" errorMsg="Ingresa un email valido">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="password">Contraseña &nbsp;<span style="color: red;">*</span></label>
+                                    <input class="form-control" id="password" formControlName="password" type="password" placeholder="***********" />
+                                    <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('password')" errorMsg="Ingresa una contraseña valida">
+                                    </app-field-error-display>
+                                </div>
+                                <!-- Form Group (remember password checkbox)-->
+                                <!-- <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" id="rememberPasswordCheck" type="checkbox" value="" />
+                                        <label class="form-check-label" for="rememberPasswordCheck">Remember password</label>
+                                    </div>
+                                </div> -->
+                                <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                    <a class="small" href="javascript:void(0);">¿Olvidaste tu contraseña?</a>
+                                    <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!activatedButton">Entrar</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- <div class="card-footer text-center">
+                            <div class="small"><a href="auth-register-basic.html">Need an account? Sign up!</a></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

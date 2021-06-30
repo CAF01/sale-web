@@ -1,30 +1,28 @@
-<header
-  class="page-header page-header-dark bg-gradient-primary-to-secondary pb-3"
->
-  <div class="container-xl px-4">
-    <div class="page-header-content pt-4">
-      <div class="row align-items-center justify-content-between">
-        <div class="col-auto mt-4">
-          <h1 class="page-header-title">
-            <div class="page-header-icon"><i data-feather="globe"></i></div>
-            Marcas registradas
-          </h1>
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-3">
+    <div class="container-xl px-4">
+        <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-auto mt-4">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i data-feather="globe"></i></div>
+                        Marcas registradas
+                    </h1>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </header>
 <div class="container-xl px-4 mt-4">
 
 
-<div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-5">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between medium">Lista
                     <button class="btn btn-warning dropdown-toggle text-white" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
                     <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
-                        <a class="dropdown-item" (click)="setStatus(0)" >Todo</a>
+                        <a class="dropdown-item" (click)="setStatus(0)">Todo</a>
                         <a class="dropdown-item" (click)="setStatus(1)">Disponibles</a>
                         <a class="dropdown-item" (click)="setStatus(2)">Deshabilitados</a>
                     </div>
@@ -32,65 +30,75 @@
                 <div class="card-body" *ngIf="brandList">
                     <ng-container *ngFor="let brand of brandList.data; let i = index;">
                         <div class="d-flex align-items-center justify-content-between mb-4" *ngIf="brand.status==statusBrands || statusBrands==null">
-                            <div class="d-flex align-items-center flex-shrink-0 me-3" >
-                                <div class="avatar avatar-xl me-3 bg-gray-200"><img class="avatar-img img-fluid" src="https://res.cloudinary.com/dj3kprcui/image/upload/v1624387447/{{brand.imageUrl}}" alt="" /></div>
+                            <div class="d-flex align-items-center flex-shrink-0 me-3">
+                                <div class="avatar avatar-xl me-3 bg-gray-200" *ngIf="brand.imageUrl"><img class="avatar-img img-fluid" src="https://res.cloudinary.com/dj3kprcui/image/upload/v1624387447/{{brand.imageUrl}}" alt="" /></div>
+                                <div class="avatar avatar-xl me-3 bg-gray-200" *ngIf="!brand.imageUrl"><img class="avatar-img img-fluid" src="assets/img/illustrations/Image folder-rafiki.svg" alt="" /></div>
                                 <div class="d-flex flex-column fw-bold">
                                     <a class="text-dark line-height-normal mb-1" href="javascript:void(0);">{{brand.name}}</a>
                                     <div class="badge bg-success text-white rounded-pill" *ngIf="brand.status">Disponible</div>
                                     <div class="badge bg-danger text-white rounded-pill" *ngIf="!brand.status">Deshabilitada</div>
                                 </div>
                             </div>
-                            <div class="dropdown">
+                            <div class="d-flex justify-content-between">
+                                <a href="javascript:void(0);" (click)="SelectBrand(brand)">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                                <a href="javascript:void(0);" (click)="del(brand)" *ngIf="brand.status">
+                                    <i class="far fa-trash-alt redIcon"></i>
+                                </a>
+                                <a href="javascript:void(0);" (click)="RestoreBrand(brand)" *ngIf="!brand.status">
+                                    <i class="fas fa-undo-alt greenIcon"></i>
+                                </a>
+                            </div>
+                            <!-- <div class="dropdown">
                                 <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="{{i}}" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="{{i}}">
                                     <a class="dropdown-item" href="javascript:void(0);" (click)="SelectBrand(brand)">Actualizar</a>
                                     <a class="dropdown-item" href="javascript:void(0);" (click)="del(brand)" *ngIf="brand.status">Borrar</a>
                                     <a class="dropdown-item" href="javascript:void(0);" (click)="RestoreBrand(brand)" *ngIf="!brand.status">Recuperar</a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                     </ng-container>
-                    
+
                 </div>
             </div>
-    </div>
-    <div class="col-md-5">
+        </div>
+        <div class="col-md-5">
 
-                <div class="card mb-4">
-                    <div class="card-header">Agregar marca</div>
-                    <div class="card-body">
-                        <form [formGroup]="brandForm">
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-12">
-                                    <label class="medium mb-1 text-blue" for="Name">Nombre <span style="color:red">*</span></label>
-                                    <input class="form-control" id="Name" formControlName="name" type="text" maxlength="50" />
-                                    <app-field-error-display *ngIf="!formSubmitAttempt"
-                                    [displayError]="validationInput('name')" 
-                                    errorMsg="Completa este campo">
-                                    </app-field-error-display>
-                                </div>
+            <div class="card mb-4">
+                <div class="card-header">Agregar marca</div>
+                <div class="card-body">
+                    <form [formGroup]="brandForm">
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-12">
+                                <label class="medium mb-1 text-blue" for="Name">Nombre <span style="color:red">*</span></label>
+                                <input class="form-control" id="Name" formControlName="name" type="text" maxlength="50" />
+                                <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('name')" errorMsg="Completa este campo">
+                                </app-field-error-display>
                             </div>
-                            <div class="card-body text-center">
-                                <img class="img-account-profile rounded-circle mb-1" src={{file?.name}} alt="" />
-                                <!-- <div class="small font-italic text-muted mb-4">JPG o PNG no mayores a 5 MB</div>
+                        </div>
+                        <div class="card-body text-center">
+                            <img class="img-account-profile rounded-circle mb-1" src="{{file?.name}}" alt="" />
+                            <!-- <div class="small font-italic text-muted mb-4">JPG o PNG no mayores a 5 MB</div>
                                 <input type="file" formControlName="imageUrl" accept="image/png, image/jpeg">
                                 <app-field-error-display *ngIf="!formSubmitAttempt"
                                     [displayError]="validationInput('imageUrl')" 
                                     errorMsg="Completa este campo">
                                     </app-field-error-display> -->
-                                    <app-file-upload (onSelectFile)="keepFile($event)" MaxSize="5000000" Accept="'image/png, image/jpeg'"></app-file-upload>
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary" type="submit" (click)="onSubmit()">Agregar</button>
-                            </div>
-                            
-                        </form>
-                    </div>
+                            <app-file-upload (onSelectFile)="keepFile($event)" MaxSize="5000000" Accept="'image/png, image/jpeg'"></app-file-upload>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary" type="submit" (click)="onSubmit()">Agregar</button>
+                        </div>
+
+                    </form>
                 </div>
+            </div>
 
 
+        </div>
+        <div class="col-md-1"></div>
     </div>
-    <div class="col-md-1"></div>
-</div>
 </div>

@@ -70,7 +70,6 @@ export class GetBrandsComponent implements OnInit {
        newBrand.name=this.brand.name;
        newBrand.status=true;
        newBrand.imageUrl= this.brand.ImageUrl;
-
         this.brandList.data.push(newBrand);
       },
       error=>
