@@ -57,18 +57,18 @@ export class ProductService {
     );
   }
 
-  getProductByName(name:GetProductRequest):Observable<PaginationListResponse<ProductInfo>>
+  getProductByName(name:GetProductRequest):Observable<ProductInfo[]>
   {
     let params = new HttpParams().set('ProductName', name.productName.toString());
-    return this._http.get<PaginationListResponse<ProductInfo>>(
+    return this._http.get<ProductInfo[]>(
       `${environment.url_api}${this.controller}/get-by-name`,{ params: params }
     );
   }
 
-  getProductByCode(code:GetProductRequest):Observable<PaginationListResponse<ProductInfo>>
+  getProductByCode(code:GetProductRequest):Observable<ProductInfo[]>
   {
     let params = new HttpParams().set('Code', code.code.toString());
-    return this._http.get<PaginationListResponse<ProductInfo>>(
+    return this._http.get<ProductInfo[]>(
       `${environment.url_api}${this.controller}/get-by-code`,{ params: params }
     );
   }

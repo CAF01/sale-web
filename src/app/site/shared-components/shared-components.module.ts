@@ -9,6 +9,10 @@ import player from 'lottie-web';
 import { AlertModalComponent } from './alert-modal/alert-modal.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SearchModalComponent } from './search-modal/search-modal.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PaySaleModalComponent } from './pay-sale-modal/pay-sale-modal.component';
+import { NgxCurrencyModule } from 'ngx-currency';
+
 
 
 export function playerFactory()
@@ -17,14 +21,14 @@ export function playerFactory()
 }
 
 
-
 @NgModule({
   declarations: [
     FieldErrorDisplayComponentComponent,
     DisplayLottieComponent,
     AlertModalComponent,
     FileUploadComponent,
-    SearchModalComponent
+    SearchModalComponent,
+    PaySaleModalComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +36,8 @@ export function playerFactory()
     FormsModule,
     ReactiveFormsModule,
     LottieModule.forRoot({player:playerFactory}),
+    NgbModule,
+    NgxCurrencyModule
     
   ],
   exports:[
@@ -40,7 +46,8 @@ export function playerFactory()
     ReactiveFormsModule,
     DisplayLottieComponent,
     AlertModalComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    NgbModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

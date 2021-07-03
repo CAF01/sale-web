@@ -1,4 +1,4 @@
-export interface InsertPendingPaymentRequest {
+export class InsertPendingPaymentRequest {
     saleID: number;
     payed: number;
 }

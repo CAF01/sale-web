@@ -1,33 +1,53 @@
 <div>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+        <h4 class="modal-title" id="modal-basic-title">Busqueda de productos</h4>
     </div>
     <div class="modal-body">
 
         <div class="row justify-content-center">
             <form [formGroup]="searchForm">
-                <div class="row gx-3">
-                    <div class="mb-3 col-md-8">
-                        <input class="form-control" type="text" formControlName="searching" placeholder="{{message}}" *ngIf="numModal==0" maxlength="75" />
-                        <input class="form-control" type="text" formControlName="searching" placeholder="{{message}}" *ngIf="numModal==1" maxlength="25" />
-                    </div>
-                    <div class="mb-3 col-md-4">
-                        <button type="submit" class="form-control btn btn-purple" (click)="searchInfo()">Buscar</button>
-                    </div>
-                </div>
-                <div class="row gx-3" *ngIf="listResponse">
-                    <label class="medium mb-2 text-blue" for="result">Resultados</label>
-                    <div class="mb-3 col-md-9">
-                        <select id="result" name="result" class="form-control" formControlName="result">         
-                            <option *ngFor="let producto of listResponse; let i = index;"  value="{{i}}">
-                                <p>{{producto.productName}} - {{producto.model}}</p>
-                            </option>
-                        </select>
-                    </div>
-                    <div class="mb-3 col-md-3 d-flex justify-content-center">
-                        <button type=" submit " class="form-control btn btn-primary " (click)="bringResult() ">Seleccionar</button>
-                    </div>
-                </div>
+                <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                    <li [ngbNavItem]="1">
+                        <a ngbNavLink>Por Código</a>
+                        <ng-template ngbNavContent>
+                            <input class="form-control mb-3" type="text" formControlName="searchingCode" (ngModelChange)="searchCode()" placeholder="código de producto" maxlength="25" />
+
+                            <div class="row gx-3 form-group" *ngIf="listResponseCode">
+                                <div class="d-flex justify-content-center">
+                                    <h4>Coincidencias&nbsp;<span class="badge bg-primary text-white">{{matchesC}}</span></h4>
+                                </div>
+                                <div class="form-group">
+                                    <ul class="heroes">
+                                        <li *ngFor="let producto of listResponseCode; let i = index;" (click)="bringResult(i)">
+                                            <p><span>{{producto.productName}}</span> {{producto.model}}</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </li>
+                    <li [ngbNavItem]="2">
+                        <a ngbNavLink>Por Nombre</a>
+                        <ng-template ngbNavContent>
+                            <input class="form-control mb-3" type="text" formControlName="searchingName" (ngModelChange)="searchName()" placeholder="nombre de producto" maxlength="75" />
+                            <div class="row gx-3 form-group" *ngIf="listResponseName">
+                                <div class="d-flex justify-content-center">
+                                    <h4>Coincidencias&nbsp;<span class="badge bg-primary text-white">{{matchesN}}</span></h4>
+                                </div>
+                                <div class="form-group">
+                                    <ul class="heroes">
+                                        <li *ngFor="let producto of listResponseName; let i = index;" (click)="bringResult(i)">
+                                            <p><span>{{producto.productName}}</span> {{producto.model}}</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </li>
+                </ul>
+
+                <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
             </form>
         </div>
 

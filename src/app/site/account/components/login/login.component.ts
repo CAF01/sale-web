@@ -52,12 +52,8 @@ export class LoginComponent implements OnInit {
       );
       this.userService.Login(userLogin).subscribe(
         (request) => {
-          debugger;
-          SecurityHelper.setTokenStorage(request.token);
-          this.router.navigate(['/home'], {
-            queryParams: { user: JSON.stringify(request) },
-            skipLocationChange: true, //skip location para ocultar el json de la URL
-          });
+          SecurityHelper.setTokenStorage(request);
+          this.router.navigate(['/home']);
         },error=>
         {
           this.activatedButton=true;

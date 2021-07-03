@@ -8,7 +8,7 @@ import { NewAddressComponent } from './components/address/new-address/new-addres
 import { UpdateAddressComponent } from './components/address/update-address/update-address.component';
 import { MomentModule } from 'ngx-moment';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 
@@ -24,8 +24,8 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     UsersRoutingModule,
     MomentModule,
-    SharedComponentsModule,
-    NgbPaginationModule
+    SharedComponentsModule
+  
 
   ],schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })

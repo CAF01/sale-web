@@ -10,7 +10,7 @@ import { InterceptorService } from './site/core/services/interceptor.service';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './site/home-components/home/home.component';
 import { SharedComponentsModule } from './site/shared-components/shared-components.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 // import { NgxCurrencyModule } from 'ngx-currency';
 
 
@@ -29,7 +29,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     ToastNoAnimationModule.forRoot(),
     SharedComponentsModule,
-    NgbModule,
+
+
     // NgxCurrencyModule
     ],
   providers: [

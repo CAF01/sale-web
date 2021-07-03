@@ -71,6 +71,13 @@ export class ClientService {
         `${environment.url_api}${this.controller}`,{ params: params }
       );
     }
- 
+
+
+    getClientsByPhone(Phone: string): Observable<client> {
+      let params = new HttpParams().set('Phone', Phone);
+      return this._http.get<client>(
+        `${environment.url_api}${this.controller}/find-by-phone`,{ params: params }
+      );
+    }
 
 }

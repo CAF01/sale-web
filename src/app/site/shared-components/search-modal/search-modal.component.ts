@@ -12,17 +12,19 @@ import { ProductInfo } from '../../products/models/productInfo';
 import { ProductService } from '../../products/services/product.service';
 import { GetProductRequest } from '../../providers/models/request/getproductrequest';
 
+
 @Component({
   selector: 'app-search-modal',
   templateUrl: './search-modal.component.html',
   styleUrls: ['./search-modal.component.scss'],
 })
 export class SearchModalComponent implements OnInit {
-  @Input() numModal: number = 0;
-  @Input() title: string;
-  @Input() message?: string;
+  // @Input() title: string;
+  // @Input() message?: string;
   @Input() products?: Array<ProductInfo>;
-
+  active = 1;
+  matchesC:number=0;
+  matchesN:number=0;
   constructor(
     public modal: NgbActiveModal,
     private _formBuilder: FormBuilder,
@@ -36,73 +38,74 @@ export class SearchModalComponent implements OnInit {
   submitAttempt: boolean = true;
   searchForm: FormGroup;
 
-  listResponse: Array<ProductInfo>;
+  listResponseCode: Array<ProductInfo>;
+  listResponseName: Array<ProductInfo>;
 
   validateForm = ValidateForm;
 
   SetValidatorSearch() {
     this.searchForm = this._formBuilder.group({
-      searching: new FormControl('', [Validators.required]),
-      result:new FormControl('',[])
+      searchingCode: new FormControl('', [Validators.required,Validators.maxLength(25)]),
+      searchingName: new FormControl('', [Validators.required,Validators.maxLength(75)])
     });
-  }
-
-  searchInfo() {
-    if (this.searchForm.valid) 
-    {
-      this.submitAttempt = true;
-      if (this.numModal == 0) 
-      {
-        //ByName-Product
-        let req = new GetProductRequest();
-        req.productName = this.searchForm.get('searching').value;
-
-        this.productService.getProductByName(req).subscribe((request) => {
-
-          this.CreateArrayProducts(request);
-        },error=>console.log(error));
-      }
-      if (this.numModal == 1) 
-      {
-        //ByCode-Product
-        let req = new GetProductRequest();
-        req.code = this.searchForm.get('searching').value;
-
-        this.productService.getProductByCode(req).subscribe((request) => {
-
-          this.CreateArrayProducts(request);
-
-        },error=>console.log(error));
-      }
-    } 
-    else 
-    {
-      this.validateForm.validateAllFormFields(this.searchForm);
-      this.submitAttempt = false;
-    }
-  }
-
-  CreateArrayProducts(response: PaginationListResponse<ProductInfo>) {
-    this.listResponse = new Array<ProductInfo>();
-    var zero = 0;
-    while (response[zero]) 
-    {
-      this.listResponse.push(response[zero]);
-      zero++;
-    }
-    this.searchForm.get('result').setValue(0);
   }
 
   validationInputInvoice(field: string): boolean {
     return this.searchForm.get(field).errors != undefined;
   }
 
-  bringResult()
+  bringResult(i:number)
   {
-    if(this.numModal==0 || this.numModal==1)
-    {
-      this.products.push(this.listResponse[this.searchForm.get('result').value]);
-    }
+    if(this.active==1)
+      this.products.push(this.listResponseCode[i]);
+    else
+      this.products.push(this.listResponseName[i]);
     this.modal.close(true)
+  }
+
+  searchCode()
+  {
+    let cad:string = this.searchForm.get('searchingCode').value;
+    if(cad.length>=4)
+    {
+      let req = new GetProductRequest();
+      req.code = cad;
+      this.productService.getProductByCode(req).subscribe((request) => {
+        this.listResponseCode = new Array<ProductInfo>();
+        this.listResponseCode=request;
+        this.matchesC=this.listResponseCode.length;
+      },error=>
+      {
+        this.matchesC=0;
+      });
+    }
+    else
+    {
+      this.listResponseCode=undefined;
+      this.matchesC=0;
+    }
+  }
+
+  searchName()
+  {
+    let cad:string = this.searchForm.get('searchingName').value;
+    if(cad.length>=4)
+    {
+      let req = new GetProductRequest();
+        req.productName = cad;
+        this.productService.getProductByName(req).subscribe((request) => {
+          this.listResponseName= new Array<ProductInfo>();
+          this.listResponseName=request;
+          this.matchesN=this.listResponseName.length;
+        },error=>
+        {
+          this.matchesN=0;
+        });
+    }
+    else
+    {
+      this.listResponseName=undefined;
+      this.matchesN=0;
+    }
   }
 }

@@ -32,19 +32,8 @@
                 <nav class="sidenav sidenav-light">
                     <div class="sidenav-menu">
                         <div class="nav">
-                            <div class="sidenav-menu-heading"><span><i class="fas fa-search"></i></span>&nbsp; Buscar productos por</div>
-                            <a class="nav-link col-md-1 text-blue" href="javascript:void(0);" (click)="searchByName()">
-                                <div class="nav-link-icon">
-                                    <i class="fas fa-font"></i>
-                                </div>
-                                Nombre
-                            </a>
-                            <a class="nav-link col-md-1 text-blue" href="javascript:void(0);" (click)="searchByCode()">
-                                <div class="nav-link-icon">
-                                    <i class="fas fa-barcode"></i>
-                                </div>
-                                Código
-                            </a>
+                            <div class="sidenav-menu-heading">
+                                <a href="javascript:void(0);" class="medium mb-2" (click)="searchProduct()"><span><i class="fas fa-search"></i></span>&nbsp; Busqueda de productos</a></div>
                         </div>
                     </div>
                 </nav>

@@ -1,0 +1,27 @@
+.heroes {
+    margin: 0 0 2em 0;
+    list-style-type: none;
+    padding: 0;
+    width: 15em;
+    font-size: 20px;
+    text-align: center;
+}
+
+.heroes li {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: #f2f6fc;
+    border-color: #5586d0 #d4dae3 #f2f6fc;
+    color: black;
+    margin: .5em;
+    padding: .3em 0;
+    height: 1.6em;
+    border-radius: 4px;
+}
+
+.heroes li:hover {
+    color: #ffffff;
+    background-color: #0061f2;
+    left: .1em;
+}

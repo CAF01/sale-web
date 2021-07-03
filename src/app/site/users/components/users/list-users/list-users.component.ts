@@ -11,8 +11,6 @@ import { UserAddressInfo } from '../../../models/entitys/user-address-info';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as Feather from 'feather-icons';
 import { AlertModalComponent } from 'src/app/site/shared-components/alert-modal/alert-modal.component';
-import { userInsertRequest } from '../../../models/request/userinsertrequest';
-import { UserLogin } from '../../../models/request/user-login';
 
 @Component({
   selector: 'app-list-users',
@@ -40,11 +38,6 @@ export class ListUsersComponent implements OnInit {
     Feather.replace();
 
     this.getUsers();
-
-    // this.usersService
-    //   .Login(new UserLogin("evanalcantaraf@gmail.com","Abcd1234"))
-    //   .subscribe((response) => console.log(response));
-
     moment().locale('es');
   }
 
