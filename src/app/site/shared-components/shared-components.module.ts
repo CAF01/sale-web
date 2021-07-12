@@ -12,6 +12,9 @@ import { SearchModalComponent } from './search-modal/search-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaySaleModalComponent } from './pay-sale-modal/pay-sale-modal.component';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { HistorialPaymentModalComponent } from './historial-payment-modal/historial-payment-modal.component';
+import { SearchProductsComponent } from './search-products/search-products.component';
+import { SearchClientComponent } from './search-client/search-client.component';
 
 
 
@@ -29,6 +32,9 @@ export function playerFactory()
     FileUploadComponent,
     SearchModalComponent,
     PaySaleModalComponent,
+    HistorialPaymentModalComponent,
+    SearchProductsComponent,
+    SearchClientComponent,
   ],
   imports: [
     CommonModule,
@@ -47,7 +53,9 @@ export function playerFactory()
     DisplayLottieComponent,
     AlertModalComponent,
     FileUploadComponent,
-    NgbModule
+    NgbModule,
+    SearchProductsComponent,
+    SearchClientComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

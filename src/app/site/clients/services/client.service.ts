@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { PaginationListResponse } from '../../core/models/pagination-list-response';
 import { client } from '../models/entitys/client';
@@ -77,6 +78,26 @@ export class ClientService {
       let params = new HttpParams().set('Phone', Phone);
       return this._http.get<client>(
         `${environment.url_api}${this.controller}/find-by-phone`,{ params: params }
+      );
+    }
+
+    getClientByPhonePipe(phone:string):Observable<client[]>
+    {
+      let params = new HttpParams().set('phone', phone);
+      return this._http.get<client[]>(
+        `${environment.url_api}${this.controller}/get-by-phone`,{ params: params }
+      ).pipe
+        (map(response=>response)
+      );
+    }
+
+    getClientByLastNamePipe(lastname:string):Observable<client[]>
+    {
+      let params = new HttpParams().set('lastname', lastname);
+      return this._http.get<client[]>(
+        `${environment.url_api}${this.controller}/get-by-lastname`,{ params: params }
+      ).pipe
+        (map(response=>response)
       );
     }
 

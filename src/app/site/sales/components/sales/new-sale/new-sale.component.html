@@ -19,7 +19,7 @@
                 <div class="sidenav-menu">
                     <div class="nav">
                         <div class="sidenav-menu-heading">
-                            <a href="javascript:void(0);" style="font-size: 15px;" class="mb-2" (click)="searchProduct()"><span><i class="fas fa-search"></i></span>&nbsp; Busqueda de productos</a></div>
+                            <a href="javascript:void(0);" placement="top" ngbTooltip="Abrir buscador de productos" style="font-size: 15px;" class="mb-2" (click)="searchProduct()"><span><i class="fas fa-search"></i></span>&nbsp; Busqueda de productos</a></div>
                     </div>
                 </div>
             </nav>
@@ -118,8 +118,7 @@
                 <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
                     <div class="small text-muted text-uppercase fw-700 mb-2 ">Blizzard Entertainment</div>
                     <!-- <div class="h6 mb-0 ">Blizzard Entertainment</div> -->
-                    <div class="small ">©2021 BLIZZARD ENTERTAINMENT, INC. TODOS LOS DERECHOS RESERVADOS. Todas las marcas comerciales a las que se hace referencia son propiedad de sus respectivos dueños.</div>
-                    <div class="small "></div>
+                    <div class="small ">©2021 BLIZZARD ENTERTAINMENT, INC. TODOS LOS DERECHOS RESERVADOS.</div>
                 </div>
                 <div class="col-lg-6 col-lg-6 mb-lg-0">
                     <!-- Invoice - additional notes-->
@@ -127,7 +126,6 @@
                     <div class="small mb-0 ">El plazo máximo para realizar un cambio de producto será de 10 (diez) días naturales a partir de la fecha de compra de la mercancía.</div>
                 </div>
                 <div class="col-lg-2 mb-lg-0 col-lg-2">
-                    <br>
                     <br>
                     <button class="btn btn-primary" *ngIf="total>0" (click)="openTransaction()">Siguiente</button>
                 </div>

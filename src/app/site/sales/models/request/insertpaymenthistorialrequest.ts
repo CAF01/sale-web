@@ -1,4 +1,4 @@
-export interface InsertPaymentHistorialRequest {
+export class InsertPaymentHistorialRequest {
     paymentMethodID: number;
     amount: number;
     pendingID: number;

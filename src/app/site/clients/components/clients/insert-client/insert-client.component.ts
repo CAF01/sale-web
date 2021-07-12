@@ -8,6 +8,7 @@ import { insertAddressClientRequest } from '../../../models/request/insertaddres
 import { SubstringHelper } from 'src/app/site/core/helpers/substring-helper';
 import { ClientService } from '../../../services/client.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -31,9 +32,10 @@ export class InsertClientComponent implements OnInit {
   flag?: boolean;
   flagAddressSkipped: boolean;
   addressSubmited: boolean;
- 
+  list:boolean=false;
 
-  constructor(private _formBuilder: FormBuilder,private clientService : ClientService, private toastr : ToastrService) { }
+  constructor(private _formBuilder: FormBuilder,private clientService : ClientService, private toastr : ToastrService,
+    private router: Router) { }
 
 
   ngOnInit(): void {
@@ -41,6 +43,15 @@ export class InsertClientComponent implements OnInit {
     this.SetValidatorsClient();
     this.SetValidatorsAddress();
     this.setTrueFlags();
+    if(sessionStorage.listProducts)
+    {
+      this.list=true;
+    }
+  }
+
+  return()
+  {
+    this.router.navigate(['home/sales/new-sale-beta']);
   }
 
 
@@ -85,31 +96,39 @@ export class InsertClientComponent implements OnInit {
 
   }
 
-  InsertClient()
+  async InsertClient()
   {
     if (this.address==undefined && this.flagAddressSkipped && this.client) 
     {
-      this.clientService.newClient(this.client).subscribe(response=>
-        {
-          console.log(response)//alert toast
-          this.toastr.success('Cliente agregado correctamente','Correcto');
+      let result = await this.clientService.newClient(this.client).toPromise();
+      if(result>0)
+      {
+        this.toastr.success('Cliente agregado correctamente','Correcto');
+          if(sessionStorage.listProducts)
+          {
+            sessionStorage.setItem('clientInfo', JSON.stringify(this.client));
+            sessionStorage.setItem('clientID',result.toString());
+            this.router.navigate(['home/sales/new-sale']);
+          }
           this.reset();
           this.Redirect("#wizard1");
-        }),
-        (error=>{
-            console.log(error)
-          });
+      }
     }
     if(this.address && this.addressSubmited && this.formSubmitAttempt)
     {
-      this.clientService.newClientWithAddress(this.client).subscribe(response=>{
+      let result = await this.clientService.newClientWithAddress(this.client).toPromise();
+      if(result>0)
+      {
         this.toastr.success('Cliente agregado correctamente','Correcto');
+        if(sessionStorage.listProducts)
+        {
+            sessionStorage.setItem('clientInfo', JSON.stringify(this.client));
+            sessionStorage.setItem('clientID',result.toString());
+            this.router.navigate(['home/sales/new-sale']);
+        }
         this.reset();
         this.Redirect("#wizard1");
-      }),
-      (error=>{
-        console.log(error)
-      });
+      }
     }
   }
 

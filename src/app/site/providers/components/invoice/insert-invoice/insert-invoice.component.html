@@ -33,7 +33,7 @@
                     <div class="sidenav-menu">
                         <div class="nav">
                             <div class="sidenav-menu-heading">
-                                <a href="javascript:void(0);" class="medium mb-2" (click)="searchProduct()"><span><i class="fas fa-search"></i></span>&nbsp; Busqueda de productos</a></div>
+                                <a href="javascript:void(0);" class="medium mb-2" placement="top" ngbTooltip="Abrir buscador de productos" (click)="searchProduct()"><span><i class="fas fa-search"></i></span>&nbsp; Busqueda de productos</a></div>
                         </div>
                     </div>
                 </nav>
@@ -98,7 +98,7 @@
                                         <!-- <a href="javascript:void(0);" (click)="calc()" [ngStyle]="{'font-size': '25px'}" data-bs-toggle="tooltip" data-bs-placement="left" title="Precio U. X Cantidad">
                                             <i class="fas fa-calculator"></i>
                                         </a> -->
-                                        <a href="javascript:void(0);" (click)="onSubmit()" [ngStyle]="{'font-size': '25px'}">
+                                        <a href="javascript:void(0);" (click)="onSubmit()" placement="top" ngbTooltip="Agregar" [ngStyle]="{'font-size': '25px'}">
                                             <i class="fas fa-plus"></i>
                                         </a>
                                     </div>

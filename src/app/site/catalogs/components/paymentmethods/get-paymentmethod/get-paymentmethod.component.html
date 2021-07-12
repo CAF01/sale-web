@@ -1,83 +1,79 @@
-<header
-  class="page-header page-header-dark bg-gradient-primary-to-secondary pb-3"
->
-  <div class="container-xl px-4">
-    <div class="page-header-content pt-4">
-      <div class="row align-items-center justify-content-between">
-        <div class="col-auto mt-4">
-          <h1 class="page-header-title">
-            <div class="page-header-icon"><i data-feather="credit-card"></i></div>
-            Métodos de pago registrados
-          </h1>
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-3">
+    <div class="container-xl px-4">
+        <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-auto mt-4">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i data-feather="credit-card"></i></div>
+                        Métodos de pago registrados
+                    </h1>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </header>
 <div class="container-xl px-4 mt-4">
-<div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-5">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between">Lista
-                  <button class="btn btn-warning dropdown-toggle text-white" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
+                    <button class="btn btn-warning dropdown-toggle text-white" placement="top" ngbTooltip="Disponibilidad" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
                     <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
-                        <a class="dropdown-item" (click)="setStatus(0)" >Todo</a>
+                        <a class="dropdown-item" (click)="setStatus(0)">Todo</a>
                         <a class="dropdown-item" (click)="setStatus(1)">Disponibles</a>
                         <a class="dropdown-item" (click)="setStatus(2)">Deshabilitados</a>
                     </div>
                 </div>
                 <div class="card-body" *ngIf="paymentmethodlist">
                     <ng-container *ngFor="let payment of paymentmethodlist; let i = index">
-                      <div class="d-flex align-items-center justify-content-between mb-4" *ngIf="payment.status==statusBrands || statusBrands==null">
-                        <div class="d-flex align-items-center flex-shrink-0 me-3">
-                            <div class="avatar avatar-xl me-3 bg-gray-200"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" alt="" /></div>
-                            <div class="d-flex flex-column fw-bold">
-                                <a class="text-dark line-height-normal mb-2" href="javascript:void(0);">{{payment.description}}</a>
-                                <div class="small text-muted" *ngIf="payment.status">Activo</div>
-                                <div class="small text-muted" *ngIf="!payment.status">Inactivo</div>
+                        <div class="d-flex align-items-center justify-content-between mb-4" *ngIf="payment.status==statusBrands || statusBrands==null">
+                            <div class="d-flex align-items-center flex-shrink-0 me-3">
+                                <div class="avatar avatar-xl me-3 bg-gray-200"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" alt="" /></div>
+                                <div class="d-flex flex-column fw-bold">
+                                    <a class="text-dark line-height-normal mb-2" href="javascript:void(0);">{{payment.description}}</a>
+                                    <div class="small text-muted" *ngIf="payment.status">Activo</div>
+                                    <div class="small text-muted" *ngIf="!payment.status">Inactivo</div>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle" placement="top" ngbTooltip="Acciones" id="{{i}}" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="{{i}}">
+                                    <a class="dropdown-item" href="javascript:void(0);" (click)="SelectPayment(payment)">Actualizar</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" (click)="del(payment)" *ngIf="payment.status">Borrar</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" (click)="RestorePayment(payment)" *ngIf="!payment.status">Restaurar</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="dropdown">
-                            <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="{{i}}" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                            <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="{{i}}">
-                                <a class="dropdown-item" href="javascript:void(0);" (click)="SelectPayment(payment)">Actualizar</a>
-                                <a class="dropdown-item" href="javascript:void(0);" (click)="del(payment)" *ngIf="payment.status">Borrar</a>
-                                <a class="dropdown-item" href="javascript:void(0);" (click)="RestorePayment(payment)" *ngIf="!payment.status">Restaurar</a>
-                            </div>
-                        </div>
-                    </div>
                     </ng-container>
                 </div>
             </div>
-    </div>
-    <div class="col-md-5">
+        </div>
+        <div class="col-md-5">
 
-                <div class="card mb-4">
-                    <div class="card-header">Agregar método de pago</div>
-                    <div class="card-body">
-                        <form [formGroup]="paymentForm">
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-12">
-                                    <label class="medium mb-1 text-blue" for="Description">Descripción <span style="color:red">*</span></label>
-                                    <input class="form-control" id="Description" formControlName="Description" type="text" maxlength="25"/>
-                                    <app-field-error-display *ngIf="!formSubmitAttempt"
-                                    [displayError]="validationInput('Description')" 
-                                    errorMsg="Completa este campo">
-                                    </app-field-error-display>
-                                </div>
+            <div class="card mb-4">
+                <div class="card-header">Agregar método de pago</div>
+                <div class="card-body">
+                    <form [formGroup]="paymentForm">
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-12">
+                                <label class="medium mb-1 text-blue" for="Description">Descripción <span style="color:red">*</span></label>
+                                <input class="form-control" id="Description" formControlName="Description" type="text" maxlength="25" />
+                                <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('Description')" errorMsg="Completa este campo">
+                                </app-field-error-display>
                             </div>
-                            <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary" type="submit" (click)="onSubmit()">Agregar</button>
-                            </div>
-                            
-                        </form>
-                    </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary" type="submit" (click)="onSubmit()">Agregar</button>
+                        </div>
+
+                    </form>
                 </div>
+            </div>
 
 
+        </div>
+        <div class="col-md-1"></div>
     </div>
-    <div class="col-md-1"></div>
-</div>
 
 </div>

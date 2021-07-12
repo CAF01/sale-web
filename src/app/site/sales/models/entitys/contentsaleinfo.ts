@@ -1,6 +1,7 @@
-export interface ContentSaleInfo {
+export class ContentSaleInfo {
     productName: string;
     description: string;
+    model:string
     code: string;
     saleID: number;
     quantity: number;

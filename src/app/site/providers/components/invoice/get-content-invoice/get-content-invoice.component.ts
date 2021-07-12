@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { PaginationListResponse } from 'src/app/site/core/models/pagination-list-response';
 import { InvoiceContentInfo } from '../../../models/entitys/invoicecontentinfo';
@@ -27,7 +27,8 @@ export class GetContentInvoiceComponent implements OnInit {
 
   constructor(
     private _route: ActivatedRoute,
-    private providerService:ProviderService
+    private providerService:ProviderService,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
@@ -38,6 +39,10 @@ export class GetContentInvoiceComponent implements OnInit {
         let invoiceID=this.invoiceInfo.invoiceID;
         this.getInfoProvider(invoiceID);
         this.getContentInvoice(invoiceID);
+      }
+      else
+      {
+        this.router.navigate(['home/providers/list-invoice']);
       }
     });
 
@@ -60,7 +65,6 @@ export class GetContentInvoiceComponent implements OnInit {
     this.providerService.getContentInvoice(id).subscribe(request=>
       {
         this.contentInvoice=request;
-        console.log(this.contentInvoice);
         this.Subtotal=this.contentInvoice.data[0].total;
         this.CostIVA=this.Subtotal*(this.IVA/100);
         this.Total=this.Subtotal+this.CostIVA;

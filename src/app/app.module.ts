@@ -11,13 +11,16 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './site/home-components/home/home.component';
 import { SharedComponentsModule } from './site/shared-components/shared-components.module';
 import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { DashboardComponent } from './site/home-components/dashboard/dashboard.component';
+import { ChartsModule } from 'ng2-charts';
 // import { NgxCurrencyModule } from 'ngx-currency';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    DashboardComponent
   ],
   imports: [
     RouterModule,
@@ -29,6 +32,7 @@ import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     ToastNoAnimationModule.forRoot(),
     SharedComponentsModule,
+    ChartsModule
 
 
     // NgxCurrencyModule

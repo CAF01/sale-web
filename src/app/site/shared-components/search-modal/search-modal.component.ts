@@ -63,28 +63,7 @@ export class SearchModalComponent implements OnInit {
     this.modal.close(true)
   }
 
-  searchCode()
-  {
-    let cad:string = this.searchForm.get('searchingCode').value;
-    if(cad.length>=4)
-    {
-      let req = new GetProductRequest();
-      req.code = cad;
-      this.productService.getProductByCode(req).subscribe((request) => {
-        this.listResponseCode = new Array<ProductInfo>();
-        this.listResponseCode=request;
-        this.matchesC=this.listResponseCode.length;
-      },error=>
-      {
-        this.matchesC=0;
-      });
-    }
-    else
-    {
-      this.listResponseCode=undefined;
-      this.matchesC=0;
-    }
-  }
+
 
   searchName()
   {

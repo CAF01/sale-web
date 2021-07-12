@@ -3,10 +3,10 @@
 
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
     <!-- User Dropdown-->
-    <h2 style="color: rgb(0, 98, 255);font-weight: bold;margin-left: 5px;margin-right: 5px;"><a [routerLink]="['/home']">Punto de venta</a></h2>
+    <h2 style="color: rgb(0, 98, 255);font-weight: bold;margin-left: 5px;margin-right: 5px;"><a [routerLink]="['/home/dash']">Punto de venta</a></h2>
     <ul class="navbar-nav align-items-center ms-auto">
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
-            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="assets/img/illustrations/profiles/profile-3.png" /></a>
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" placement="left" ngbTooltip="Perfil" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="assets/img/illustrations/profiles/profile-3.png" /></a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                 <h6 class="dropdown-header d-flex align-items-center">
                     <img class="dropdown-user-img" src="assets/img/illustrations/profiles/profile-3.png" />
@@ -58,6 +58,38 @@
                             <a class="nav-link" [routerLink]="['/home/clients','insert-client']" routerLinkActive="active">
                                 <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
                                 Agregar nuevo
+                            </a>
+
+                        </nav>
+                    </div>
+
+                    <a class="nav-link collapsed" data-toggle="collapse" data-target="#sales" aria-expanded="false" aria-controls="collapseAdmin">
+                        <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
+                        Ventas
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+
+                    <div class="collapse" id="sales" data-parent="#accordionSidenav">
+
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" [routerLink]="['/home/sales','list']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="archive"></i></div>
+                                Lista
+                            </a>
+
+                            <a class="nav-link" [routerLink]="['/home/sales','new-sale']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="shopping-bag"></i></div>
+                                Nueva
+                            </a>
+
+                            <!-- <a class="nav-link" [routerLink]="['/home/sales','new-sale-beta']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="shopping-bag"></i></div>
+                                Beta
+                            </a> -->
+
+                            <a class="nav-link" [routerLink]="['/home/sales','pending-payments']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="loader"></i></div>
+                                Pagos pendientes
                             </a>
 
                         </nav>

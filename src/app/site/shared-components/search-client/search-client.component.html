@@ -1,0 +1,24 @@
+<div class="row justify-content-center">
+    <form [formGroup]="searchForm">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink>Teléfono</a>
+                <ng-template ngbNavContent>
+                    <!-- <input class="form-control mb-3" type="text" formControlName="searchingCode" (ngModelChange)="searchCode()" placeholder="código de producto" maxlength="25" /> -->
+                    <input placeholder="Escribe número de teléfono registrado al cliente" id="typeahead-basicPhone" type="text" class="form-control" [focusFirst]='true' #input (selectItem)="selectedItem($event,input)" typeahead-on-select="asyncSelected = '';" formControlName="searchingPhone"
+                        [editable]='false' [ngbTypeahead]="searchPhone" [inputFormatter]="formatter" [resultFormatter]="formatter" />
+                    <small *ngIf="searching" class="form-text text-muted">buscando...</small>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink>Apellido</a>
+                <ng-template ngbNavContent>
+                    <input placeholder="Escribe el apellido del cliente" id="typeahead-basicNameClient" type="text" class="form-control" [focusFirst]='true' #input (selectItem)="selectedItem($event,input)" typeahead-on-select="asyncSelected = '';" formControlName="searchingLastName"
+                        [ngbTypeahead]="searchLastName" [inputFormatter]="formatter" [resultFormatter]="formatter" [editable]='false' />
+                    <small *ngIf="searching" class="form-text text-muted">buscando...</small>
+                </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </form>
+</div>

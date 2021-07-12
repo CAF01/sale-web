@@ -79,13 +79,13 @@
                                         {{product?.maxstock}} - {{product?.minstock}}
                                     </td> -->
                                     <td style="font-size: 20px;">
-                                        <a href="javascript:void(0);" (click)="edit(product)">
+                                        <a href="javascript:void(0);" placement="top" ngbTooltip="Editar" (click)="edit(product)">
                                             <i class="far fa-edit"></i>
                                         </a>
-                                        <a href="javascript:void(0);" *ngIf="product?.status" (click)="DelSelected(product)">
+                                        <a href="javascript:void(0);" placement="top" ngbTooltip="Borrar" *ngIf="product?.status" (click)="DelSelected(product)">
                                             <i class="far fa-trash-alt redIcon"></i>
                                         </a>
-                                        <a href="javascript:void(0);" *ngIf="!product?.status" (click)="RestoreProduct(product)">
+                                        <a href="javascript:void(0);" placement="top" ngbTooltip="Restaurar" *ngIf="!product?.status" (click)="RestoreProduct(product)">
                                             <i class="fas fa-undo-alt greenIcon"></i>
                                         </a>
                                     </td>

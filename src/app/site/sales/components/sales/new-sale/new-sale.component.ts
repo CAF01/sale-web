@@ -80,6 +80,32 @@ export class NewSaleComponent implements OnInit {
     }
   }
 
+  onReceive($event)
+  {
+    let receivedProd=$event.item as ProductInfo;
+    let searchProduct=this.listProductsForSale.find((d)=>d.productID==receivedProd.productID);
+      if(searchProduct)
+      {
+        if(this.listProductsForSale.length>0)
+        {
+          let index = this.listProductsForSale.findIndex(d=>d.productID==searchProduct.productID)
+          if(index>=0)
+          {
+            this.addQuantity(index);
+          }
+          else
+          {
+            this.asignProdValues(receivedProd);
+          }
+        }
+        else
+        {
+          this.asignProdValues(receivedProd);
+        }
+        this.saleForm.get('inputCode').setValue("");
+      }
+  }
+
 
   onEnter(event: KeyboardEvent) {
     if(this.saleForm.get('inputCode').valid)

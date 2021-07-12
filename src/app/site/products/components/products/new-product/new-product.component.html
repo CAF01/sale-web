@@ -75,7 +75,7 @@
                         <div class="row gx-3 mb-3" *ngIf="categories || brands">
                             <!-- Form Group (organization name)-->
                             <div class="col-md-6">
-                                <label class="medium mb-1 text-blue" for="category">Categoria <span style="color:red"> * </span><a (click)="addCategory()"><i class="fas fa-plus-square"></i></a></label>
+                                <label class="medium mb-1 text-blue" for="category">Categoria <span style="color:red"> * </span><a (click)="addCategory()" placement="top" ngbTooltip="Nueva categoria"><i class="fas fa-plus-square"></i></a></label>
                                 <select id="category" name="category" class="form-control" formControlName="CategoryID">
                                     <option value="{{category.categoryID}}" *ngFor="let category of categories?.data">{{category.description}}</option>
                                 </select>

@@ -4,13 +4,18 @@ import { AuthGuardServiceService } from './site/core/services/auth-guard-service
 import { HomeComponent } from './site/home-components/home/home.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },/*/home/users*/
+  { path: '', redirectTo: '/home/dash', pathMatch: 'full' },/*/home/users*/
   // { path: 'user', loadChildren: () => import('./site/user-components/user-components.module').then(m => m.UserComponentsModule) },
   {
     path: 'home',
     component: HomeComponent,
     canActivate: [AuthGuardServiceService],
     children: [
+      {
+        path:'dash',
+        loadChildren:()=>
+        import('./site/home-components/home-components.module').then((m)=>m.HomeComponentsModule),
+      },
       {
         path: 'users',
         loadChildren: () =>
@@ -49,11 +54,6 @@ const routes: Routes = [
       }
     ],
   },
-  // {
-  //   path:'dash',
-  //   loadChildren:()=>
-  //   import('./site/home-components/home-components.module').then((m)=>m.HomeComponentsModule),
-  // }
   // {
   //   path: 'catalogs',
   //   loadChildren: () =>

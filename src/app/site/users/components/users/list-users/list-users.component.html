@@ -13,7 +13,7 @@
 
                 </div>
                 <div class="dropdown col-auto mt-8">
-                    <button class="btn btn-warning dropdown-toggle" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar estado de usuarios</button>
+                    <button class="btn btn-warning dropdown-toggle" placement="top" ngbTooltip="Actividad" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar estado de usuarios</button>
                     <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
                         <a class="dropdown-item" (click)="SetStat(1)">Todos</a>
                         <a class="dropdown-item" (click)="SetStat(2)">Activos</a>
@@ -30,8 +30,8 @@
 
 <div class="card">
     <div class="card-header">
-        <span style="float: right"><a [routerLink]="['/home/users/new-user']"
-        ><i data-feather="user-plus" style="width: 30px; height: 35px"></i></a
+        <span style="float: right" placement="left" ngbTooltip="Nuevo usuario"><a [routerLink]="['/home/users/new-user']"
+        ><i data-feather="user-plus"  style="width: 30px; height: 35px"></i></a
     ></span>
     </div>
 </div>
@@ -95,19 +95,19 @@
                                         <div class="badge bg-danger text-white rounded-pill">Inactivo</div>
                                     </td>
                                     <td class="d-flex justify-content-between">
-                                        <a href="javascript:void(0);" (click)="edit(user)">
+                                        <a href="javascript:void(0);" (click)="edit(user)" placement="top" ngbTooltip="Editar">
                                             <i class="fas fa-user-edit"></i>
                                         </a>
-                                        <a href="javascript:void(0);" (click)="getAddres(user)" *ngIf="user.addressID">
+                                        <a href="javascript:void(0);" (click)="getAddres(user)" *ngIf="user.addressID" placement="left" ngbTooltip="Dirección disponible">
                                             <i class="fas fa-map-marked-alt mapIcon"></i>
                                         </a>
-                                        <a href="javascript:void(0);" (click)="getAddres(user)" *ngIf="!user.addressID">
+                                        <a href="javascript:void(0);" (click)="getAddres(user)" *ngIf="!user.addressID" placement="top" ngbTooltip="Sin dirección">
                                             <i class="fas fa-map-marked-alt hasNoMap"></i>
                                         </a>
-                                        <a href="javascript:void(0);" (click)="DelSelected(user)" *ngIf="user.status">
+                                        <a href="javascript:void(0);" (click)="DelSelected(user)" *ngIf="user.status" placement="top" ngbTooltip="Eliminar">
                                             <i class="fas fa-trash-alt redIcon"></i>
                                         </a>
-                                        <a href="javascript:void(0);" (click)="RestoreUser(user)" *ngIf="!user.status">
+                                        <a href="javascript:void(0);" (click)="RestoreUser(user)" *ngIf="!user.status" placement="top" ngbTooltip="Restaurar">
                                             <i class="fas fa-undo greenIcon"></i>
                                         </a>
                                     </td>

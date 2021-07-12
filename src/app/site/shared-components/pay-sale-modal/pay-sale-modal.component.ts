@@ -76,6 +76,10 @@ export class PaySaleModalComponent implements OnInit {
       this.saleRequest.paymentMethodID=2;
       this.saleRequest.clientID=this.clientList.clientID;
       this.insertPendingPaymentRequest=new InsertPendingPaymentRequest();
+      if(this.total<this.paying)
+      {
+        this.paying=this.total;
+      }
       this.insertPendingPaymentRequest.payed=this.paying;
       this.saleRequest.pendingPayment=this.insertPendingPaymentRequest;
       var response = await this.saleService.CreateSale(this.saleRequest).toPromise();

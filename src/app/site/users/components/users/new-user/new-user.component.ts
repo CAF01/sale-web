@@ -8,9 +8,9 @@ import { ValidateForm } from 'src/app/site/core/helpers/validate-formfields-help
 import { AddressInsertRequest } from '../../../models/request/addressinsertrequest';
 import { userInsertRequest } from '../../../models/request/userinsertrequest';
 import { UserService } from '../../../services/user.service';
-import {AnimationOptions} from 'ngx-lottie';
-import { AnimationItem } from 'lottie-web';
-import { NgZone } from '@angular/core';
+// import {AnimationOptions} from 'ngx-lottie';
+// import { AnimationItem } from 'lottie-web';
+// import { NgZone } from '@angular/core';
 import * as Feather from 'feather-icons';
 
 @Component({

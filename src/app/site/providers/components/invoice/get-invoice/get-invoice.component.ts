@@ -61,6 +61,10 @@ export class GetInvoiceComponent implements OnInit {
       skipLocationChange: true, //skip location para ocultar el json de la URL
     });
   }
+
+  onEnter(event: KeyboardEvent) {
+    this.onSearch();
+  }
   
   onSearch()
   {

@@ -20,7 +20,7 @@
         <div class="col-md-5">
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between medium">Lista
-                    <button class="btn btn-warning dropdown-toggle text-white" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
+                    <button class="btn btn-warning dropdown-toggle text-white" placement="top" ngbTooltip="Marcas disponibles/deshabilitadas" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
                     <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
                         <a class="dropdown-item" (click)="setStatus(0)">Todo</a>
                         <a class="dropdown-item" (click)="setStatus(1)">Disponibles</a>
@@ -40,13 +40,13 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <a href="javascript:void(0);" (click)="SelectBrand(brand)">
+                                <a href="javascript:void(0);" placement="top" ngbTooltip="Editar" (click)="SelectBrand(brand)">
                                     <i class="far fa-edit"></i>
                                 </a>
-                                <a href="javascript:void(0);" (click)="del(brand)" *ngIf="brand.status">
+                                <a href="javascript:void(0);" placement="top" ngbTooltip="Eliminar" (click)="del(brand)" *ngIf="brand.status">
                                     <i class="far fa-trash-alt redIcon"></i>
                                 </a>
-                                <a href="javascript:void(0);" (click)="RestoreBrand(brand)" *ngIf="!brand.status">
+                                <a href="javascript:void(0);" placement="top" ngbTooltip="Restaurar" (click)="RestoreBrand(brand)" *ngIf="!brand.status">
                                     <i class="fas fa-undo-alt greenIcon"></i>
                                 </a>
                             </div>

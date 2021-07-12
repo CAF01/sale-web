@@ -6,4 +6,5 @@ export interface PaymentHistorialInfo {
     saleID: number;
     indeb: number;
     payed: number;
+    Description:string;
 }

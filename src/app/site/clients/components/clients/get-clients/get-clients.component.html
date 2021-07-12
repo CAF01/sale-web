@@ -10,10 +10,9 @@
                     <div class="page-header-subtitle">
                         Gestiona a los clientes registrados de forma sencilla.
                     </div>
-
                 </div>
                 <div class="dropdown col-auto mt-8">
-                    <button class="btn btn-warning dropdown-toggle" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar estado de clientes</button>
+                    <button class="btn btn-warning dropdown-toggle" placement="top" ngbTooltip="Actividad" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar estado de clientes</button>
                     <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
                         <a class="dropdown-item" (click)="SetStat(1)">Todos</a>
                         <a class="dropdown-item" (click)="SetStat(2)">Activos</a>
@@ -114,19 +113,19 @@
                             </a>
                         </td>
                         <td class="d-flex justify-content-between">
-                            <a href="javascript:void(0);" (click)="edit(client)">
+                            <a href="javascript:void(0);" placement="top" ngbTooltip="Editar" (click)="edit(client)">
                                 <i class="fas fa-user-edit"></i>
                             </a>
-                            <a href="javascript:void(0);" (click)="getAddres(client)" *ngIf="client.addressID">
+                            <a href="javascript:void(0);" placement="left" ngbTooltip="Dirección disponbible" (click)="getAddres(client)" *ngIf="client.addressID">
                                 <i class="fas fa-map-marked-alt mapIcon"></i>
                             </a>
-                            <a href="javascript:void(0);" (click)="getAddres(client)" *ngIf="!client.addressID">
+                            <a href="javascript:void(0);" placement="top" ngbTooltip="Sin dirección" (click)="getAddres(client)" *ngIf="!client.addressID">
                                 <i class="fas fa-map-marked-alt hasNoMap"></i>
                             </a>
-                            <a href="javascript:void(0);" (click)="DelSelected(client)" *ngIf="client.status ">
+                            <a href="javascript:void(0);" placement="top" ngbTooltip="Eliminar" (click)="DelSelected(client)" *ngIf="client.status ">
                                 <i class="fas fa-trash-alt redIcon"></i>
                             </a>
-                            <a href="javascript:void(0);" (click)="Restoreclient(client)" *ngIf="!client.status ">
+                            <a href="javascript:void(0);" placement="top" ngbTooltip="Restaurar" (click)="Restoreclient(client)" *ngIf="!client.status ">
                                 <i class="fas fa-undo greenIcon"></i>
                             </a>
                         </td>

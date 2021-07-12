@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { DeleteRequest } from '../../catalogs/models/request/deleteRequest';
 import { PaginationListResponse } from '../../core/models/pagination-list-response';
@@ -65,11 +66,23 @@ export class ProductService {
     );
   }
 
-  getProductByCode(code:GetProductRequest):Observable<ProductInfo[]>
+  getProductByNamePipe(name:GetProductRequest):Observable<ProductInfo[]>
+  {
+    let params = new HttpParams().set('ProductName', name.productName.toString());
+    return this._http.get<ProductInfo[]>(
+      `${environment.url_api}${this.controller}/get-by-name`,{ params: params }
+    ).pipe
+      (map(response=>response)
+    );
+  }
+
+  getProductByCode(code:GetProductRequest)
   {
     let params = new HttpParams().set('Code', code.code.toString());
     return this._http.get<ProductInfo[]>(
       `${environment.url_api}${this.controller}/get-by-code`,{ params: params }
+    ).pipe(
+      map(response => response)
     );
   }
 
