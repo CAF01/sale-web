@@ -103,13 +103,7 @@ export class InsertInvoiceComponent implements OnInit {
     invoice.providerID = this.provID;
     invoice.products = this.listContentInvoice;
     invoice.providerName = this.ProviderInfo.companyName;
-
-    invoice.total = this.listContentInvoice
-      .map((data) => data.amount)
-      .reduce(function (a, b) {
-        return a + b;
-      });
-
+    
     this.providerService.insertInvoice(invoice).subscribe(
       (request) => {
         this.BackuplistContentInvoice = undefined;

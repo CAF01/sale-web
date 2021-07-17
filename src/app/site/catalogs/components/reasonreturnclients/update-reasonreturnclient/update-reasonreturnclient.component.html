@@ -1,1 +1,33 @@
-<p>update-reasonreturnclient works!</p>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+</div>
+<div class="modal-body">
+    <form [formGroup]="reasonForm">
+        <div class="row justify-content-center">
+            <div class="row gx-3">
+                <div class="mb-3 col-md-6">
+                    <label class="medium mb-2">Razón&nbsp;<span style="color: red;">*</span></label>
+                    <input class="form-control" placeholder="Ej: No funciona" type="text" formControlName="description" />
+                    <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('description')" errorMsg="Este campo no puede quedar vacío">
+                    </app-field-error-display>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label class="medium mb-2">Observaciones (Extra)</label>
+                    <input class="form-control" placeholder="Ej: Con defecto de fabrica" type="text" formControlName="observation" />
+                    <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('observation')" errorMsg="Completa este campo correctamente">
+                    </app-field-error-display>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<div class="modal-footer d-flex justify-content-between">
+    <button type="button" class="btn btn-danger" (click)="modal.close(false)">
+      Cerrar
+    </button>
+    <button type="button" class="btn btn-primary" (click)="Insert()">
+      Agregar
+    </button>
+
+</div>

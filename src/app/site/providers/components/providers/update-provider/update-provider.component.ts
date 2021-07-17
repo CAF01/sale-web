@@ -39,11 +39,11 @@ export class UpdateProviderComponent implements OnInit {
     if(this.providerForm.valid)
     {
       this.asignNewValues();
-      this.providerService.updateUser(this.updateProviderRequest).subscribe(request=>{
+      this.providerService.updateProvider(this.updateProviderRequest).subscribe(request=>{
         if(request)
         {
           console.log(request);
-
+          //redirect
         }
       },(error=>
         {
@@ -102,7 +102,6 @@ export class UpdateProviderComponent implements OnInit {
     this.providerForm.get('email').setValue(this.provider?.email);
     this.providerForm.get('contactName').setValue(this.provider?.contactName);
     this.providerForm.get('notes').setValue(this.provider?.notes);
-    console.log(this.providerForm);
   }
 
   validationInput(field: string): boolean {

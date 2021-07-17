@@ -60,6 +60,7 @@ export class GetContentSaleComponent implements OnInit {
     if(response.length>0)
     {
       this.contentSale=response;
+      console.log(response);
     }
   }
 

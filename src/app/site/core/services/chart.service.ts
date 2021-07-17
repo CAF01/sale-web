@@ -18,5 +18,12 @@ export class ChartService {
         `${environment.url_api}${this.controller}`,{params:params}
       );
     }
+    getDailyReport(id:number):Observable<ChartSale>
+    {
+      let params = new HttpParams().set('id', id.toString());
+      return this._http.get<ChartSale>(
+        `${environment.url_api}${this.controller}/daily-report`,{params:params}
+      );
+    }
 
   }

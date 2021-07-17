@@ -16,6 +16,7 @@ import { DeleteRequest } from '../models/request/deleteRequest';
 import { paymentInsertRequest } from '../models/request/paymentinsertrequest';
 import { paymentSetStatusRequest } from '../models/request/paymentsetstatusrequest';
 import { paymentUpdateRequest } from '../models/request/paymentupdaterequest';
+import { reasonClientInsertRequest } from '../models/request/reasonclientinsertrequest';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class CatalogService {
   brandController = 'Brand';
   categoryController = 'Category';
   paymentController = 'PaymentMethod';
+  reasonReturnClientController='ReasonReturnClient';
 
   constructor(private _http: HttpClient) { }
 
@@ -125,6 +127,13 @@ export class CatalogService {
   deletePhoto(deleteR:DeleteRequest):Observable<boolean>{
     return this._http.post<boolean>(
       `${environment.url_api}${this.brandController}/delete`,deleteR
+    );
+  }
+
+  insertReasonReturnClient(reason:reasonClientInsertRequest):Observable<number>
+  {
+    return this._http.post<number>(
+      `${environment.url_api}${this.reasonReturnClientController}`,reason
     );
   }
 

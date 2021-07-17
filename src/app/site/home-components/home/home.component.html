@@ -49,16 +49,19 @@
                     <div class="collapse" id="collapseAdmin" data-parent="#accordionSidenav">
 
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" [routerLink]="['/home/clients','insert-client']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
+                                Agregar nuevo
+                            </a>
+
+
+
                             <a class="nav-link" [routerLink]="['/home/clients','list']" routerLinkActive="active">
                                 <div class="nav-link-icon"><i data-feather="book-open"></i></div>
                                 Lista
                             </a>
 
 
-                            <a class="nav-link" [routerLink]="['/home/clients','insert-client']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
-                                Agregar nuevo
-                            </a>
 
                         </nav>
                     </div>
@@ -72,14 +75,15 @@
                     <div class="collapse" id="sales" data-parent="#accordionSidenav">
 
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" [routerLink]="['/home/sales','list']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="archive"></i></div>
-                                Lista
-                            </a>
-
                             <a class="nav-link" [routerLink]="['/home/sales','new-sale']" routerLinkActive="active">
                                 <div class="nav-link-icon"><i data-feather="shopping-bag"></i></div>
                                 Nueva
+                            </a>
+
+
+                            <a class="nav-link" [routerLink]="['/home/sales','list']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="archive"></i></div>
+                                Lista
                             </a>
 
                             <!-- <a class="nav-link" [routerLink]="['/home/sales','new-sale-beta']" routerLinkActive="active">
@@ -91,6 +95,24 @@
                                 <div class="nav-link-icon"><i data-feather="loader"></i></div>
                                 Pagos pendientes
                             </a>
+
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLayoutsStarterTemplates" aria-expanded="false" aria-controls="collapseLayoutsStarterTemplates">
+                                <div class="nav-link-icon"><i class="redIcon" data-feather="rotate-cw"></i></div>
+                                Devoluciones
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayoutsStarterTemplates" data-bs-parent="#accordionSidenavLayout">
+                                <nav class="sidenav-menu-nested nav">
+                                    <a class="nav-link" [routerLink]="['/home/clients','new-return']" routerLinkActive="active">
+                                        <div class="nav-link-icon"><i data-feather="plus"></i></div>
+                                        Nueva
+                                    </a>
+                                    <a class="nav-link" [routerLink]="['/home/sales','list']" routerLinkActive="active">
+                                        <div class="nav-link-icon"><i data-feather="list"></i></div>
+                                        Registro
+                                    </a>
+                                </nav>
+                            </div>
 
                         </nav>
                     </div>
@@ -130,15 +152,16 @@
 
                     <div class="collapse" id="collapseprov" data-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" [routerLink]="['/home/providers/','new-provider']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
+                                Agregar nuevo
+                            </a>
+
                             <a class="nav-link" [routerLink]="['/home/providers','list']" routerLinkActive="active">
                                 <div class="nav-link-icon"><i data-feather="book-open"></i></div>
                                 Lista
                             </a>
 
-                            <a class="nav-link" [routerLink]="['/home/providers/','new-provider']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
-                                Agregar nuevo
-                            </a>
 
                             <a class="nav-link" [routerLink]="['/home/providers/','new-invoice']" routerLinkActive="active">
                                 <div class="nav-link-icon"><i data-feather="package"></i></div>
@@ -161,14 +184,14 @@
 
                     <div class="collapse" id="collapseusers" data-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" [routerLink]="[ '/home/users','list']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="book-open"></i></div>
-                                Lista
-                            </a>
-
                             <a class="nav-link" [routerLink]="[ '/home/users/','new-user']" routerLinkActive="active">
                                 <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
                                 Agregar Nuevo
+                            </a>
+
+                            <a class="nav-link" [routerLink]="[ '/home/users','list']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="book-open"></i></div>
+                                Lista
                             </a>
 
                         </nav>

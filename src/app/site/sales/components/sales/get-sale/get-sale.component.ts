@@ -34,7 +34,7 @@ export class GetSaleComponent implements OnInit {
   ngOnInit(): void {
     this.getSales();
     moment().locale('es');
-    // this.initSiganR();
+    this.initSiganR();
     this.SetSearchForm();
   }
 
@@ -95,20 +95,17 @@ export class GetSaleComponent implements OnInit {
   }
 
 
-  // initSiganR() {
-  //   let connection = new HubConnectionBuilder()
-  //     .withUrl(`${environment.url_base}Invoices`)
-  //     .build();
+  initSiganR() {
+    let connection = new HubConnectionBuilder()
+      .withUrl(`${environment.url_base}Sales`)
+      .build();
+    connection.on('SaleInsert', (data) => {
+      let Sale = data as SalesInfo;
+      this.Sales.data.unshift(Sale);
+    });
 
-  //   connection.on('SendInvoice', (data) => {
-  //     let Invoice = data as InvoiceInfo;
-  //     this.Invoices.data.unshift(Invoice);
-
-  //     this.toastr.info("Folio:"+Invoice.invoiceID,"Nueva factura registrada.");
-  //   });
-
-  //   connection.start().then();
-  // }
+    connection.start().then();
+  }
 
   // pageChange(page: any) {
   //   this.providerService

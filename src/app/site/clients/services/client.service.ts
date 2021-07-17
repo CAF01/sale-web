@@ -3,10 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ReasonReturnInfo } from '../../catalogs/models/entitys/reasonreturninfo';
 import { PaginationListResponse } from '../../core/models/pagination-list-response';
 import { client } from '../models/entitys/client';
+import { ProductReturned } from '../models/entitys/productreturned';
 import { insertAddressClientRequest } from '../models/request/insertaddressclientrequest';
 import { insertClientRequest } from '../models/request/insertclientrequest';
+import { InsertReturnClientRequest } from '../models/request/insertreturnclientrequest';
 import { setStatusClientRequest } from '../models/request/setstatusclient';
 import { updateAddressClientRequest } from '../models/request/updateaddressclientrequest';
 import { updateClientRequest } from '../models/request/updateclientrequest';
@@ -16,8 +19,9 @@ import { updateClientRequest } from '../models/request/updateclientrequest';
 })
 export class ClientService {
   controller = 'Client';
-
+  controllerReturn = 'ReturnClient';
   controllerAddress = 'ClientAddress';
+  controllerReason = 'ReasonReturnClient';
   constructor(private _http: HttpClient) {}
 
     newClient(Client: insertClientRequest): Observable<number> {
@@ -100,5 +104,25 @@ export class ClientService {
         (map(response=>response)
       );
     }
+
+    newReturn(request: InsertReturnClientRequest[]): Observable<number> {
+      return this._http.post<number>(
+        `${environment.url_api}${this.controllerReturn}`,request
+      );
+    }
+
+    getReasons(): Observable<ReasonReturnInfo[]> {
+      return this._http.get<ReasonReturnInfo[]>(
+        `${environment.url_api}${this.controllerReason}`
+      );
+    }
+
+    getReturnedProds(id:number): Observable<ProductReturned[]> {
+      let params = new HttpParams().set('id', id.toString());
+      return this._http.get<ProductReturned[]>(
+        `${environment.url_api}${this.controllerReturn}/get-product-returneds`,{params:params}
+      );
+    }
+  
 
 }

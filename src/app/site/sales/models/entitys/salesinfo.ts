@@ -7,4 +7,5 @@ export class SalesInfo {
     description:string;
     client:string;
     phone:string;
+    payed:number;
 }

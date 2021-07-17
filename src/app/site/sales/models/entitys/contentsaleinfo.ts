@@ -8,4 +8,5 @@ export class ContentSaleInfo {
     amount: number;
     discount: number;
     unitPrice: number;
+    contentSaleID:number;
 }

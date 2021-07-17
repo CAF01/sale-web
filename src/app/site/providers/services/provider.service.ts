@@ -35,7 +35,7 @@ export class ProviderService {
     );
   }
 
-  updateUser(provider:updateProviderRequest):Observable<boolean>{
+  updateProvider(provider:updateProviderRequest):Observable<boolean>{
     return this._http.put<boolean>(
       `${environment.url_api}${this.controller}`,provider
     );
