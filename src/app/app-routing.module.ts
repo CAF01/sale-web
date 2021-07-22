@@ -51,6 +51,11 @@ const routes: Routes = [
         path:'sales',
         loadChildren:()=>
         import('./site/sales/sales.module').then((m)=>m.SalesModule),
+      },
+      {
+        path:'reports',
+        loadChildren:()=>
+        import('./site/reports/reports.module').then((m)=>m.ReportsModule),
       }
     ],
   },
@@ -93,6 +98,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./site/account/account.module').then((m) => m.AccountModule),
   },
+  { path: 'reports', loadChildren: () => import('./site/reports/reports.module').then(m => m.ReportsModule) },
 ];
 
 @NgModule({

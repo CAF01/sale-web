@@ -27,6 +27,24 @@
                 </div>
                 <div class="card-body" *ngIf="paymentmethodlist">
                     <ng-container *ngFor="let payment of paymentmethodlist; let i = index">
+                        <div class="card h-100 border-start-lg mb-1" [ngClass]="{'border-start-success': payment.status,'border-start-danger':!payment.status}">
+                            <div class="card-body">
+                                <div class="h3 d-flex justify-content-between">{{payment.description}}
+                                    <div class="dropdown">
+                                        <button class="btn btn-transparent-dark btn-icon dropdown-toggle" placement="top" ngbTooltip="Acciones" id="{{i}}" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                        <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="{{i}}">
+                                            <a class="dropdown-item" href="javascript:void(0);" (click)="SelectPayment(payment)">Actualizar</a>
+                                            <a class="dropdown-item" href="javascript:void(0);" (click)="del(payment)" *ngIf="payment.status">Borrar</a>
+                                            <a class="dropdown-item" href="javascript:void(0);" (click)="RestorePayment(payment)" *ngIf="!payment.status">Restaurar</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <!-- <ng-container *ngFor="let payment of paymentmethodlist; let i = index">
                         <div class="d-flex align-items-center justify-content-between mb-4" *ngIf="payment.status==statusBrands || statusBrands==null">
                             <div class="d-flex align-items-center flex-shrink-0 me-3">
                                 <div class="avatar avatar-xl me-3 bg-gray-200"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" alt="" /></div>
@@ -45,7 +63,7 @@
                                 </div>
                             </div>
                         </div>
-                    </ng-container>
+                    </ng-container> -->
                 </div>
             </div>
         </div>

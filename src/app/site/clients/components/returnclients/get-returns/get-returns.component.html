@@ -1,1 +1,64 @@
-<p>get-returns works!</p>
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container-xl px-4">
+        <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-auto mt-4">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i data-feather="file-text"></i></div>
+                        Historial de devoluciones
+                    </h1>
+                    <div class="page-header-subtitle">Verifica el estado de las devoluciones realizadas por los clientes.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main page content-->
+<div class="container-xl px-4 mt-n10">
+    <div class="card mb-4 d-flex justify-content-between">
+        <!-- <div class="card-header d-flex justify-content-between">Información de ventas
+            <form [formGroup]="searchForm" class="col-md-3">
+                <div class="input-group input-group-joined input-group-solid">
+                    <input class="form-control pe-0" type="search" formControlName="saleID" maxlength="6" (keyup.enter)="onEnter($event)" placeholder="Buscar por número" aria-label="Search" />
+                    <div class="input-group-text"><a href="javascript:void(0);" placement="top" ngbTooltip="Buscar" (click)="onSearch()"><i class="fas fa-search"></i></a></div>
+                </div>
+            </form>
+        </div> -->
+        <div class="card-body">
+            <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                <div class="dataTable-container">
+                    <table id="datatablesSimple" class="dataTable-table">
+                        <thead>
+                            <tr>
+                                <th data-sortable=""># Venta</th>
+                                <th data-sortable="">Fecha de registro</th>
+                                <th data-sortable="">Atendió</th>
+                                <th data-sortable="">Producto</th>
+                                <th data-sortable="">Cantidad</th>
+                                <th data-sortable="">Devolución</th>
+                                <th data-sortable="">Razón</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="historial">
+                            <tr *ngFor="let item of historial?.data">
+                                <td>{{item.saleID}}</td>
+                                <td>{{ formatDate(item.registerDate) | amDateFormat: "DD" }} de {{ formatDate(item.registerDate) | amLocale: "es" | amDateFormat: "MMMM YYYY" }}</td>
+                                <td>{{item.userName}}</td>
+                                <td>{{item.productName}}</td>
+                                <td>{{item.quantity}}</td>
+                                <td>${{item.totalPrice}}</td>
+                                <td>{{item.razon}}</td>
+                                <!-- <td class="d-flex justify-content-center">
+                                    <a href="javascript:void(0);" placement="top" ngbTooltip="Abrir" [ngStyle]="{'font-size': '25px'}" (click)="openSale(sale)">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ngb-pagination *ngIf="historial?.totalPages > 1" [(page)]="page" [pageSize]="historial?.pageSize" (pageChange)="pageChange($event)" [collectionSize]="historial?.totalRows"></ngb-pagination>
+            </div>
+        </div>
+    </div>
+</div>

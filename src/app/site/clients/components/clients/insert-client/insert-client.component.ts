@@ -33,6 +33,7 @@ export class InsertClientComponent implements OnInit {
   flagAddressSkipped: boolean;
   addressSubmited: boolean;
   list:boolean=false;
+  validatePhone=0;
 
   constructor(private _formBuilder: FormBuilder,private clientService : ClientService, private toastr : ToastrService,
     private router: Router) { }
@@ -49,6 +50,11 @@ export class InsertClientComponent implements OnInit {
     }
   }
 
+  async findIfExistsPhone(phone:string)
+  { 
+    this.validatePhone = await this.clientService.findIfExistsPhone(phone).toPromise();
+  }
+
   return()
   {
     this.router.navigate(['home/sales/new-sale-beta']);
@@ -61,16 +67,25 @@ export class InsertClientComponent implements OnInit {
     {
       if(this.clientForm.valid)
       {
-        this.client=this.clientForm.value;
-        this.telephone= SubstringHelper.CutString(this.client.phone);
-        if(this.client.workPhone!="")
+        this.findIfExistsPhone(this.clientForm.get('phone').value);
+        if(this.validatePhone>0)
         {
-          this.workphone=SubstringHelper.CutString(this.client.workPhone);
+          this.toastr.error('El teléfono ya se ha registrado anteriormente','Error');
+          this.flag=false;
+          this.clientForm.get('phone').reset();
         }
-        this.formSubmitAttempt=true;
-        this.flag = true;
-        this.Redirect('#wizard2');
-        
+        else
+        {
+          this.client=this.clientForm.value;
+          this.telephone= SubstringHelper.CutString(this.client.phone);
+          if(this.client.workPhone!="")
+          {
+            this.workphone=SubstringHelper.CutString(this.client.workPhone);
+          }
+          this.formSubmitAttempt=true;
+          this.flag = true;
+          this.Redirect('#wizard2');
+        }
       }
       else
       {

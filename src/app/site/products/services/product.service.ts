@@ -26,6 +26,14 @@ export class ProductService {
     )
   }
 
+  getProductsByBrand(idBrand:number):Observable<PaginationListResponse<ProductInfo>>
+  {
+    let params = new HttpParams().set('idBrand',idBrand.toString());
+    return this._http.get<PaginationListResponse<ProductInfo>>(
+      `${environment.url_api}${this.controller}/products-by-brand`,{params:params}
+    )
+  }
+
   newProduct(product: InsertProductRequest): Observable<number> {
     return this._http.post<number>(
       `${environment.url_api}${this.controller}`,product

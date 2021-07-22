@@ -1,6 +1,8 @@
-export interface ReturnProductClientInfo {
+export class ReturnProductClientInfo {
+    saleID:number;
+    userName:string;
     returnID: number;
-    registerDate: string;
+    registerDate: Date;
     razon: string;
     observation: string;
     productName: string;

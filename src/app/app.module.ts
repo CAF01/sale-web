@@ -13,6 +13,7 @@ import { SharedComponentsModule } from './site/shared-components/shared-componen
 import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './site/home-components/dashboard/dashboard.component';
 import { ChartsModule } from 'ng2-charts';
+import { MomentModule } from 'ngx-moment';
 // import { NgxCurrencyModule } from 'ngx-currency';
 
 
@@ -32,7 +33,8 @@ import { ChartsModule } from 'ng2-charts';
     CommonModule,
     ToastNoAnimationModule.forRoot(),
     SharedComponentsModule,
-    ChartsModule
+    ChartsModule,
+    MomentModule
 
 
     // NgxCurrencyModule

@@ -15,6 +15,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { HistorialPaymentModalComponent } from './historial-payment-modal/historial-payment-modal.component';
 import { SearchProductsComponent } from './search-products/search-products.component';
 import { SearchClientComponent } from './search-client/search-client.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 
@@ -35,6 +36,7 @@ export function playerFactory()
     HistorialPaymentModalComponent,
     SearchProductsComponent,
     SearchClientComponent,
+    CalendarComponent,
   ],
   imports: [
     CommonModule,
@@ -55,7 +57,8 @@ export function playerFactory()
     FileUploadComponent,
     NgbModule,
     SearchProductsComponent,
-    SearchClientComponent
+    SearchClientComponent,
+    CalendarComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

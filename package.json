@@ -28,6 +28,7 @@
     "chart.js": "^2.9.4",
     "css-animator": "^2.3.1",
     "feather-icons": "^4.28.0",
+    "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
     "lottie-web": "^5.7.11",
     "moment": "^2.29.1",

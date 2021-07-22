@@ -1,4 +1,4 @@
-export interface InsertReturnProviderRequest {
+export class InsertReturnProviderRequest {
     reasonID: number;
     quantity: number;
     contentID: number;

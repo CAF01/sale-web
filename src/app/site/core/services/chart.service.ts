@@ -25,5 +25,11 @@ export class ChartService {
         `${environment.url_api}${this.controller}/daily-report`,{params:params}
       );
     }
+    getReports():Observable<ChartSale>
+    {
+      return this._http.get<ChartSale>(
+        `${environment.url_api}${this.controller}/reports`
+      );
+    }
 
   }

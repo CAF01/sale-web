@@ -5,4 +5,8 @@ export class ChartSale {
     earnDay:number;
     avgSale:number;
     earnYear:number;
+    earnMonth:number;
+    users:number;
+    pendingPayments:number;
+
 }

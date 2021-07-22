@@ -17,6 +17,9 @@ import { paymentInsertRequest } from '../models/request/paymentinsertrequest';
 import { paymentSetStatusRequest } from '../models/request/paymentsetstatusrequest';
 import { paymentUpdateRequest } from '../models/request/paymentupdaterequest';
 import { reasonClientInsertRequest } from '../models/request/reasonclientinsertrequest';
+import { reasonClientUpdateRequest } from '../models/request/reasonclientupdaterequest';
+import { reasonProviderInsertRequest } from '../models/request/reasonproviderinsertrequest';
+import { reasonProviderUpdateRequest } from '../models/request/reasonproviderupdaterequest';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +29,7 @@ export class CatalogService {
   categoryController = 'Category';
   paymentController = 'PaymentMethod';
   reasonReturnClientController='ReasonReturnClient';
+  reasonReturnProviderController='ReasonReturnProvider';
 
   constructor(private _http: HttpClient) { }
 
@@ -134,6 +138,27 @@ export class CatalogService {
   {
     return this._http.post<number>(
       `${environment.url_api}${this.reasonReturnClientController}`,reason
+    );
+  }
+
+  updateReasonReturnClient(reason:reasonClientUpdateRequest):Observable<boolean>
+  {
+    return this._http.put<boolean>(
+      `${environment.url_api}${this.reasonReturnClientController}`,reason
+    );
+  }
+
+  insertReasonReturnProvider(reason:reasonProviderInsertRequest):Observable<number>
+  {
+    return this._http.post<number>(
+      `${environment.url_api}${this.reasonReturnProviderController}`,reason
+    );
+  }
+
+  updateReasonReturnProvider(reason:reasonProviderUpdateRequest):Observable<boolean>
+  {
+    return this._http.put<boolean>(
+      `${environment.url_api}${this.reasonReturnProviderController}`,reason
     );
   }
 

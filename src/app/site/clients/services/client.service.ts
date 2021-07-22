@@ -7,6 +7,7 @@ import { ReasonReturnInfo } from '../../catalogs/models/entitys/reasonreturninfo
 import { PaginationListResponse } from '../../core/models/pagination-list-response';
 import { client } from '../models/entitys/client';
 import { ProductReturned } from '../models/entitys/productreturned';
+import { ReturnProductClientInfo } from '../models/entitys/returnproductclientinfo';
 import { insertAddressClientRequest } from '../models/request/insertaddressclientrequest';
 import { insertClientRequest } from '../models/request/insertclientrequest';
 import { InsertReturnClientRequest } from '../models/request/insertreturnclientrequest';
@@ -117,12 +118,35 @@ export class ClientService {
       );
     }
 
+    getHistorialReturns(): Observable<PaginationListResponse<ReturnProductClientInfo>> 
+    {
+      return this._http.get<PaginationListResponse<ReturnProductClientInfo>>(
+        `${environment.url_api}${this.controllerReturn}`
+      );
+    }
+    getHistorialReturnsByPage(page:number): Observable<PaginationListResponse<ReturnProductClientInfo>> 
+    {
+      let params = new HttpParams().set('skip', page.toString());
+      return this._http.get<PaginationListResponse<ReturnProductClientInfo>>(
+        `${environment.url_api}${this.controllerReturn}`,{params:params}
+      );
+    }
+
     getReturnedProds(id:number): Observable<ProductReturned[]> {
       let params = new HttpParams().set('id', id.toString());
       return this._http.get<ProductReturned[]>(
         `${environment.url_api}${this.controllerReturn}/get-product-returneds`,{params:params}
       );
     }
+
+    findIfExistsPhone(Phone: string): Observable<number> {
+      let params = new HttpParams().set('Phone', Phone);
+      return this._http.get<number>(
+        `${environment.url_api}${this.controller}/exist-phone`,{ params: params }
+      );
+    }
+
+
   
 
 }

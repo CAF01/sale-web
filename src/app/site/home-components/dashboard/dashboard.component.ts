@@ -8,6 +8,7 @@ import { ChartService } from '../../core/services/chart.service';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import { environment } from 'src/environments/environment';
 import { SalesInfo } from '../../sales/models/entitys/salesinfo';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -59,7 +60,8 @@ export class DashboardComponent implements OnInit {
   
   constructor(
     private helperService: HelperService,
-    private chartService: ChartService
+    private chartService: ChartService,
+    private router : Router
   ) {}
 
   ngOnInit(): void {
@@ -105,6 +107,11 @@ export class DashboardComponent implements OnInit {
     });
 
     connection.start().then();
+  }
+
+  openGeneralReports()
+  {
+    this.router.navigate(['home/reports']);
   }
 
   // async GetDailyReport()

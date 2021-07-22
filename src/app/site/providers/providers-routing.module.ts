@@ -6,6 +6,8 @@ import { InsertInvoiceComponent } from './components/invoice/insert-invoice/inse
 import { GetProvidersComponent } from './components/providers/get-providers/get-providers.component';
 import { InsertProviderComponent } from './components/providers/insert-provider/insert-provider.component';
 import { UpdateProviderComponent } from './components/providers/update-provider/update-provider.component';
+import { GetReturnproviderComponent } from './components/return-provider/get-returnprovider/get-returnprovider.component';
+import { InsertReturnproviderComponent } from './components/return-provider/insert-returnprovider/insert-returnprovider.component';
 // import { ProvidersComponent } from './providers.component';
 
 const routes: Routes = [
@@ -13,27 +15,34 @@ const routes: Routes = [
     path: 'new-provider',
     component: InsertProviderComponent /*, component: ProvidersComponent*/,
   },
-  { 
-    path: 'list', 
-    component: GetProvidersComponent 
+  {
+    path: 'list',
+    component: GetProvidersComponent,
   },
   {
     path: 'update-provider',
-    component: UpdateProviderComponent
+    component: UpdateProviderComponent,
   },
   {
-    path:'new-invoice',
-    component:InsertInvoiceComponent
+    path: 'new-invoice',
+    component: InsertInvoiceComponent,
   },
   {
-    path:'list-invoice',
-    component:GetInvoiceComponent
+    path: 'list-invoice',
+    component: GetInvoiceComponent,
   },
   {
-    path:'content-invoice',
-    component:GetContentInvoiceComponent
+    path: 'content-invoice',
+    component: GetContentInvoiceComponent,
+  },
+  {
+    path:'insert-return',
+    component:InsertReturnproviderComponent
+  },
+  {
+    path:'historial-returns',
+    component:GetReturnproviderComponent
   }
-  
 ];
 
 @NgModule({

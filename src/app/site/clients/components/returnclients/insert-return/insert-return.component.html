@@ -24,7 +24,7 @@
             <div class="card-header border-bottom">
                 <ul class="nav nav-pills card-header-pills" id="cardPill" role="tablist">
                     <li class="nav-item"><a class="nav-link active" id="overview-pill" href="#overviewPill" data-bs-toggle="tab" role="tab" aria-controls="overview" aria-selected="true">Lista de productos</a></li>
-                    <li class="nav-item"><a class="nav-link" id="example-pill" href="#examplePill" data-bs-toggle="tab" role="tab" aria-controls="example" aria-selected="false">Información de compra</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" id="example-pill" href="#examplePill" data-bs-toggle="tab" role="tab" aria-controls="example" aria-selected="false">Información de compra</a></li> -->
                     <li class="nav-item"><a class="nav-link" [ngClass]="{'disabled': !historial}" id="historial-pill" href="#historialPill" data-bs-toggle="tab" role="tab" aria-controls="example" aria-selected="false">Historial de devoluciones</a></li>
                 </ul>
             </div>
@@ -60,8 +60,11 @@
                                                     <td class="text-end fw-bold" *ngIf="existReturned && Validando[i]?.changed">${{calcAmount(item?.unitPrice,Validando[i]?.realQuant)}}</td>
                                                     <td class="text-end fw-bold" *ngIf="!existReturned || Validando[i]?.changed==false">${{item.amount}}</td>
                                                     <td class="text-center fw-bold">
-                                                        <div class="form-check d-flex justify-content-center disableDiv" [ngClass]="{'enabledDiv':existReturned && Validando[i].realQuant>0 || !existReturned}">
+                                                        <div class="form-check d-flex justify-content-center" *ngIf="((existReturned && Validando[i].realQuant>0) || !existReturned)">
                                                             <input class="form-check-input" type="checkbox" [checked]="checkAll" (change)="onCheckboxChange($event,item)" id="{{item.contentSaleID}}">
+                                                        </div>
+                                                        <div class="form-check d-flex justify-content-center disableDiv" *ngIf="existReturned && Validando[i].realQuant==0">
+                                                            <!-- <input class="form-check-input" type="checkbox" [checked]="checkAll" (change)="onCheckboxChange($event,item)" id="{{item.contentSaleID}}"> -->
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -97,7 +100,7 @@
                                                                 <th scope="col ">Producto</th>
                                                                 <th class="text-end" scope="col">Cantidad</th>
                                                                 <th class="text-end" scope="col">Devolución</th>
-                                                                <th class="text-end" scope="col">Razón</th>
+                                                                <th class="text-end" scope="col">Razón <a href="javascript:void();" (click)="addReason()" placement="top" ngbTooltip="Nueva razón"><i class="fas fa-plus-square"></i></a></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -129,7 +132,7 @@
                                         <br>
                                         <br>
                                         <div class="d-flex justify-content-between">
-                                            <button class="btn btn-danger">Cancelar</button>
+                                            <button class="btn btn-danger" type="button" (click)="cancel()">Cancelar</button>
                                             <button class="btn btn-primary" type="submit" (click)="return()">Realizar devolución</button>
                                         </div>
                                     </div>
@@ -167,7 +170,7 @@
                                                 <div class="fw-bold">{{item?.description}}</div>
                                                 <div class="small text-muted">{{item.observation}}</div>
                                             </td>
-                                            <td class="fw-bold">{{item?.registerDate}}</td>
+                                            <td class="fw-bold">{{ formatDate(item.registerDate) | amDateFormat: "DD" }} de {{ formatDate(item.registerDate) | amLocale: "es" | amDateFormat: "MMMM YYYY" }}</td>
                                             <td class="text-end fw-bold">{{item.quantity}}</td>
                                             <td class="text-end fw-bold">${{item.totalPrice}}</td>
                                         </tr>

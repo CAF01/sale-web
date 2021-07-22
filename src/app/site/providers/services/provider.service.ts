@@ -11,6 +11,9 @@ import { setStatusProviderRequest } from '../models/request/setstatusproviderreq
 import { InsertInvoiceRequest } from '../models/request/insertinvoicerequest';
 import { InvoiceInfo } from '../models/entitys/invoiceinfo';
 import { InvoiceContentInfo } from '../models/entitys/invoicecontentinfo';
+import { ReturnProductProviderInfo } from '../models/entitys/returnproductproviderinfo';
+import { ReasonReturnProvider } from '../../catalogs/models/entitys/reasonreturnproviderinfo';
+import { InsertReturnProviderRequest } from '../models/request/insertreturnproviderrequest';
 
 
 @Injectable({
@@ -19,6 +22,8 @@ import { InvoiceContentInfo } from '../models/entitys/invoicecontentinfo';
 export class ProviderService {
   controller = 'Provider';
   controllerInvoice = 'Invoice';
+  controllerReason = 'ReasonReturnProvider';
+  controllerReturn = 'ReturnProvider';
 
   constructor(private _http: HttpClient) { }
 
@@ -101,12 +106,56 @@ export class ProviderService {
     );
   }
 
+  getContentInvoiceByID(id:number):Observable<InvoiceContentInfo[]>
+  {
+    let params = new HttpParams().set('id', id.toString());
+    return this._http.get<InvoiceContentInfo[]>(
+      `${environment.url_api}${this.controllerInvoice}/content-invoice-by-id`,{params:params}
+    );
+  }
+
   getInvoiceByPage(page: number): Observable<PaginationListResponse<InvoiceInfo>> {
     let params = new HttpParams().set('skip', page.toString());
 
     return this._http.get<PaginationListResponse<InvoiceInfo>>(
       `${environment.url_api}${this.controllerInvoice}/all-invoice`,
       { params: params }
+    );
+  }
+
+  getListReturneds(invoiceID:number):Observable<ReturnProductProviderInfo[]>
+  {
+    let params = new HttpParams().set('id', invoiceID.toString());
+    return this._http.get<ReturnProductProviderInfo[]>(
+      `${environment.url_api}${this.controllerReturn}/get-product-returneds`,{params:params}
+    );
+  }
+
+  getHistorialReturnsToProvier():Observable<PaginationListResponse<ReturnProductProviderInfo>>
+  {
+    return this._http.get<PaginationListResponse<ReturnProductProviderInfo>>(
+      `${environment.url_api}${this.controllerReturn}`
+    );
+  }
+
+  getHistorialReturnsToProvierByPage(page:number):Observable<PaginationListResponse<ReturnProductProviderInfo>>
+  {
+    let params = new HttpParams().set('skip',page.toString());
+    return this._http.get<PaginationListResponse<ReturnProductProviderInfo>>(
+      `${environment.url_api}${this.controllerReturn}`,{params:params}
+    );
+  }
+
+  getReasonReturn():Observable<ReasonReturnProvider[]>
+  {
+    return this._http.get<ReasonReturnProvider[]>(
+      `${environment.url_api}${this.controllerReason}`
+    );
+  }
+
+  newReturn(request: InsertReturnProviderRequest[]): Observable<number> {
+    return this._http.post<number>(
+      `${environment.url_api}${this.controllerReturn}`,request
     );
   }
 }

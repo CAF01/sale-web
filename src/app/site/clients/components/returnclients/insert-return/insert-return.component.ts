@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as Feather from 'feather-icons';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { UpdateReasonreturnclientComponent } from 'src/app/site/catalogs/components/reasonreturnclients/update-reasonreturnclient/update-reasonreturnclient.component';
 import { ReasonReturnInfo } from 'src/app/site/catalogs/models/entitys/reasonreturninfo';
@@ -42,8 +43,10 @@ export class InsertReturnComponent implements OnInit {
   dynamicForm: FormGroup;
   existReturned:boolean=false;
   checks:any[]=[];
+  checkallControl:any;
   ngOnInit(): void {
     Feather.replace();
+    moment().locale('es');
     this.SetValidatorSearch();
     this.SetValidatorReturn();
     this.getReasons();
@@ -51,6 +54,10 @@ export class InsertReturnComponent implements OnInit {
       numberOfTickets: ['', Validators.required],
       products: new FormArray([])
     });
+  }
+
+  formatDate(date: Date) {
+    return new Date(date);
   }
 
   get f() { return this.dynamicForm.controls; }
@@ -114,13 +121,13 @@ export class InsertReturnComponent implements OnInit {
         }
         else
         {
-          this.ListReturneds=[];
+          this.ListReturneds=null;
           this.historial = false;
         }
         
       },error=>
       {
-        this.ListReturneds=[];
+        this.ListReturneds=null;
         console.log(error);
         this.historial = false;
       });
@@ -169,7 +176,57 @@ export class InsertReturnComponent implements OnInit {
 
   selectAll(e)
   {
+    this.checkallControl=e;
     this.checkAll==false ? this.checkAll=true : this.checkAll=false;
+    if(e.currentTarget.checked)//checked
+    {
+      if(this.contentToReturn && this.t.controls.length>=1)
+      {
+        this.contentSale.forEach(element => {
+          let valQuant = this.Validando.find(d=>d.idProd==element.contentSaleID);
+          if(!this.contentToReturn.find(d=>d.contentSaleID==element.contentSaleID))
+          {
+            if(valQuant.realQuant>0)
+            {
+              this.t.push(this._formBuilder.group({quantity:[null, [Validators.required, Validators.min(1)]],
+                totalPrice: [null, [Validators.required, Validators.min(1)]],
+                reasonID: [null, [Validators.required, Validators.min(1)]],
+              }));
+              this.t.controls[this.t.controls.length-1].get('quantity').setValue(1);
+              this.t.controls[this.t.controls.length-1].get('reasonID').setValue(this.reasons[0].reasonID);
+              this.t.controls[this.t.controls.length-1].get('totalPrice').setValue(element.unitPrice*1);
+              this.t.controls[this.t.controls.length-1].get('totalPrice').disable();
+      
+              this.contentToReturn.push(element);
+            }
+          }
+        });
+      }
+      else
+      {
+        this.checks=[];
+        this.contentSale.forEach(element => {
+          let valQuant = this.Validando.find(d=>d.idProd==element.contentSaleID);
+          if(valQuant.realQuant>0)
+          {
+            this.t.push(this._formBuilder.group({quantity:[null, [Validators.required, Validators.min(1)]],
+              totalPrice: [null, [Validators.required, Validators.min(1)]],
+              reasonID: [null, [Validators.required, Validators.min(1)]],
+            }));
+            this.t.controls[this.t.controls.length-1].get('quantity').setValue(1);
+            this.t.controls[this.t.controls.length-1].get('reasonID').setValue(this.reasons[0].reasonID);
+            this.t.controls[this.t.controls.length-1].get('totalPrice').setValue(element.unitPrice*1);
+            this.t.controls[this.t.controls.length-1].get('totalPrice').disable();
+      
+            this.contentToReturn.push(element);
+          }
+        });
+      }
+    }
+    else
+    {
+      this.cancel();
+    }
   }
 
   async onEnter(event: KeyboardEvent) {
@@ -217,8 +274,8 @@ export class InsertReturnComponent implements OnInit {
       request.push(item);
       i++;
     }
-    // var response = await this.clientService.newReturn(request).toPromise();
-    if (1 > 0) 
+    var response = await this.clientService.newReturn(request).toPromise();
+    if (response > 0) 
     {
       if (this.ListReturneds) 
       {
@@ -228,7 +285,7 @@ export class InsertReturnComponent implements OnInit {
       {
         this.ListReturneds = [];
         this.asignValuesToNewReturned(request);
-        if (this.ListReturneds.length >= 1) this.historial = true;
+        this.ListReturneds.length >= 1 ? this.historial = true : false;
       }
       this.toastr.success('Devolución realizada', 'Correcto');
       this.cancel();
@@ -263,7 +320,9 @@ export class InsertReturnComponent implements OnInit {
     this.checks=[];
     this.t.controls=[];
     this.t.reset();
+    this.checkAll=false;
     this.contentToReturn=[];
+    this.checkallControl.target.checked=false;
   }
 
   validateQuantity(i:number)
@@ -303,13 +362,11 @@ export class InsertReturnComponent implements OnInit {
 
     modal.componentInstance.title = 'Agregar razón de devolución';
     modal.componentInstance.reasonList = this.reasons;
+    modal.componentInstance.ModalNum = 1;
 
     modal.result
       .then((result) => {
         if (result) {
-          this.returnForm
-            .get('reasonID')
-            .setValue(this.reasons[this.reasons.length - 1].reasonID);
         }
       })
       .catch((err) => {});

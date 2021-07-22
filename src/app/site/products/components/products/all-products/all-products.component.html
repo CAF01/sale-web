@@ -11,11 +11,19 @@
                         Gestiona los productos registrados.
                     </div>
                 </div>
+                <br>
+                <div class="d-flex justify-content-between" *ngIf="thereBrand">
+                    <button class="btn btn-danger" type="button" (click)="back()">
+                        Regresar a marcas
+                    </button>
+                    <button class="btn btn-success" (click)="getAll()" *ngIf="seeAll">
+                        Todos los productos
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </header>
-<!-- Main page content-->
 <div class="container-xl px-4 mt-n10">
     <div class="card mb-4">
         <div class="card-header">Productos</div>
@@ -41,7 +49,6 @@
                                 <th>Precio</th>
                                 <th>Precio a mayoreo</th>
                                 <th>C. a mayoreo</th>
-                                <!-- <th>Stock Max-Min</th> -->
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -57,7 +64,6 @@
                                 <th>Precio</th>
                                 <th>Precio a mayoreo</th>
                                 <th>C. a mayoreo</th>
-                                <!-- <th>Stock Max-Min</th> -->
                                 <th>Acciones</th>
                             </tr>
                         </tfoot>
@@ -75,9 +81,6 @@
                                     <td>${{product?.normalPrice}}</td>
                                     <td>${{product?.pricePerWholeSale}}</td>
                                     <td>{{product?.minForWholeSale}}</td>
-                                    <!-- <td>
-                                        {{product?.maxstock}} - {{product?.minstock}}
-                                    </td> -->
                                     <td style="font-size: 20px;">
                                         <a href="javascript:void(0);" placement="top" ngbTooltip="Editar" (click)="edit(product)">
                                             <i class="far fa-edit"></i>
