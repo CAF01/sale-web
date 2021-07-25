@@ -1,4 +1,5 @@
-export interface ReturnProductProviderInfo {
+export class ReturnProductProviderInfo {
+    invoiceID:number
     returnProviderID: number;
     contentID: number;
     productName: string;
@@ -6,5 +7,6 @@ export interface ReturnProductProviderInfo {
     model: string;
     quantity: number;
     amount: number;
-    registerDate: string;
+    descriptReason:string;
+    registerDate: Date;
 }

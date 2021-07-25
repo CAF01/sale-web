@@ -8,4 +8,6 @@ export class InvoiceContentInfo {
     unitPrice: number;
     amount: number;
     total:number;
+    contentID:number;
+    stock:number;
 }

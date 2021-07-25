@@ -9,6 +9,9 @@
                     </h1>
                     <div class="page-header-subtitle">Completa los siguientes pasos para agregar a un cliente.</div>
                 </div>
+                <div class="dropdown col-auto mt-8">
+                    <button class="btn btn-danger" placement="top" ngbTooltip="Regresar" id="dropdownFadeInUp" type="button" *ngIf="list" (click)="return()">Regresar a venta</button>
+                </div>
             </div>
         </div>
     </div>
@@ -24,7 +27,7 @@
                         <div class="wizard-step-text-details">Información de cliente</div>
                     </div>
                 </a>
-                <a  class="nav-item nav-link disableDiv " [ngClass]="{'enabledDiv':flag}" id="wizard2-tab" href="#wizard2" data-bs-toggle="tab" role="tab" aria-controls="wizard2" aria-selected="true">
+                <a class="nav-item nav-link disableDiv" [ngClass]="{'enabledDiv':flag}" id="wizard2-tab" href="#wizard2" data-bs-toggle="tab" role="tab" aria-controls="wizard2" aria-selected="true">
                     <div class="wizard-step-icon">2</div>
                     <div class="wizard-step-text">
                         <div class="wizard-step-text-name">Detalles de dirección</div>
@@ -56,49 +59,39 @@
                                         <button (click)="play()">Play</button>
                                         <button (click)="pause()">Stop</button> -->
                                         <label class="medium mb-1 text-blue" for="firstName">Nombre <span style="color:red">*</span></label>
-                                        <input class="form-control" id="firstName"  formControlName="firstName" type="text" placeholder="Valerie"/>
-                                        <app-field-error-display *ngIf="!formSubmitAttempt"
-                                            [displayError]="validationInput('firstName')" 
-                                            errorMsg="Completa este campo">
+                                        <input class="form-control" id="firstName" formControlName="firstName" type="text" placeholder="Valerie" />
+                                        <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('firstName')" errorMsg="Completa este campo">
                                         </app-field-error-display>
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label class="medium mb-1 text-blue" for="lastName">Apellidos  <span style="color:red">*</span></label>
-                                        <input class="form-control" id="lastName" formControlName="lastName" type="text" placeholder="Luna Azul"/>   
-                                        <app-field-error-display *ngIf="!formSubmitAttempt"
-                                            [displayError]="validationInput('lastName')" 
-                                            errorMsg="Completa este campo">
+                                        <input class="form-control" id="lastName" formControlName="lastName" type="text" placeholder="Luna Azul" />
+                                        <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('lastName')" errorMsg="Completa este campo">
                                         </app-field-error-display>
                                     </div>
-                          
+
                                 </div>
                                 <div class="mb-3">
                                     <label class="medium mb-1 text-blue" for="email">Correo electrónico</label>
                                     <input class="form-control" id="email" type="email" formControlName="email" placeholder="example@gmail.com" />
-                                    <app-field-error-display *ngIf="!formSubmitAttempt"  
-                                        [displayError]="validationInput('email')" 
-                                        errorMsg="Ingresa un correo electrónico válido">
+                                    <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('email')" errorMsg="Ingresa un correo electrónico válido">
                                     </app-field-error-display>
                                 </div>
                                 <div class="row gx-3">
                                     <div class="mb-3 col-md-6">
                                         <label class="medium mb-1 text-blue" for="phone">Número de teléfono  <span style="color:red">*</span></label>
                                         <input class="form-control" id="phone" type="tel" formControlName="phone" name="phone" placeholder="2223779312" maxlength=10/>
-                                        <app-field-error-display *ngIf="!formSubmitAttempt" 
-                                        [displayError]="validationInput('phone')" 
-                                        errorMsg="Ingresa un número de teléfono válido">
+                                        <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('phone')" errorMsg="Ingresa un número de teléfono válido">
                                         </app-field-error-display>
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label class="medium mb-1 text-blue" for="phone">Teléfono de oficina (trabajo)</label>
                                         <input class="form-control" id="phone" type="tel" formControlName="workPhone" name="phone" placeholder="2222411930" maxlength=10/>
-                                        <app-field-error-display *ngIf="!formSubmitAttempt" 
-                                        [displayError]="validationInput('workPhone')" 
-                                        errorMsg="Ingresa un número de teléfono válido">
+                                        <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('workPhone')" errorMsg="Ingresa un número de teléfono válido">
                                         </app-field-error-display>
                                     </div>
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label class="medium mb-1 text-blue" for="notes">Notas (información adicional)</label>
                                     <!-- <input class="form-control" id="notes" type="text" formControlName="notes" maxlength="100" /> -->
@@ -124,21 +117,16 @@
                                 <div class="row gx-3">
                                     <div class="mb-3 col-md-6">
                                         <label class="medium mb-1 text-blue" for="lineAddress1">Línea de dirección 1 <span style="color:red">*</span></label>
-                                        <input class="form-control" id="lineAddress1" formControlName="lineAddress1" type="text" placeholder="Calle Centenario N.87"/>
-                                        <app-field-error-display
-                                        [displayError]="validationInputAddress('lineAddress1')" 
-                                        errorMsg="Completa este campo"
-                                        *ngIf="!addressSubmited">
+                                        <input class="form-control" id="lineAddress1" formControlName="lineAddress1" type="text" placeholder="Calle Centenario N.87" />
+                                        <app-field-error-display [displayError]="validationInputAddress('lineAddress1')" errorMsg="Completa este campo" *ngIf="!addressSubmited">
                                         </app-field-error-display>
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label class="medium mb-1 text-blue" for="lineAddress2">Línea de dirección 2</label>
-                                        <input class="form-control" id="lineAddress2" type="text"  formControlName="lineAddress2" placeholder="Col. Bénito Juárez, San Agustín Atzompa."/>
-                                        <app-field-error-display *ngIf="!addressSubmited" 
-                                        [displayError]="validationInputAddress('lineAddress2')" 
-                                        errorMsg="Completa este campo correctamente">
+                                        <input class="form-control" id="lineAddress2" type="text" formControlName="lineAddress2" placeholder="Col. Bénito Juárez, San Agustín Atzompa." />
+                                        <app-field-error-display *ngIf="!addressSubmited" [displayError]="validationInputAddress('lineAddress2')" errorMsg="Completa este campo correctamente">
                                         </app-field-error-display>
-                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row gx-3">
                                     <div class="mb-3 col-md-6">
@@ -213,35 +201,27 @@
                                             <option value="Vanuatu">Vanuatu</option>
                                             <option value="Venezuela">Venezuela</option>
                                         </select>
-                                        <app-field-error-display *ngIf="!addressSubmited" 
-                                        [displayError]="validationInputAddress('country')" 
-                                        errorMsg="Selecciona un país de la lista">
+                                        <app-field-error-display *ngIf="!addressSubmited" [displayError]="validationInputAddress('country')" errorMsg="Selecciona un país de la lista">
                                         </app-field-error-display>
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label class="medium mb-1 text-blue" for="state">Estado <span style="color:red">*</span></label>
-                                        <input class="form-control" id="state" type="text" formControlName="state" placeholder="Ingresa tu estado"/>
-                                        <app-field-error-display *ngIf="!addressSubmited" 
-                                        [displayError]="validationInputAddress('state')" 
-                                        errorMsg="completa este campo">
+                                        <input class="form-control" id="state" type="text" formControlName="state" placeholder="Ingresa tu estado" />
+                                        <app-field-error-display *ngIf="!addressSubmited" [displayError]="validationInputAddress('state')" errorMsg="completa este campo">
                                         </app-field-error-display>
                                     </div>
                                 </div>
                                 <div class="row gx-3">
                                     <div class="mb-3 col-md-6">
                                         <label class="medium mb-1 text-blue" for="city">Ciudad <span style="color:red">*</span></label>
-                                        <input class="form-control" id="city" type="text" formControlName="city" placeholder="Ingresa tu ciudad"/>
-                                        <app-field-error-display *ngIf="!addressSubmited" 
-                                        [displayError]="validationInputAddress('city')" 
-                                        errorMsg="completa este campo">
+                                        <input class="form-control" id="city" type="text" formControlName="city" placeholder="Ingresa tu ciudad" />
+                                        <app-field-error-display *ngIf="!addressSubmited" [displayError]="validationInputAddress('city')" errorMsg="completa este campo">
                                         </app-field-error-display>
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label class="medium mb-1 text-blue" for="postalCode">Código Postal <span style="color:red">*</span></label>
                                         <input class="form-control" id="postalCode" type="number" formControlName="postalCode" placeholder="Ingresa tu C.P" value="78488" maxlength="5" />
-                                        <app-field-error-display *ngIf="!addressSubmited" 
-                                        [displayError]="validationInputAddress('postalCode')" 
-                                        errorMsg="Ingresa un código postal válido">
+                                        <app-field-error-display *ngIf="!addressSubmited" [displayError]="validationInputAddress('postalCode')" errorMsg="Ingresa un código postal válido">
                                         </app-field-error-display>
                                     </div>
                                 </div>
@@ -255,7 +235,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="tab-pane py-5 py-xl-10 fade" id="wizard4" role="tabpanel" aria-labelledby="wizard4-tab">
                     <div class="row justify-content-center">
                         <div class="col-xxl-6 col-xl-8">
@@ -286,19 +266,19 @@
                                 <div class="col text-primary">{{client?.notes}}</div>
                             </div>
                             <div *ngIf="address">
-                                <div class="row medium text-muted" >
+                                <div class="row medium text-muted">
                                     <div class="col-sm-4 text-truncate"><em>País:</em></div>
                                     <div class="col text-primary">{{client?.country}}</div>
                                 </div>
-                                <div class="row medium text-muted" >
+                                <div class="row medium text-muted">
                                     <div class="col-sm-4 text-truncate"><em>Estado:</em></div>
                                     <div class="col text-primary">{{client?.state}}</div>
                                 </div>
-                                <div class="row medium text-muted" >
+                                <div class="row medium text-muted">
                                     <div class="col-sm-4 text-truncate"><em>Ciudad:</em></div>
                                     <div class="col text-primary">{{client?.city}}</div>
                                 </div>
-                                <div class="row large text-muted" >
+                                <div class="row large text-muted">
                                     <div class="col-sm-4 text-truncate"><em>Linea de dirección 1:</em></div>
                                     <div class="col text-primary">{{client?.lineAddress1}}</div>
                                 </div>
@@ -306,12 +286,12 @@
                                     <div class="col-sm-4 text-truncate"><em>Linea de dirección 2:</em></div>
                                     <div class="col text-primary">{{client?.lineAddress2}}</div>
                                 </div>
-                                <div class="row large text-muted" >
+                                <div class="row large text-muted">
                                     <div class="col-sm-4 text-truncate"><em>Código postal</em></div>
                                     <div class="col text-primary">{{client?.postalCode}}</div>
-                                </div>        
+                                </div>
                             </div>
-                           
+
                             <hr class="my-4" />
                             <div class="d-flex justify-content-between">
                                 <button class="btn btn-light" type="button" (click)='Redirect("#wizard2")'>Regresar</button>
@@ -324,4 +304,3 @@
         </div>
     </div>
 </div>
-

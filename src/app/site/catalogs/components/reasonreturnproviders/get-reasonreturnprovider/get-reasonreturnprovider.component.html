@@ -1,1 +1,71 @@
-<p>get-reasonreturnprovider works!</p>
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-3">
+    <div class="container-xl px-4">
+        <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-auto mt-4">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i data-feather="trending-down"></i></div>
+                        Razones de devolución registradas
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-xl px-4 mt-4">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+            <div class="card mb-4">
+                <div *ngIf="reasonsList" class="card-body">
+                    <ng-container *ngFor="let item of reasonsList; let i = index;">
+                        <div class="card h-100 border-start-lg border-start-primary mb-1">
+                            <div class="card-body">
+                                <div class="h3 d-flex justify-content-between">{{item.description}}
+                                    <div class="d-flex justify-content-between">
+                                        <a href="javascript:void(0);" placement="top" ngbTooltip="Editar" (click)="SelectReason(item)">
+                                            <i class="far fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="small text-muted" *ngIf="item.observation">{{item?.observation}}</div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+
+            <div class="card mb-4">
+                <div class="card-header">Agregar Razón de devolución</div>
+                <div class="card-body">
+                    <form [formGroup]="reasonForm">
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-12 mb-1">
+                                <label class="medium mb-1 text-blue" for="description">Descripción <span style="color:red">*</span></label>
+                                <input class="form-control" id="description" formControlName="description" type="text" />
+                                <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('description')" errorMsg="Completa este campo">
+                                </app-field-error-display>
+                            </div>
+                            <div class="col-md-12 mb-1">
+                                <label class="medium mb-1 text-blue" for="description">Observación</label>
+                                <input class="form-control" id="description" formControlName="observation" type="text" />
+                                <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('observation')" errorMsg="Error de formato">
+                                </app-field-error-display>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary" type="submit" (click)="onSubmit()">Agregar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+</div>

@@ -4,13 +4,18 @@ import { AuthGuardServiceService } from './site/core/services/auth-guard-service
 import { HomeComponent } from './site/home-components/home/home.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home/users', pathMatch: 'full' },
+  { path: '', redirectTo: '/home/dash', pathMatch: 'full' },/*/home/users*/
   // { path: 'user', loadChildren: () => import('./site/user-components/user-components.module').then(m => m.UserComponentsModule) },
   {
     path: 'home',
     component: HomeComponent,
     canActivate: [AuthGuardServiceService],
     children: [
+      {
+        path:'dash',
+        loadChildren:()=>
+        import('./site/home-components/home-components.module').then((m)=>m.HomeComponentsModule),
+      },
       {
         path: 'users',
         loadChildren: () =>
@@ -46,48 +51,54 @@ const routes: Routes = [
         path:'sales',
         loadChildren:()=>
         import('./site/sales/sales.module').then((m)=>m.SalesModule),
+      },
+      {
+        path:'reports',
+        loadChildren:()=>
+        import('./site/reports/reports.module').then((m)=>m.ReportsModule),
       }
     ],
   },
-  {
-    path: 'catalogs',
-    loadChildren: () =>
-      import('./site/catalogs/catalogs.module').then((m) => m.CatalogsModule),
-  },
-  {
-    path: 'clients',
-    loadChildren: () =>
-      import('./site/clients/clients.module').then((m) => m.ClientsModule),
-  },
-  {
-    path: 'providers',
-    loadChildren: () =>
-      import('./site/providers/providers.module').then(
-        (m) => m.ProvidersModule
-      ),
-  },
-  {
-    path: 'sales',
-    loadChildren: () =>
-      import('./site/sales/sales.module').then((m) => m.SalesModule),
-  },
-  {
-    path: 'shared-components',
-    loadChildren: () =>
-      import('./site/shared-components/shared-components.module').then(
-        (m) => m.SharedComponentsModule
-      ),
-  },
-  {
-    path: 'products',
-    loadChildren: () =>
-      import('./site/products/products.module').then((m) => m.ProductsModule),
-  },
+  // {
+  //   path: 'catalogs',
+  //   loadChildren: () =>
+  //     import('./site/catalogs/catalogs.module').then((m) => m.CatalogsModule),
+  // },
+  // {
+  //   path: 'clients',
+  //   loadChildren: () =>
+  //     import('./site/clients/clients.module').then((m) => m.ClientsModule),
+  // },
+  // {
+  //   path: 'providers',
+  //   loadChildren: () =>
+  //     import('./site/providers/providers.module').then(
+  //       (m) => m.ProvidersModule
+  //     ),
+  // },
+  // {
+  //   path: 'sales',
+  //   loadChildren: () =>
+  //     import('./site/sales/sales.module').then((m) => m.SalesModule),
+  // },
+  // {
+  //   path: 'shared-components',
+  //   loadChildren: () =>
+  //     import('./site/shared-components/shared-components.module').then(
+  //       (m) => m.SharedComponentsModule
+  //     ),
+  // },
+  // {
+  //   path: 'products',
+  //   loadChildren: () =>
+  //     import('./site/products/products.module').then((m) => m.ProductsModule),
+  // },
   {
     path: 'account',
     loadChildren: () =>
       import('./site/account/account.module').then((m) => m.AccountModule),
   },
+  { path: 'reports', loadChildren: () => import('./site/reports/reports.module').then(m => m.ReportsModule) },
 ];
 
 @NgModule({

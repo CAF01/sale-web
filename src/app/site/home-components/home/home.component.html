@@ -3,15 +3,15 @@
 
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
     <!-- User Dropdown-->
-    <h2 style="color: rgb(0, 98, 255);font-weight: bold;margin-left: 5px;margin-right: 5px;"><a [routerLink]="['/home']">Punto de venta</a></h2>
+    <h2 style="color: rgb(0, 98, 255);font-weight: bold;margin-left: 5px;margin-right: 5px;"><a [routerLink]="['/home/dash']">Punto de venta</a></h2>
     <ul class="navbar-nav align-items-center ms-auto">
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
-            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="assets/img/illustrations/profiles/profile-3.png" /></a>
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" placement="left" ngbTooltip="Perfil" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="assets/img/illustrations/profiles/profile-3.png" /></a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                 <h6 class="dropdown-header d-flex align-items-center">
                     <img class="dropdown-user-img" src="assets/img/illustrations/profiles/profile-3.png" />
                     <div class="dropdown-user-details">
-                        <div class="dropdown-user-details-name">{{user?.firstName}} {{user?.lastName}}</div>
+                        <div class="dropdown-user-details-name">{{user?.firstName}}</div>
                         <div class="dropdown-user-details-email">{{user?.email}}</div>
                     </div>
                 </h6>
@@ -41,7 +41,7 @@
                     <div class="sidenav-menu-heading">Administrar...</div>
 
                     <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseAdmin" aria-expanded="false" aria-controls="collapseAdmin">
-                        <div class="nav-link-icon"><i data-feather="users"></i></div>
+                        <div class="nav-link-icon"><i style="color: rgb(0, 98, 255);" data-feather="users"></i></div>
                         Clientes
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -50,21 +50,78 @@
 
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                             <a class="nav-link" [routerLink]="['/home/clients','list']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="book-open"></i></div>
+                                <div class="nav-link-icon"><i style="color:lightsalmon;" data-feather="book-open"></i></div>
                                 Lista
                             </a>
 
 
                             <a class="nav-link" [routerLink]="['/home/clients','insert-client']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
+                                <div class="nav-link-icon"><i style="color:rgb(0, 98, 255)" data-feather="user-plus"></i></div>
                                 Agregar nuevo
                             </a>
+
+
+
+
+                        </nav>
+                    </div>
+
+                    <a class="nav-link collapsed" data-toggle="collapse" data-target="#sales" aria-expanded="false" aria-controls="collapseAdmin">
+                        <div class="nav-link-icon"><i style="color: green;" data-feather="dollar-sign"></i></div>
+                        Ventas
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+
+                    <div class="collapse" id="sales" data-parent="#accordionSidenav">
+
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" [routerLink]="['/home/sales','list']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i style="color:lightsalmon;" data-feather="archive"></i></div>
+                                Lista
+                            </a>
+
+
+                            <a class="nav-link" [routerLink]="['/home/sales','new-sale']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i style="color:rgb(0, 98, 255)" data-feather="shopping-bag"></i></div>
+                                Nueva
+                            </a>
+
+
+
+                            <!-- <a class="nav-link" [routerLink]="['/home/sales','new-sale-beta']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i data-feather="shopping-bag"></i></div>
+                                Beta
+                            </a> -->
+
+                            <a class="nav-link" [routerLink]="['/home/sales','pending-payments']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i style="color:green;" data-feather="loader"></i></div>
+                                Pagos pendientes
+                            </a>
+
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLayoutsStarterTemplates" aria-expanded="false" aria-controls="collapseLayoutsStarterTemplates">
+                                <div class="nav-link-icon"><i style="color: red;" data-feather="rotate-cw"></i></div>
+                                Devoluciones
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayoutsStarterTemplates">
+                                <nav class="sidenav-menu-nested nav">
+                                    <a class="nav-link" [routerLink]="['/home/clients','historial-returns']" routerLinkActive="active">
+                                        <div class="nav-link-icon"><i data-feather="list"></i></div>
+                                        Historial
+                                    </a>
+
+                                    <a class="nav-link" [routerLink]="['/home/clients','new-return']" routerLinkActive="active">
+                                        <div class="nav-link-icon"><i style="color:rgb(0, 98, 255)" data-feather="plus"></i></div>
+                                        Nueva
+                                    </a>
+                                </nav>
+                            </div>
 
                         </nav>
                     </div>
 
                     <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseprod" aria-expanded="false" aria-controls="collapseprod">
-                        <div class="nav-link-icon"><i data-feather="shopping-bag"></i></div>
+                        <div class="nav-link-icon"><i style="color:indigo;" data-feather="shopping-bag"></i></div>
                         Productos
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -72,17 +129,17 @@
                     <div class="collapse" id="collapseprod" data-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                             <a class="nav-link" [routerLink]="['/home/products','new-product']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="plus-circle"></i></div>
+                                <div class="nav-link-icon"><i style="color:rgb(0, 98, 255)" data-feather="plus-circle"></i></div>
                                 Agregar Nuevo
                             </a>
 
                             <a class="nav-link" [routerLink]="['/home/products','stock']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="list"></i></div>
+                                <div class="nav-link-icon"><i style="color:steelblue;" data-feather="list"></i></div>
                                 Inventario
                             </a>
 
                             <a class="nav-link" [routerLink]="['/home/products','all-product']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="archive"></i></div>
+                                <div class="nav-link-icon"><i style="color:lightsalmon;" data-feather="archive"></i></div>
                                 Lista
                             </a>
 
@@ -91,7 +148,7 @@
 
 
                     <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseprov" aria-expanded="false" aria-controls="collapseprov">
-                        <div class="nav-link-icon"><i data-feather="truck"></i></div>
+                        <div class="nav-link-icon"><i style="color:darkslateblue;" data-feather="truck"></i></div>
                         Proveedores
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -99,30 +156,50 @@
                     <div class="collapse" id="collapseprov" data-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                             <a class="nav-link" [routerLink]="['/home/providers','list']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="book-open"></i></div>
+                                <div class="nav-link-icon"><i style="color:lightsalmon;" data-feather="book-open"></i></div>
                                 Lista
                             </a>
 
                             <a class="nav-link" [routerLink]="['/home/providers/','new-provider']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
+                                <div class="nav-link-icon"><i style="color:rgb(0, 98, 255)" data-feather="user-plus"></i></div>
                                 Agregar nuevo
                             </a>
 
+
                             <a class="nav-link" [routerLink]="['/home/providers/','new-invoice']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="package"></i></div>
+                                <div class="nav-link-icon"><i style="color:purple;" data-feather="package"></i></div>
                                 Registrar entradas
                             </a>
 
                             <a class="nav-link" [routerLink]="['/home/providers/','list-invoice']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="folder"></i></div>
+                                <div class="nav-link-icon"><i style="color:steelblue;" data-feather="folder"></i></div>
                                 Detalle de entradas
                             </a>
+
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseDevProv" aria-expanded="false" aria-controls="collapseDevProv">
+                                <div class="nav-link-icon"><i style="color: red;" data-feather="rotate-cw"></i></div>
+                                Devoluciones
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseDevProv">
+                                <nav class="sidenav-menu-nested nav">
+                                    <a class="nav-link" [routerLink]="['/home/providers','historial-returns']" routerLinkActive="active">
+                                        <div class="nav-link-icon"><i data-feather="list"></i></div>
+                                        Historial
+                                    </a>
+
+                                    <a class="nav-link" [routerLink]="['/home/providers','insert-return']" routerLinkActive="active">
+                                        <div class="nav-link-icon"><i style="color:rgb(0, 98, 255)" data-feather="plus"></i></div>
+                                        Nueva
+                                    </a>
+                                </nav>
+                            </div>
 
                         </nav>
                     </div>
 
                     <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseusers" aria-expanded="false" aria-controls="collapseusers">
-                        <div class="nav-link-icon"><i data-feather="meh"></i></div>
+                        <div class="nav-link-icon"><i style="color:orangered;" data-feather="meh"></i></div>
                         Usuarios
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -130,12 +207,12 @@
                     <div class="collapse" id="collapseusers" data-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                             <a class="nav-link" [routerLink]="[ '/home/users','list']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="book-open"></i></div>
+                                <div class="nav-link-icon"><i style="color:lightsalmon;" data-feather="book-open"></i></div>
                                 Lista
                             </a>
 
                             <a class="nav-link" [routerLink]="[ '/home/users/','new-user']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
+                                <div class="nav-link-icon"><i style="color:rgb(0, 98, 255)" data-feather="user-plus"></i></div>
                                 Agregar Nuevo
                             </a>
 
@@ -144,7 +221,7 @@
 
 
                     <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseCatalog" aria-expanded="false" aria-controls="collapseCatalog">
-                        <div class="nav-link-icon"><i data-feather="paperclip"></i></div>
+                        <div class="nav-link-icon"><i style="color:cornflowerblue;" data-feather="paperclip"></i></div>
                         Catálogos
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -154,27 +231,27 @@
 
 
                             <a class="nav-link" [routerLink]="[ '/home/catalogs','brands']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="tag"></i></div>
+                                <div class="nav-link-icon"><i style="color:steelblue;" data-feather="tag"></i></div>
                                 Marcas
                             </a>
 
                             <a class="nav-link" [routerLink]="[ '/home/catalogs/','categories']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="package"></i></div>
+                                <div class="nav-link-icon"><i style="color:steelblue;" data-feather="package"></i></div>
                                 Categorias
                             </a>
 
                             <a class="nav-link" [routerLink]="[ '/home/catalogs/','paymentmethods']" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="credit-card"></i></div>
+                                <div class="nav-link-icon"><i style="color:steelblue;" data-feather="credit-card"></i></div>
                                 Métodos de pago
                             </a>
 
-                            <a class="nav-link" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="trending-down"></i></div>
+                            <a class="nav-link" [routerLink]="[ '/home/catalogs/','reason']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i style="color:steelblue;" data-feather="trending-down"></i></div>
                                 Razones de devolución cliente
                             </a>
 
-                            <a class="nav-link" routerLinkActive="active">
-                                <div class="nav-link-icon"><i data-feather="thumbs-down"></i></div>
+                            <a class="nav-link" [routerLink]="[ '/home/catalogs/','reason-provider']" routerLinkActive="active">
+                                <div class="nav-link-icon"><i style="color:steelblue;" data-feather="thumbs-down"></i></div>
                                 Razones de devolución proveedor
                             </a>
 
@@ -190,7 +267,7 @@
             <div class="sidenav-footer">
                 <div class="sidenav-footer-content">
                     <div class="sidenav-footer-subtitle">Inició sesión como:</div>
-                    <div class="sidenav-footer-title">{{user?.firstName}} {{user?.lastName}}</div>
+                    <div class="sidenav-footer-title">{{user?.firstName}}</div>
                 </div>
             </div>
         </nav>

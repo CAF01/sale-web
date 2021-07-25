@@ -30,7 +30,6 @@ export class InsertInvoiceComponent implements OnInit {
   BackuplistContentInvoice: Array<InsertContentRequest>;
 
   provSelected: boolean = false;
-  isSearching: boolean = false;
   provID: number;
   BackupProvID: number;
 
@@ -104,13 +103,7 @@ export class InsertInvoiceComponent implements OnInit {
     invoice.providerID = this.provID;
     invoice.products = this.listContentInvoice;
     invoice.providerName = this.ProviderInfo.companyName;
-
-    invoice.total = this.listContentInvoice
-      .map((data) => data.amount)
-      .reduce(function (a, b) {
-        return a + b;
-      });
-
+    
     this.providerService.insertInvoice(invoice).subscribe(
       (request) => {
         this.BackuplistContentInvoice = undefined;
@@ -168,38 +161,12 @@ export class InsertInvoiceComponent implements OnInit {
     }
   }
 
-  searchByName() {
+  searchProduct() {
     let modal = this.modalService.open(SearchModalComponent, {
       centered: true,
     });
 
-    modal.componentInstance.title = 'Busqueda de productos por nombre';
     modal.componentInstance.products = this.products;
-    modal.componentInstance.message = 'Nombre de producto';
-
-    modal.result
-      .then((result) => {
-        if (result) {
-          this.toastr.success('Producto agregado a la lista actual', 'Listo');
-          let duplicateProd = this.products.findIndex(prod=>prod.productID==this.products[this.products.length-1].productID);
-          if(duplicateProd<this.products.length-1)
-          {
-            this.products.splice(duplicateProd,1);
-          }
-          this.invoiceForm.get('productID').setValue(this.products.length - 1);
-        }
-      })
-      .catch((err) => {});
-  }
-
-  searchByCode() {
-    let modal = this.modalService.open(SearchModalComponent, {
-      centered: true,
-    });
-    modal.componentInstance.numModal = 1;
-    modal.componentInstance.title = 'Busqueda de productos por código';
-    modal.componentInstance.products = this.products;
-    modal.componentInstance.message = 'Código de producto';
 
     modal.result
       .then((result) => {
@@ -270,12 +237,6 @@ export class InsertInvoiceComponent implements OnInit {
       this.invoiceForm.get('amount').setValue(amount.toFixed(2));
     }
   }
-
-  SetsearchStatus() {
-    if (this.isSearching) this.isSearching = false;
-    else this.isSearching = true;
-  }
-
   delItem(pos: number) {
     this.listContentInvoice.splice(pos, 1);
     this.longProds = this.listContentInvoice.length;

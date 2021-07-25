@@ -1,1 +1,187 @@
-<p>insert-return works!</p>
+<div class="container-xl px-4 mt-4">
+    <!-- Knowledge base home header option-->
+    <header class="card card-waves mb-4">
+        <div class="card-body px-5 pt-5 pb-0">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-lg-6">
+                    <h1 class="text-primary">Devolución de productos</h1>
+                    <p class="lead mb-4">Busca el número de ticket del recibo de compra, para verificar la información de los productos.</p>
+                    <form [formGroup]="searchForm">
+                        <div class="shadow rounded">
+                            <div class="input-group input-group-joined input-group-joined-xl border-0">
+                                <input formControlName="searchID" (keyup.enter)="onEnter($event)" class="form-control me-0" type="text" placeholder="Buscar..." aria-label="Search" autofocus />
+                                <span class="input-group-text"><i data-feather="search"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-4"><img class="img-fluid" src="assets/img/illustrations/Cash Payment-bro.svg" /></div>
+            </div>
+        </div>
+    </header>
+    <div class="row" *ngIf="contentSale">
+        <div class="card">
+            <div class="card-header border-bottom">
+                <ul class="nav nav-pills card-header-pills" id="cardPill" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" id="overview-pill" href="#overviewPill" data-bs-toggle="tab" role="tab" aria-controls="overview" aria-selected="true">Lista de productos</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" id="example-pill" href="#examplePill" data-bs-toggle="tab" role="tab" aria-controls="example" aria-selected="false">Información de compra</a></li> -->
+                    <li class="nav-item"><a class="nav-link" [ngClass]="{'disabled': !historial}" id="historial-pill" href="#historialPill" data-bs-toggle="tab" role="tab" aria-controls="example" aria-selected="false">Historial de devoluciones</a></li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="cardTabContent">
+                    <div class="tab-pane fade show active" id="overviewPill" role="tabpanel" aria-labelledby="overview-tab">
+                        <div class="mb-4">
+                            <div class="card-body p-2 p-md-3">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless mb-0">
+                                        <thead class="border-bottom">
+                                            <tr class="small text-uppercase text-muted">
+                                                <th scope="col ">Producto</th>
+                                                <th class="text-end" scope="col">Cantidad</th>
+                                                <th class="text-end" scope="col">Precio U.</th>
+                                                <th class="text-end" scope="col">Importe</th>
+                                                <th class="text-end" scope="col">Seleccionar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngFor="let item of contentSale;let i = index;">
+                                                <tr class="border-bottom">
+                                                    <td>
+                                                        <div class="fw-bold">{{item?.productName}}</div>
+                                                        <div class="small text-muted d-none d-md-block">{{item.description}}</div>
+                                                    </td>
+                                                    <ng-container *ngIf="existReturned">
+                                                        <td class="text-end fw-bold" *ngIf="Validando[i]?.changed" style="color: red;">{{Validando[i].realQuant}}</td>
+                                                        <td class="text-end fw-bold" *ngIf="Validando[i]?.changed==false">{{item.quantity}}</td>
+                                                    </ng-container>
+                                                    <td class="text-end fw-bold" *ngIf="!existReturned">{{item.quantity}}</td>
+                                                    <td class="text-end fw-bold">${{item.unitPrice}}</td>
+                                                    <td class="text-end fw-bold" *ngIf="existReturned && Validando[i]?.changed">${{calcAmount(item?.unitPrice,Validando[i]?.realQuant)}}</td>
+                                                    <td class="text-end fw-bold" *ngIf="!existReturned || Validando[i]?.changed==false">${{item.amount}}</td>
+                                                    <td class="text-center fw-bold">
+                                                        <div class="form-check d-flex justify-content-center" *ngIf="((existReturned && Validando[i].realQuant>0) || !existReturned)">
+                                                            <input class="form-check-input" type="checkbox" [checked]="checkAll" (change)="onCheckboxChange($event,item)" id="{{item.contentSaleID}}">
+                                                        </div>
+                                                        <div class="form-check d-flex justify-content-center disableDiv" *ngIf="existReturned && Validando[i].realQuant==0">
+                                                            <!-- <input class="form-check-input" type="checkbox" [checked]="checkAll" (change)="onCheckboxChange($event,item)" id="{{item.contentSaleID}}"> -->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="form-check">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Seleccionar Todo
+                                    </label>
+                                    <input class="form-check-input" type="checkbox" (change)="selectAll($event)" value="" id="flexCheckDefault">
+                                </div>
+                            </div>
+                            <!-- <div class="d-flex justify-content-center mb-4">
+                                <button class="btn btn-danger" (click)="ReturnAll()">Devolver todo</button>
+                            </div> -->
+                        </div>
+                        <div *ngIf="contentToReturn[0]">
+
+                            <form [formGroup]="dynamicForm">
+                                <div class="card m-3">
+                                    <div class="card-body">
+                                        <div class="list-group list-group-flush">
+                                            <div class="list-group-item">
+                                                <div>
+                                                    <table class="table table-borderless mb-0">
+                                                        <thead class="border-bottom">
+                                                            <tr class="small text-uppercase text-muted">
+                                                                <th scope="col ">Producto</th>
+                                                                <th class="text-end" scope="col">Cantidad</th>
+                                                                <th class="text-end" scope="col">Devolución</th>
+                                                                <th class="text-end" scope="col">Razón <a href="javascript:void();" (click)="addReason()" placement="top" ngbTooltip="Nueva razón"><i class="fas fa-plus-square"></i></a></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <ng-container *ngFor="let ticket of t.controls; let i = index">
+                                                                <tr class="border-bottom" [formGroup]="ticket">
+                                                                    <td>
+                                                                        <div class="fw-bold">{{contentToReturn[i].productName}}</div>
+                                                                    </td>
+                                                                    <td class="text-end fw-bold"><input type="text" formControlName="quantity" (ngModelChange)="validateQuantity(i)" class="form-control" /></td>
+                                                                    <td class="text-end fw-bold"><input type="text" formControlName="totalPrice" class="form-control" /></td>
+                                                                    <td class="text-end fw-bold">
+                                                                        <div class="text-center" *ngIf="reasons">
+                                                                            <select id="{{i}}Reason" name="{{i}}R" class="form-control" formControlName="reasonID">
+                                                                                <ng-container *ngFor="let item of reasons">
+                                                                                    <option value="{{item?.reasonID}}">{{item?.description}}
+                                                                                    </option>    
+                                                                                </ng-container>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-container>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="d-flex justify-content-between">
+                                            <button class="btn btn-danger" type="button" (click)="cancel()">Cancelar</button>
+                                            <button class="btn btn-primary" type="submit" (click)="return()">Realizar devolución</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="examplePill" role="tabpanel" aria-labelledby="example-tab">
+                        <h5 class="card-title">Example Pane</h5>
+                        <p class="card-text">...</p>
+                    </div>
+                    <div class="tab-pane fade" id="historialPill" role="tabpanel" aria-labelledby="example-tab">
+                        <h5 class="card-title">Productos devueltos</h5>
+                        <div class="card-body p-2 p-md-3">
+                            <div class="table-responsive">
+                                <table class="table table-borderless mb-0">
+                                    <thead class="border-bottom">
+                                        <tr class="small text-uppercase text-muted">
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">Razón de devolución</th>
+                                            <th scope="col">Fecha</th>
+                                            <th class="text-end" scope="col">Cantidad</th>
+                                            <th class="text-end" scope="col">Importe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="ListReturneds">
+                                        <tr class="border-bottom" *ngFor="let item of ListReturneds">
+                                            <td>
+                                                <div class="fw-bold">{{item?.product}}</div>
+                                            </td>
+                                            <td>
+                                                <div class="fw-bold">{{item?.description}}</div>
+                                                <div class="small text-muted">{{item.observation}}</div>
+                                            </td>
+                                            <td class="fw-bold">{{ formatDate(item.registerDate) | amDateFormat: "DD" }} de {{ formatDate(item.registerDate) | amLocale: "es" | amDateFormat: "MMMM YYYY" }}</td>
+                                            <td class="text-end fw-bold">{{item.quantity}}</td>
+                                            <td class="text-end fw-bold">${{item.totalPrice}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

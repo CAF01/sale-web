@@ -6,7 +6,7 @@ import { ProductService } from '../../../services/product.service';
 import * as Feather from 'feather-icons';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SetStatusProductRequest } from '../../../models/setstatusproductrequest';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertModalComponent } from 'src/app/site/shared-components/alert-modal/alert-modal.component';
@@ -20,25 +20,57 @@ export class AllProductsComponent implements OnInit {
   products: PaginationListResponse<ProductInfo> | undefined;
 
   page: number = 1;
-
+  brandID:number;
+  thereBrand:boolean=false;
+  seeAll:boolean=true;
   statusUsers?: boolean = undefined;
 
   constructor(
     private productService: ProductService,
     private router: Router,
     private toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private _route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     Feather.replace();
-
-    this.getProducts();
+    this._route.queryParams.subscribe((params) => {
+      if (params.brandID) {
+        this.thereBrand=true;
+        this.brandID = JSON.parse(params.brandID) as number;
+        this.getProductsByBrandID(this.brandID);
+      }
+      else
+      {
+        this.getProducts();
+      }
+    });
     this.initSiganR();
+  }
+
+  back()
+  {
+    this.router.navigate(['/home/catalogs','brands']);
+  }
+
+  getAll()
+  {
+    this.seeAll=false;
+    this.getProducts();
   }
 
   getProducts() {
     this.productService.getProducts().subscribe(
+      (response) => {
+        this.products = response;
+      },
+      (error) => {}
+    );
+  }
+
+  getProductsByBrandID(brand:number) {
+    this.productService.getProductsByBrand(brand).subscribe(
       (response) => {
         this.products = response;
       },

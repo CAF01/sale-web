@@ -8,7 +8,6 @@ import {
 import { Router } from '@angular/router';
 import { SecurityHelper } from 'src/app/site/core/helpers/security-helper';
 import { ValidateForm } from 'src/app/site/core/helpers/validate-formfields-helper';
-import { User } from 'src/app/site/users/models/entitys/user';
 import { UserLogin } from 'src/app/site/users/models/request/user-login';
 import { UserService } from 'src/app/site/users/services/user.service';
 
@@ -32,7 +31,7 @@ export class LoginComponent implements OnInit {
   ) {
 
     if(SecurityHelper.getToken()){
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home/dash']);
       return;
     }
 
@@ -52,12 +51,8 @@ export class LoginComponent implements OnInit {
       );
       this.userService.Login(userLogin).subscribe(
         (request) => {
-          debugger;
-          SecurityHelper.setTokenStorage(request.token);
-          this.router.navigate(['/home'], {
-            queryParams: { user: JSON.stringify(request) },
-            skipLocationChange: true, //skip location para ocultar el json de la URL
-          });
+          SecurityHelper.setTokenStorage(request);
+          this.router.navigate(['/home/dash']);
         },error=>
         {
           this.activatedButton=true;

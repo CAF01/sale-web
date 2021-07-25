@@ -1,1 +1,36 @@
-<p>new-payment-historial works!</p>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Añadir nuevo pago</h4>
+</div>
+<div class="modal-body">
+    <form [formGroup]="paymentForm">
+        <div class="row justify-content-center">
+            <div class="row gx-3">
+                <div class="mb-3 col-md-4">
+                    <label class="medium mb-2">Nuevo monto</label>
+                    <!-- <input class="form-control" type="text" /> -->
+                    <input currencyMask class="form-control" (ngModelChange)="calc()" formControlName="amount" [options]="{ prefix: 'MX$ ', thousands: ',', decimal: '.', allowNegative:false,align:'center', max:'100000.00' }" />
+                    <!-- <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('description')" errorMsg="Este campo no puede quedar vacío">
+                    </app-field-error-display> -->
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label class="medium mb-2">Monto deber</label>
+                    <h4>${{total}}</h4>
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label class="medium mb-2">Cambio</label>
+                    <h4>${{dev}}</h4>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.close(false)">
+      Cerrar
+    </button>
+    <button type="button" class="btn btn-success" (click)="onSubmit()">
+      Añadir
+    </button>
+
+</div>

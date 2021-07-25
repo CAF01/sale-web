@@ -1,0 +1,24 @@
+<div class="row justify-content-center">
+    <form [formGroup]="searchForm">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink>Por Código</a>
+                <ng-template ngbNavContent>
+                    <!-- <input class="form-control mb-3" type="text" formControlName="searchingCode" (ngModelChange)="searchCode()" placeholder="código de producto" maxlength="25" /> -->
+                    <input placeholder="Escribe el código de producto" id="typeahead-basicCodeProduct" type="text" class="form-control" [focusFirst]='true' #input (selectItem)="selectedItem($event,input)" typeahead-on-select="asyncSelected = '';" formControlName="searchingCode"
+                        [editable]='false' [ngbTypeahead]="searchCode" [inputFormatter]="formatter " [resultFormatter]="formatter" />
+                    <small *ngIf="searching" class="form-text text-muted">buscando...</small>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2 ">
+                <a ngbNavLink>Por Nombre</a>
+                <ng-template ngbNavContent>
+                    <input placeholder="Escribe el nombre de producto" id="typeahead-basicNameProduct" type="text" class="form-control" [focusFirst]='true' #input (selectItem)="selectedItem($event,input)" formControlName="searchingName" [ngbTypeahead]="searchName" [inputFormatter]="formatter"
+                        [resultFormatter]="formatter" [editable]='false' />
+                    <small *ngIf="searching" class="form-text text-muted">buscando...</small>
+                </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </form>
+</div>

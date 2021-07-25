@@ -7,6 +7,7 @@ import { ValidateForm } from 'src/app/site/core/helpers/validate-formfields-help
 import { insertProviderRequest } from '../../../models/request/insertproviderrequest';
 import { ProviderService } from '../../../services/provider.service';
 import * as Feather from 'feather-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-insert-provider',
@@ -25,7 +26,10 @@ export class InsertProviderComponent implements OnInit {
   company: insertProviderRequest;
 
 
-  constructor(private _formBuilder: FormBuilder, private providerService : ProviderService,private toastr: ToastrService) { }
+  constructor(private _formBuilder: FormBuilder,
+    private providerService : ProviderService,
+    private toastr: ToastrService,
+    private router: Router) { }
 
   ngOnInit(): void {
     Feather.replace();
@@ -64,7 +68,8 @@ export class InsertProviderComponent implements OnInit {
         this.toastr.toastrConfig.preventDuplicates=false;
         this.toastr.toastrConfig.disableTimeOut=false;
         this.toastr.success('Proveedor agregado correctamente.', 'Correcto');
-        this.Redirect('#wizard1');
+        this.router.navigate(['/home/providers','list']);
+        // this.Redirect('#wizard1');
       },error=>{
         console.log(error);
       });

@@ -1,11 +1,16 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ReasonReturnInfo } from '../../catalogs/models/entitys/reasonreturninfo';
 import { PaginationListResponse } from '../../core/models/pagination-list-response';
 import { client } from '../models/entitys/client';
+import { ProductReturned } from '../models/entitys/productreturned';
+import { ReturnProductClientInfo } from '../models/entitys/returnproductclientinfo';
 import { insertAddressClientRequest } from '../models/request/insertaddressclientrequest';
 import { insertClientRequest } from '../models/request/insertclientrequest';
+import { InsertReturnClientRequest } from '../models/request/insertreturnclientrequest';
 import { setStatusClientRequest } from '../models/request/setstatusclient';
 import { updateAddressClientRequest } from '../models/request/updateaddressclientrequest';
 import { updateClientRequest } from '../models/request/updateclientrequest';
@@ -15,8 +20,9 @@ import { updateClientRequest } from '../models/request/updateclientrequest';
 })
 export class ClientService {
   controller = 'Client';
-
+  controllerReturn = 'ReturnClient';
   controllerAddress = 'ClientAddress';
+  controllerReason = 'ReasonReturnClient';
   constructor(private _http: HttpClient) {}
 
     newClient(Client: insertClientRequest): Observable<number> {
@@ -71,6 +77,76 @@ export class ClientService {
         `${environment.url_api}${this.controller}`,{ params: params }
       );
     }
- 
+
+
+    getClientsByPhone(Phone: string): Observable<client> {
+      let params = new HttpParams().set('Phone', Phone);
+      return this._http.get<client>(
+        `${environment.url_api}${this.controller}/find-by-phone`,{ params: params }
+      );
+    }
+
+    getClientByPhonePipe(phone:string):Observable<client[]>
+    {
+      let params = new HttpParams().set('phone', phone);
+      return this._http.get<client[]>(
+        `${environment.url_api}${this.controller}/get-by-phone`,{ params: params }
+      ).pipe
+        (map(response=>response)
+      );
+    }
+
+    getClientByLastNamePipe(lastname:string):Observable<client[]>
+    {
+      let params = new HttpParams().set('lastname', lastname);
+      return this._http.get<client[]>(
+        `${environment.url_api}${this.controller}/get-by-lastname`,{ params: params }
+      ).pipe
+        (map(response=>response)
+      );
+    }
+
+    newReturn(request: InsertReturnClientRequest[]): Observable<number> {
+      return this._http.post<number>(
+        `${environment.url_api}${this.controllerReturn}`,request
+      );
+    }
+
+    getReasons(): Observable<ReasonReturnInfo[]> {
+      return this._http.get<ReasonReturnInfo[]>(
+        `${environment.url_api}${this.controllerReason}`
+      );
+    }
+
+    getHistorialReturns(): Observable<PaginationListResponse<ReturnProductClientInfo>> 
+    {
+      return this._http.get<PaginationListResponse<ReturnProductClientInfo>>(
+        `${environment.url_api}${this.controllerReturn}`
+      );
+    }
+    getHistorialReturnsByPage(page:number): Observable<PaginationListResponse<ReturnProductClientInfo>> 
+    {
+      let params = new HttpParams().set('skip', page.toString());
+      return this._http.get<PaginationListResponse<ReturnProductClientInfo>>(
+        `${environment.url_api}${this.controllerReturn}`,{params:params}
+      );
+    }
+
+    getReturnedProds(id:number): Observable<ProductReturned[]> {
+      let params = new HttpParams().set('id', id.toString());
+      return this._http.get<ProductReturned[]>(
+        `${environment.url_api}${this.controllerReturn}/get-product-returneds`,{params:params}
+      );
+    }
+
+    findIfExistsPhone(Phone: string): Observable<number> {
+      let params = new HttpParams().set('Phone', Phone);
+      return this._http.get<number>(
+        `${environment.url_api}${this.controller}/exist-phone`,{ params: params }
+      );
+    }
+
+
+  
 
 }

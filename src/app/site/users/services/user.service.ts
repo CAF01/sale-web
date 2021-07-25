@@ -11,9 +11,7 @@ import { userUpdateRequest } from '../models/request/userupdaterequest';
 import { AddressUpdateRequest } from '../models/request/addressupdaterequest';
 import { AddressInsertRequest } from '../models/request/addressinsertrequest';
 import { userSetStatRequest } from '../models/request/usersetstatrequest';
-import { Token } from '../models/request/token';
 import { UserLogin } from '../models/request/user-login';
-import { UserInfo } from 'os';
 
 @Injectable({
   providedIn: 'root',

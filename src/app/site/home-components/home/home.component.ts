@@ -26,11 +26,15 @@ export class HomeComponent implements OnInit {
     ).subscribe(response=>{
       Feather.replace();
     });
-    this._route.queryParams.subscribe((params) => {
-      if (params.user) {
-        this.user = JSON.parse(params.user) as User;
-      }
-    });
+    this.user = new User();
+    this.user.userID=parseInt(localStorage.getItem('userid'));
+    this.user.firstName=localStorage.getItem('name');
+    this.user.email=localStorage.getItem('email');
+    // this._route.queryParams.subscribe((params) => {
+    //   if (params.user) {
+    //     this.user = JSON.parse(params.user) as User;
+    //   }
+    // });
   }
 
   logout()

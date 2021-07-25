@@ -1,1 +1,328 @@
-<p>update-sale works!</p>
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container-fluid px-4">
+        <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-auto mt-4">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i data-feather="arrow-right-circle"></i></div>
+                        Venta de productos
+                    </h1>
+                    <div class="page-header-subtitle">Completa los aspectos de la venta</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main page content-->
+<div class="container-fluid px-4 mt-n10">
+    <!-- Wizard card example with navigation-->
+    <div class="card">
+        <div class="card-header border-bottom">
+            <!-- Wizard navigation-->
+            <div class="nav nav-pills nav-justified flex-column flex-xl-row nav-wizard" id="cardTab" role="tablist">
+                <!-- Wizard navigation item 1-->
+                <a class="nav-item nav-link" [ngClass]="{'active':viewOne, 'disableDiv':!viewOne}" id="wizard1-tab" href="#wizard1" data-bs-toggle="tab" role="tab" aria-controls="wizard1" aria-selected="true">
+                    <div class="wizard-step-icon">1</div>
+                    <div class="wizard-step-text">
+                        <div class="wizard-step-text-name">Productos</div>
+                        <div class="wizard-step-text-details">Añade los productos</div>
+                    </div>
+                </a>
+                <!-- Wizard navigation item 2-->
+                <a class="nav-item nav-link disableDiv" [ngClass]="{'enabledDiv':selectedItems && viewTwo}" id="wizard2-tab" href="#wizard2" data-bs-toggle="tab" role="tab" aria-controls="wizard2" aria-selected="true">
+                    <div class="wizard-step-icon">2</div>
+                    <div class="wizard-step-text">
+                        <div class="wizard-step-text-name">Cliente</div>
+                        <div class="wizard-step-text-details">Selecciona al cliente</div>
+                    </div>
+                </a>
+                <!-- Wizard navigation item 3-->
+                <a class="nav-item nav-link disableDiv" [ngClass]="{'enabledDiv':viewThree}" id="wizard3-tab" href="#wizard3" data-bs-toggle="tab" role="tab" aria-controls="wizard3" aria-selected="true">
+                    <div class="wizard-step-icon">3</div>
+                    <div class="wizard-step-text">
+                        <div class="wizard-step-text-name">Pago</div>
+                        <div class="wizard-step-text-details">Detalles de pago</div>
+                    </div>
+                </a>
+                <!-- Wizard navigation item 4-->
+                <a class="nav-item nav-link disableDiv" [ngClass]="{'enabledDiv':viewFour}" id="wizard4-tab" href="#wizard4" data-bs-toggle="tab" role="tab" aria-controls="wizard4" aria-selected="true">
+                    <div class="wizard-step-icon">4</div>
+                    <div class="wizard-step-text">
+                        <div class="wizard-step-text-name">Recibo</div>
+                        <div class="wizard-step-text-details">Información de compra</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="cardTabContent">
+                <div class="tab-pane py-5 py-xl-5 fade show active" id="wizard1" role="tabpanel" aria-labelledby="wizard1-tab">
+                    <div class="row justify-content-center">
+                        <div class="col-xxl-6 col-xl-8">
+                            <div class="py-2">
+                                <h2 class="text-primary">Selección de productos</h2>
+                                <app-search-products (onSubmit)="onReceive($event)"></app-search-products>
+                            </div>
+                            <form [formGroup]="saleForm">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="text-center">Producto</th>
+                                            <th scope="col" class="text-center">Disponibles</th>
+                                            <th scope="col" class="text-center">Cantidad</th>
+                                            <th scope="col" class="text-center">Unit.</th>
+                                            <th scope="col" class="text-center">Monto</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="listProductsForSale">
+
+                                        <ng-container *ngFor="let item of listProductsForSale; let i = index">
+                                            <tr>
+                                                <th scope="row">{{item.nameProduct}} - {{item.description}}</th>
+                                                <td class="text-center" style="padding: 1em !important;" scope="col">{{stock(i)}}</td>
+                                                <td class="text-center" style="padding: 1em !important;" scope="col">
+                                                    <div class="d-flex justify-content-between">
+                                                        <a href="javascript:void(0);" [ngStyle]="{'font-size': '20px'}" (click)="removeQuantity(i)">
+                                                            <i class="fas fa-minus"></i>
+                                                        </a>
+                                                        <ng-container>
+                                                            <input currencyMask class="form-control" id="{{i}}" (keyup.enter)="onEnter($event,i,input)" #input value="{{item.quantity}}" style="width: 60px !important; text-align: center !important; padding: 1em !important;" [options]="{ allowNegative:false,align: 'center', max: '300',precision:0, prefix: '' } "
+                                                            />
+                                                        </ng-container>
+                                                        <!-- <label class="fw-bold">{{item?.quantity}}</label> -->
+                                                        <a href="javascript:void(0);" [ngStyle]="{'font-size': '20px'}" (click)="addQuantity(i)">
+                                                            <i class="fas fa-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center" style="padding: 1em !important;" scope="col">${{item.price}}</td>
+                                                <td class="text-center" style="padding: 1em !important;" scope="col">${{amount(item.quantity,item.price)}}</td>
+                                                <td class="text-center" scope="col">
+                                                    <div class="d-flex justify-content-center">
+                                                        <a href="javascript:void(0);" class="redIcon" [ngStyle]="{'font-size': '20px'}" (click)="delItem(i)">
+                                                            <i class="fas fa-minus-circle"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </form>
+                            <div *ngIf="selectedItems">
+                                <table class="table table-borderless mb-0">
+                                    <tbody>
+                                        <thead class="border-bottom">
+                                        </thead>
+                                        <tr>
+                                            <td class="text-end pb-0" colspan="2">
+                                                <div class="text-uppercase small fw-700 text-muted">Subtotal:</div>
+                                            </td>
+                                            <td class="text-end pb-0">
+                                                <div class="h5 mb-0 fw-700">${{subtotal}}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end pb-0" colspan="2">
+                                                <div class="text-uppercase small fw-700 text-muted">IVA ({{IVA}}%):</div>
+                                            </td>
+                                            <td class="text-end pb-0">
+                                                <div class="h5 mb-0 fw-700">${{costIVA}}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end pb-0" colspan="2">
+                                                <div class="text-uppercase small fw-700 text-muted">Total a pagar:</div>
+                                            </td>
+                                            <td class="text-end pb-0">
+                                                <div class="h5 mb-0 fw-700 text-green">${{total}}</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <hr class="my-4">
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="small mb-0"><button class="btn btn-red" (click)="reset()"><span><i class="far fa-sticky-note"></i>&nbsp; Limpiar</span></button>
+                                </div>
+                                <div class="small mb-0"><button class="btn btn-primary" [disabled]="!selectedItems" (click)="steptwo()">Siguiente &nbsp;<span><i class="fas fa-arrow-circle-right"></i></span></button></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- Wizard tab pane item 2-->
+                <div class="tab-pane py-5 py-xl-5 fade" id="wizard2" role="tabpanel" aria-labelledby="wizard2-tab">
+                    <div class="row justify-content-center">
+                        <div class="col-xxl-6 col-xl-8">
+                            <div class="py-2">
+                                <div class="d-flex justify-content-between">
+                                    <h2 class="text-primary">Cliente</h2>
+                                    <div>
+                                        <span style="float: right" placement="left" ngbTooltip="Registrar cliente"><a href="javascript:void(0);" (click)="registerClient()"
+                                            ><i class="fas fa-user-plus" style="width: 30px; height: 35px"></i></a
+                                        ></span>
+                                    </div>
+                                </div>
+
+                                <app-search-client (onSubmit)="onReceiveClient($event)"></app-search-client>
+                                <hr>
+                                <div *ngIf="selectedClient && infoClient">
+                                    <div class="row gx-3">
+                                        <div class="mb-3 col-md-6">
+                                            <label class="medium mb-1 text-blue" for="firstName">Cliente</label>
+                                            <input class="form-control" disabled value="{{infoClient?.firstName}}" id="firstName" type="text" />
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="medium mb-1 text-blue" for="phone">Número de Teléfono</label>
+                                            <input class="form-control" value="{{infoClient?.phone}}" disabled id="phone" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="medium mb-1 text-blue" for="email">Correo electrónico</label>
+                                        <input class="form-control" id="email" type="email" disabled value="{{infoClient?.email}}" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="medium mb-2 text-blue" for="notes">Notas (información adicional)</label>
+                                        <textarea class="form-control" disabled id="notes" readonly rows="2">{{infoClient?.notes}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4" />
+                            <div class="d-flex justify-content-between">
+                                <div><button class="btn btn-danger" type="button" (click)="stepone()"><span><i class="fas fa-arrow-circle-left"></i></span>&nbsp;Regresar</button></div>
+                                <div class="small mb-0"><button class="btn btn-primary" type="button" [disabled]="!infoClient.clientID" (click)="stepthree()">Confirmar cliente&nbsp;<span><i class="fas fa-arrow-circle-right"></i></span></button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Wizard tab pane item 3-->
+                <div class="tab-pane py-5 py-xl-5 fade" id="wizard3" role="tabpanel" aria-labelledby="wizard3-tab">
+                    <div class="row justify-content-center">
+                        <div class="col-xxl-4 col-xl-6">
+                            <div class="py-2">
+                                <h3 class="text-primary">Momento de pago</h3>
+                            </div>
+                            <form [formGroup]="payForm">
+                                <label class="medium mb-1 text-blue" for="total">Total a pagar</label>
+                                <input currencyMask formControlName="total" class="form-control" id="total" [options]="{ prefix: 'MX$ ', thousands: ',', decimal: '.', allowNegative:false,align:'center', max:'100000.00' }" />
+                                <br>
+                                <label class="medium mb-1 text-blue" for="pay">Recibido</label>
+                                <input currencyMask formControlName="pay" class="form-control" id="pay" (ngModelChange)="refreshPay()" [options]="{ prefix: 'MX$ ', thousands: ',', decimal: '.', allowNegative:false,align:'center', max:'100000.00' }" />
+                                <br>
+                                <label class="medium mb-1 text-blue" for="debt">Cambio (devolución)</label>
+                                <input currencyMask formControlName="debt" class="form-control" id="debt" [options]="{ prefix: 'MX$ ', thousands: ',', decimal: '.', allowNegative:false,align:'center', max:'100000.00' }" />
+                                <hr class="my-4" />
+
+                            </form>
+                            <div class="d-flex justify-content-between">
+                                <div><button class="btn btn-danger" type="button" (click)="steptwo()"><span><i class="fas fa-arrow-circle-left"></i></span>&nbsp;Regresar</button></div>
+                                <div class="small mb-0"><button class="btn btn-primary" type="button" (click)="stepfour()">Siguiente&nbsp;<span><i class="fas fa-arrow-circle-right"></i></span></button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Wizard tab pane item 4-->
+                <div class="tab-pane py-2 py-xl-1 fade" id="wizard4" role="tabpanel" aria-labelledby="wizard4-tab">
+                    <div class="row justify-content-center">
+                        <div class="card-header p-2 p-md-3 border-bottom-0 bg-gradient-primary-to-secondary text-white-50">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-12 col-lg-auto mb-5 mb-lg-0 text-center text-lg-start">
+                                    <div class="h2 text-white mb-0">Recibo de compra</div>
+                                </div>
+                                <div class="col-12 col-lg-auto text-center text-lg-end">
+                                    Atendió: {{user}}
+                                    <br />{{ formatDate(date) | amDateFormat: "DD" }} de {{ formatDate(date) | amLocale: "es" | amDateFormat: "MMMM YYYY" }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-4 p-md-5">
+                            <div class="table-responsive">
+                                <table class="table table-borderless mb-0">
+                                    <thead class="border-bottom">
+                                        <tr class="small text-uppercase text-muted">
+                                            <th scope="col ">Producto adquirido</th>
+                                            <th class="text-end" scope="col">Cantidad</th>
+                                            <th class="text-end" scope="col">Precio U.</th>
+                                            <th class="text-end" scope="col">Importe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="listProductsForSale">
+                                        <tr class="border-bottom" *ngFor="let item of listProductsForSale;">
+                                            <td>
+                                                <div class="fw-bold ">{{item?.nameProduct}}</div>
+                                                <div class="small text-muted d-none d-md-block">{{item?.description}}</div>
+                                            </td>
+                                            <td class="text-end fw-bold">{{item?.quantity}}</td>
+                                            <td class="text-end fw-bold">$ {{item?.price}}</td>
+                                            <td class="text-end fw-bold">$ {{amount(item.price,item.quantity)}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end pb-0" colspan="3">
+                                                <div class="text-uppercase small fw-700 text-muted">Subtotal:</div>
+                                            </td>
+                                            <td class="text-end pb-0">
+                                                <div class="h5 mb-0 fw-700">$ {{subtotal}}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end pb-0" colspan="3">
+                                                <div class="text-uppercase small fw-700 text-muted">IVA ({{IVA}}%):</div>
+                                            </td>
+                                            <td class="text-end pb-0">
+                                                <div class="h5 mb-0 fw-700">$ {{costIVA}}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end pb-0" colspan="3">
+                                                <div class="text-uppercase small fw-700 text-muted">Total a pagar:</div>
+                                            </td>
+                                            <td class="text-end pb-0">
+                                                <div class="h3 mb-0 fw-700 text-green">$ {{total}}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end pb-0" colspan="3">
+                                                <div class="text-uppercase small fw-700 text-muted">Monto cliente:</div>
+                                            </td>
+                                            <td class="text-end pb-0">
+                                                <div class="h3 mb-0 fw-700 text-green" *ngIf="paying>total">$ {{total}}</div>
+                                                <div class="h3 mb-0 fw-700 text-red" *ngIf="paying<total">$ {{paying}}</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="py-2 d-flex justify-content-start small mb-0"><button class="btn btn-danger" (click)="stepthree()"><span><i class="fas fa-arrow-circle-left"></i></span>&nbsp;Regresar</button></div>
+                            </div>
+                        </div>
+                        <div class="card-footer p-4 p-lg-5 border-top-0">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
+                                    <div class="small text-muted text-uppercase fw-700 mb-2">Cliente</div>
+                                    <div class="h6 mb-1">{{infoClient?.firstName}} - {{infoClient?.phone}}</div>
+                                    <div class="small">{{infoClient?.email}}</div>
+                                </div>
+                                <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
+                                    <div class="small text-muted text-uppercase fw-700 mb-2">Empresa</div>
+                                    <div class="h6 mb-0">Blizzard Entertainment</div>
+                                    <div class="small">©2021 BLIZZARD ENTERTAINMENT, INC. TODOS LOS DERECHOS RESERVADOS.</div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="small text-muted text-uppercase fw-700 mb-2">Nota</div>
+                                    <div class="small mb-0">El plazo máximo para realizar un cambio de producto será de 10 (diez) días naturales a partir de la fecha de compra de la mercancía.</div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <br>
+                                    <br>
+                                    <div class="small mb-0"><button class="btn btn-success" (click)="pay()" type="submit">Confirmar venta &nbsp;<span><i class="fas fa-credit-card"></i></span></button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -19,8 +19,8 @@
         <div class="card-header d-flex justify-content-between">Recibos de compra
             <form [formGroup]="searchForm" class="col-md-3">
                 <div class="input-group input-group-joined input-group-solid">
-                    <input class="form-control pe-0" type="search" formControlName="invoiceID" maxlength="6" placeholder="Buscar por número" aria-label="Search" />
-                    <div class="input-group-text"><a href="javascript:void(0);" (click)="onSearch()"><i class="fas fa-search"></i></a></div>
+                    <input class="form-control pe-0" type="search" formControlName="invoiceID" (keyup.enter)="onEnter($event)" maxlength="6" placeholder="Buscar por número" aria-label="Search" />
+                    <div class="input-group-text"><a href="javascript:void(0);" placement="top" ngbTooltip="Buscar" (click)="onSearch()"><i class="fas fa-search"></i></a></div>
                 </div>
             </form>
         </div>
@@ -44,7 +44,7 @@
                                 <td>{{invoice.companyName}}</td>
                                 <td>$ {{invoice.total}}</td>
                                 <td class="d-flex justify-content-center">
-                                    <a href="javascript:void(0);" [ngStyle]="{'font-size': '25px'}" (click)="openInvoice(invoice)">
+                                    <a href="javascript:void(0);" placement="top" ngbTooltip="Abrir" [ngStyle]="{'font-size': '25px'}" (click)="openInvoice(invoice)">
                                         <i class="fas fa-external-link-alt"></i>
                                     </a>
                                 </td>

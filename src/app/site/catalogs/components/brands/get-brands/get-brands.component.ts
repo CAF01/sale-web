@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as Feather from 'feather-icons';
 import { ToastrService } from 'ngx-toastr';
@@ -32,7 +33,11 @@ export class GetBrandsComponent implements OnInit {
   statusBrands?:boolean=true;
 
   validateForm = ValidateForm;
-  constructor(private modalService: NgbModal,private _formBuilder: FormBuilder,private toastr: ToastrService,private catalogService : CatalogService) {}
+  constructor(private modalService: NgbModal,
+    private _formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private catalogService : CatalogService,
+    private router: Router) {}
 
   ngOnInit(): void {
     Feather.replace();
@@ -40,6 +45,14 @@ export class GetBrandsComponent implements OnInit {
     this.formSubmitAttempt=true;
     this.getBrands();
     this.SetValidatorsBrands();
+  }
+
+  openBrandList(brandID:number)
+  {
+    this.router.navigate(['/home/products','all-product'], {
+      queryParams: { brandID: JSON.stringify(brandID) },
+      skipLocationChange: true, //skip location para ocultar el json de la URL
+    });
   }
 
   setStatus(opt:number)

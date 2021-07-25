@@ -14,13 +14,12 @@
 </header>
 <div class="container-xl px-4 mt-4">
 
-
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-5">
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between medium">Lista
-                    <button class="btn btn-warning dropdown-toggle text-white" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
+                    <button class="btn btn-warning dropdown-toggle text-white" placement="top" ngbTooltip="Marcas disponibles/deshabilitadas" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
                     <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
                         <a class="dropdown-item" (click)="setStatus(0)">Todo</a>
                         <a class="dropdown-item" (click)="setStatus(1)">Disponibles</a>
@@ -29,44 +28,35 @@
                 </div>
                 <div class="card-body" *ngIf="brandList">
                     <ng-container *ngFor="let brand of brandList.data; let i = index;">
-                        <div class="d-flex align-items-center justify-content-between mb-4" *ngIf="brand.status==statusBrands || statusBrands==null">
-                            <div class="d-flex align-items-center flex-shrink-0 me-3">
-                                <div class="avatar avatar-xl me-3 bg-gray-200" *ngIf="brand.imageUrl"><img class="avatar-img img-fluid" src="https://res.cloudinary.com/dj3kprcui/image/upload/v1624387447/{{brand.imageUrl}}" alt="" /></div>
-                                <div class="avatar avatar-xl me-3 bg-gray-200" *ngIf="!brand.imageUrl"><img class="avatar-img img-fluid" src="assets/img/illustrations/Image folder-rafiki.svg" alt="" /></div>
-                                <div class="d-flex flex-column fw-bold">
-                                    <a class="text-dark line-height-normal mb-1" href="javascript:void(0);">{{brand.name}}</a>
-                                    <div class="badge bg-success text-white rounded-pill" *ngIf="brand.status">Disponible</div>
-                                    <div class="badge bg-danger text-white rounded-pill" *ngIf="!brand.status">Deshabilitada</div>
+                        <div *ngIf="brand.status==statusBrands || statusBrands==null">
+                            <div class="card h-100 border-start-lg mb-1" [ngClass]="{'border-start-success': brand.status,'border-start-danger':!brand.status}">
+                                <div class="card-body">
+                                    <div class="h3 d-flex justify-content-between">
+                                        <div>
+                                            <div class="avatar avatar-xxl me-3 bg-gray-200" *ngIf="brand.imageUrl"><img class="avatar-img img-fluid" src="https://res.cloudinary.com/dj3kprcui/image/upload/v1624387447/{{brand.imageUrl}}" alt="" /></div>
+                                            <div class="avatar avatar-xxl me-3 bg-gray-200" *ngIf="!brand.imageUrl"><img class="avatar-img img-fluid" src="assets/img/illustrations/Image folder-rafiki.svg" alt="" /></div>
+                                        </div>
+                                        <a href="javascript:void(0);" placement="top" ngbTooltip="Ver productos" (click)="openBrandList(brand.brandID)">{{brand.name}}</a>
+                                        <div class="d-flex justify-content-between">
+                                            <a style="margin: 5px;" href="javascript:void(0);" placement="top" ngbTooltip="Editar" (click)="SelectBrand(brand)">
+                                                <i class="far fa-edit"></i>
+                                            </a>
+                                            <a style="margin: 5px;" href=" javascript:void(0); " placement="top " ngbTooltip="Eliminar " (click)="del(brand) " *ngIf="brand.status ">
+                                                <i class="far fa-trash-alt redIcon "></i>
+                                            </a>
+                                            <a style="margin: 5px;" href="javascript:void(0);" placement="top" ngbTooltip="Restaurar" (click)="RestoreBrand(brand)" *ngIf="!brand.status">
+                                                <i class="fas fa-undo-alt greenIcon"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between">
-                                <a href="javascript:void(0);" (click)="SelectBrand(brand)">
-                                    <i class="far fa-edit"></i>
-                                </a>
-                                <a href="javascript:void(0);" (click)="del(brand)" *ngIf="brand.status">
-                                    <i class="far fa-trash-alt redIcon"></i>
-                                </a>
-                                <a href="javascript:void(0);" (click)="RestoreBrand(brand)" *ngIf="!brand.status">
-                                    <i class="fas fa-undo-alt greenIcon"></i>
-                                </a>
-                            </div>
-                            <!-- <div class="dropdown">
-                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="{{i}}" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="{{i}}">
-                                    <a class="dropdown-item" href="javascript:void(0);" (click)="SelectBrand(brand)">Actualizar</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" (click)="del(brand)" *ngIf="brand.status">Borrar</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" (click)="RestoreBrand(brand)" *ngIf="!brand.status">Recuperar</a>
-                                </div>
-                            </div> -->
                         </div>
-
                     </ng-container>
-
                 </div>
             </div>
         </div>
         <div class="col-md-5">
-
             <div class="card mb-4">
                 <div class="card-header">Agregar marca</div>
                 <div class="card-body">
@@ -81,23 +71,14 @@
                         </div>
                         <div class="card-body text-center">
                             <img class="img-account-profile rounded-circle mb-1" src="{{file?.name}}" alt="" />
-                            <!-- <div class="small font-italic text-muted mb-4">JPG o PNG no mayores a 5 MB</div>
-                                <input type="file" formControlName="imageUrl" accept="image/png, image/jpeg">
-                                <app-field-error-display *ngIf="!formSubmitAttempt"
-                                    [displayError]="validationInput('imageUrl')" 
-                                    errorMsg="Completa este campo">
-                                    </app-field-error-display> -->
                             <app-file-upload (onSelectFile)="keepFile($event)" MaxSize="5000000" Accept="'image/png, image/jpeg'"></app-file-upload>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-primary" type="submit" (click)="onSubmit()">Agregar</button>
                         </div>
-
                     </form>
                 </div>
             </div>
-
-
         </div>
         <div class="col-md-1"></div>
     </div>

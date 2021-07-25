@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="dropdown col-auto mt-8">
-                    <button class="btn btn-warning dropdown-toggle" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-warning dropdown-toggle" placement="top" ngbTooltip="Actividad" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Seleccionar estado de usuarios
           </button>
                     <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp">
@@ -27,7 +27,7 @@
 </header>
 <div class="card">
     <div class="card-header">
-        <span style="float: right"><a [routerLink]="['/home/providers/new-provider']"
+        <span style="float: right" placement="left" ngbTooltip="Agregar proveedor"><a [routerLink]="['/home/providers/new-provider']"
 ><i data-feather="plus-circle" style="width: 50px; height: 45px"></i></a
 ></span>
     </div>
@@ -87,16 +87,16 @@
                                         <div class="badge bg-danger text-white rounded-pill">Inactivo</div>
                                     </td>
                                     <td class="d-flex justify-content-between">
-                                        <a href="javascript:void(0);" (click)="edit(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar información">
+                                        <a href="javascript:void(0);" (click)="edit(provider)" placement="top" ngbTooltip="Editar">
                                             <i class="far fa-edit"></i>
                                         </a>
-                                        <a href="javascript:void(0);" (click)="showNotesProvider(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Notas del proveedor">
+                                        <a href="javascript:void(0);" (click)="showNotesProvider(provider)" placement="top" ngbTooltip="Ver nota">
                                             <i class="fas fa-book bookIcon"></i>
                                         </a>
-                                        <a href="javascript:void(0);" *ngIf="provider.status" (click)="deleteProvider(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Borrar proveedor">
+                                        <a href="javascript:void(0);" *ngIf="provider.status" (click)="deleteProvider(provider)" placement="top" ngbTooltip="Eliminar">
                                             <i class="fas fa-trash-alt redIcon"></i>
                                         </a>
-                                        <a href="javascript:void(0);" *ngIf="!provider.status" (click)="restoreProvider(provider)" data-bs-toggle="tooltip" data-bs-placement="top" title="Restaurar proveedor">
+                                        <a href="javascript:void(0);" *ngIf="!provider.status" (click)="restoreProvider(provider)" placement="top" ngbTooltip="Restaurar">
                                             <i class="fas fa-undo greenIcon"></i>
                                         </a>
                                     </td>

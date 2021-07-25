@@ -9,6 +9,14 @@ import player from 'lottie-web';
 import { AlertModalComponent } from './alert-modal/alert-modal.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SearchModalComponent } from './search-modal/search-modal.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PaySaleModalComponent } from './pay-sale-modal/pay-sale-modal.component';
+import { NgxCurrencyModule } from 'ngx-currency';
+import { HistorialPaymentModalComponent } from './historial-payment-modal/historial-payment-modal.component';
+import { SearchProductsComponent } from './search-products/search-products.component';
+import { SearchClientComponent } from './search-client/search-client.component';
+import { CalendarComponent } from './calendar/calendar.component';
+
 
 
 export function playerFactory()
@@ -17,14 +25,18 @@ export function playerFactory()
 }
 
 
-
 @NgModule({
   declarations: [
     FieldErrorDisplayComponentComponent,
     DisplayLottieComponent,
     AlertModalComponent,
     FileUploadComponent,
-    SearchModalComponent
+    SearchModalComponent,
+    PaySaleModalComponent,
+    HistorialPaymentModalComponent,
+    SearchProductsComponent,
+    SearchClientComponent,
+    CalendarComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +44,8 @@ export function playerFactory()
     FormsModule,
     ReactiveFormsModule,
     LottieModule.forRoot({player:playerFactory}),
+    NgbModule,
+    NgxCurrencyModule
     
   ],
   exports:[
@@ -40,7 +54,11 @@ export function playerFactory()
     ReactiveFormsModule,
     DisplayLottieComponent,
     AlertModalComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    NgbModule,
+    SearchProductsComponent,
+    SearchClientComponent,
+    CalendarComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

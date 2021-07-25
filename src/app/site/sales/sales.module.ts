@@ -10,6 +10,11 @@ import { GetSaleComponent } from './components/sales/get-sale/get-sale.component
 import { GetContentSaleComponent } from './components/content-sales/get-content-sale/get-content-sale.component';
 import { NewPaymentHistorialComponent } from './components/payment-historial/new-payment-historial/new-payment-historial.component';
 import { GetPaymentHistorialComponent } from './components/payment-historial/get-payment-historial/get-payment-historial.component';
+import { SharedComponentsModule } from '../shared-components/shared-components.module';
+import { MomentModule } from 'ngx-moment';
+import { GetPendingPaymentsComponent } from './components/pending-payment/get-pending-payments/get-pending-payments.component';
+import { NgxCurrencyModule } from 'ngx-currency';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -21,11 +26,16 @@ import { GetPaymentHistorialComponent } from './components/payment-historial/get
     GetSaleComponent,
     GetContentSaleComponent,
     NewPaymentHistorialComponent,
-    GetPaymentHistorialComponent
+    GetPaymentHistorialComponent,
+    GetPendingPaymentsComponent
   ],
   imports: [
     CommonModule,
-    SalesRoutingModule
+    SalesRoutingModule,
+    SharedComponentsModule,
+    MomentModule,
+    NgxCurrencyModule,
+    
   ]
 })
 export class SalesModule { }
