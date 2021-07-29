@@ -7,7 +7,6 @@ import { ProductInfo } from 'src/app/site/products/models/productInfo';
 import { ProductService } from 'src/app/site/products/services/product.service';
 import { SearchModalComponent } from 'src/app/site/shared-components/search-modal/search-modal.component';
 import { InsertContentSaleRequest } from '../../../models/request/insertcontentsalerequest';
-import { InsertPendingPaymentRequest } from '../../../models/request/insertpendingpayment';
 import { InsertSaleRequest } from '../../../models/request/insertsalerequest';
 import * as moment from 'moment';
 import { PaySaleModalComponent } from 'src/app/site/shared-components/pay-sale-modal/pay-sale-modal.component';

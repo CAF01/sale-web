@@ -107,13 +107,13 @@ export class GetSaleComponent implements OnInit {
     connection.start().then();
   }
 
-  // pageChange(page: any) {
-  //   this.providerService
-  //     .getInvoiceByPage((page - 1) * this.Invoices.pageSize)
-  //     .subscribe((response) => {
-  //       this.Invoices = response;
-  //     });
+  pageChange(page: any) {
+    this.saleService
+      .GetSalesByPage((page - 1) * this.Sales.pageSize)
+      .subscribe((response) => {
+        this.Sales = response;
+      });
 
 
-  // }
+  }
 }

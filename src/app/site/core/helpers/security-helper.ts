@@ -1,3 +1,4 @@
+import { Router } from "@angular/router";
 import { User } from "../../users/models/entitys/user";
 
 export class SecurityHelper {
@@ -5,6 +6,10 @@ export class SecurityHelper {
   private static readonly EMAIL = 'email';
   private static readonly NAME = 'name';
   private static readonly USERID = 'userid';
+
+  constructor( private router: Router){
+
+  }
 
   public static setTokenStorage(token: User) {
     localStorage.setItem(this.TOKEN, token.token);

@@ -57,7 +57,7 @@ export class InsertClientComponent implements OnInit {
 
   return()
   {
-    this.router.navigate(['home/sales/new-sale-beta']);
+    this.router.navigate(['home/sales/new-sale']);
   }
 
 

@@ -5,6 +5,8 @@ import { ReportService } from '../../services/report.service';
 import { StatusRequest } from '../../models/request/statusrequest';
 import { ChartService } from 'src/app/site/core/services/chart.service';
 import { RangeDate } from 'src/app/site/core/helpers/rangeDate';
+import { error } from 'protractor';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-general',
@@ -21,7 +23,8 @@ export class GeneralComponent implements OnInit {
   dateRange: RangeDate;
   
   constructor(private reportService:ReportService,
-    private chartService:ChartService) { }
+    private chartService:ChartService,
+    private toastr:ToastrService) { }
 
   ngOnInit(): void {
     Feather.replace();
@@ -30,9 +33,9 @@ export class GeneralComponent implements OnInit {
 
   onSelectDate(event: RangeDate) {
     this.dateRange = event;
-    // this.request.startdate = event.startDateApi();
-    // this.request.endingdate = event.endDateApi();
-    console.log(this.dateRange);
+    this.request=new StatusRequest();
+    this.request.startdate = new Date(event.startDateApi());
+    this.request.endingdate = new Date(event.endDateApi());
   }
 
   getValuesForReport()
@@ -51,18 +54,52 @@ export class GeneralComponent implements OnInit {
 
   generatereportSale()
   {
-    let request = new StatusRequest();
-    this.reportService.downloadReportSale(request).subscribe((file) => {
+    this.reportService.downloadReportSale(this.request).subscribe((file) => {
       if (file) {
         saveAs(file, "Ventas");
       }
+    },error=>
+    {
+      if(error.status==404)
+      {
+        this.toastr.error('No hay datos en la fecha seleccionada','Error');
+      }
     });
   }
+
+  generatereportProductivityDate()
+  {
+    this.reportService.downloadReportProductivity(this.request).subscribe((file) => {
+      if (file) {
+        saveAs(file, "Productividad_usuarios");
+      }
+    },error=>
+    {
+      if(error.status==404)
+      {
+        this.toastr.error('No hay datos en la fecha seleccionada','Error');
+      }
+    });
+  }
+  generatereportHistorialPayDate()
+  {
+    this.reportService.downloadReportHistorial(this.request).subscribe((file) => {
+      if (file) {
+        saveAs(file, "Pagos_de_clientes");
+      }
+    },error=>
+    {
+      if(error.status==404)
+      {
+        this.toastr.error('No hay datos en la fecha seleccionada','Error');
+      }
+    });
+  }
+
   generatereportSaleMonth()
   {
     let request = new StatusRequest();
     request.startdate=new Date();
-    console.log(request);
     this.reportService.downloadReportSaleMonth(request).subscribe((file) => {
       if (file) {
         saveAs(file, "Ventas_Mensual");

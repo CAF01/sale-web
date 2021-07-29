@@ -1,5 +1,5 @@
-import { Component, DebugElement, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
@@ -19,6 +19,9 @@ import { SalesService } from '../../../services/sales.service';
   styleUrls: ['./update-sale.component.scss']
 })
 export class UpdateSaleComponent implements OnInit {
+
+  dynamicForm: FormGroup;
+
   selectedItems:boolean=false;
   viewOne:boolean=true;
   viewTwo:boolean=false;
@@ -57,20 +60,22 @@ export class UpdateSaleComponent implements OnInit {
     private saleService:SalesService){}
 
   ngOnInit(): void {
-    this.SetValidatorSale();
     this.SetValidatorsPay();
     moment().locale('es');
     this.formatDate(this.date);
+    this.dynamicForm = this._formBuilder.group({
+      numberOfTickets: ['', Validators.required],
+      products: new FormArray([])
+    });
     if(sessionStorage.listProducts)
     {
       this.setValuesAfterRegister();
       this.steptwo();
     }
-    else
-    {
-      this.saleForm.get('quant').setValue(1);
-    }
   }
+
+  get f() { return this.dynamicForm.controls; }
+  get t() { return this.f.products as FormArray; }
 
 
   async pay()
@@ -90,7 +95,7 @@ export class UpdateSaleComponent implements OnInit {
       this.insertPendingPaymentRequest.payed=this.payForm.get('pay').value;
       this.insertSaleRequest.pendingPayment=this.insertPendingPaymentRequest;
       var response = await this.saleService.CreateSale(this.insertSaleRequest).toPromise();
-      if(response>0)
+      if(response)
       {
         this.toastr.success('Venta realizada','Correcto');
         this.viewFour=false;
@@ -98,13 +103,18 @@ export class UpdateSaleComponent implements OnInit {
         this.stepone();
       }
     }
-
   }
 
   setValuesAfterRegister()
   {
     this.listProducts= JSON.parse(sessionStorage.list) as ProductInfo[];
+    let cuants = JSON.parse(sessionStorage.dynamicQuants) as [];
     this.listProductsForSale= JSON.parse(sessionStorage.listProducts) as InsertContentSaleRequest[];
+    cuants.forEach(element => {
+      this.t.push(this._formBuilder.group({quantity:[null, [Validators.required, Validators.min(1)]],
+      }));
+      this.t.controls[this.t.controls.length-1].get('quantity').setValue(element*1);
+    });
     if(sessionStorage.clientInfo)
     {
       var objCLient = JSON.parse(sessionStorage.clientInfo) as insertClientRequest;
@@ -120,6 +130,7 @@ export class UpdateSaleComponent implements OnInit {
     this.selectedItems=true;
     sessionStorage.removeItem('listProducts');
     sessionStorage.removeItem('list');
+    sessionStorage.removeItem('dynamicQuants');
     this.calculate();
   }
 
@@ -149,16 +160,43 @@ export class UpdateSaleComponent implements OnInit {
       this.toastr.error(`${receivedProd.productName} agotado`,'Agotado');
   }
 
+  validateQuantity(i:number)
+  {
+    let prod = this.listProducts.find(d=>d.productID==this.listProductsForSale[i].productID);
+    let quantForm = this.t.controls[i].get('quantity').value*1;
+    if(quantForm>prod.stock)
+    {
+      this.t.controls[i].get('quantity').setValue(prod.stock);
+      this.listProductsForSale[i].quantity=prod.stock;
+    }
+    else
+    {
+      if(quantForm<1)
+      {
+        this.t.controls[i].get('quantity').setValue(1);
+        this.listProductsForSale[i].quantity=1;
+      }
+      else
+      {
+        this.listProductsForSale[i].quantity=quantForm*1;
+      } 
+    }
+    this.calculate();
+  }
+
   amount(price,quant)
   {
     return parseFloat((price * quant).toFixed(2));
   }
 
-  SetValidatorSale() {
-    this.saleForm = this._formBuilder.group({
-      quant: new FormControl('', []),
-    });
-  }
+  // SetValidatorSale() {
+  //   this.saleForm = this._formBuilder.group({
+  //     quant: new FormControl('', []),
+  //   });
+  // }
+
+
+
   SetValidatorsPay() {
     this.payForm = this._formBuilder.group({
       total: new FormControl('',[]),
@@ -192,25 +230,16 @@ export class UpdateSaleComponent implements OnInit {
   
   addQuantity(i:number)
   {
-    if(this.listProducts.find(d=>d.productID==this.listProductsForSale[i].productID).stock>=1)
-    {
-      this.listProductsForSale[i].quantity+=1;
-      // let prod = this.listProducts.findIndex((d)=>d.productID==this.listProductsForSale[i].productID);
-      // this.listProducts[prod].stock-=1;
-      this.calculate();
-    }
+    let quant = (this.t.controls[i].get('quantity').value*1)+1;
+    this.t.controls[i].get('quantity').setValue(quant);
+    this.validateQuantity(i); 
   }
 
   removeQuantity(i:number)
   {
-    let quantity =this.listProductsForSale[i].quantity;
-    if(quantity>1)
-    {
-      this.listProductsForSale[i].quantity-=1;
-      // let prod = this.listProducts.findIndex((d)=>d.productID==this.listProductsForSale[i].productID);
-      // this.listProducts[prod].stock+=1;
-      this.calculate();
-    }
+    let quant = (this.t.controls[i].get('quantity').value*1)-1;
+    this.t.controls[i].get('quantity').setValue(quant);
+    this.validateQuantity(i); 
   }
 
   asignProdValues(searchProduct:ProductInfo)
@@ -222,9 +251,11 @@ export class UpdateSaleComponent implements OnInit {
     insertProdRequest.nameProduct=searchProduct.productName;
     insertProdRequest.price=searchProduct.normalPrice;
     insertProdRequest.description=searchProduct.description;
+    this.t.push(this._formBuilder.group({quantity:[null, [Validators.required, Validators.min(1)]],
+    }));
+    this.t.controls[this.t.controls.length-1].get('quantity').setValue(1);
+    // this.t.controls[this.t.controls.length-1].get('totalPrice').disable();
     this.listProductsForSale.push(insertProdRequest);
-    // let prodIndex = this.listProducts.findIndex((d)=>d.productID==searchProduct.productID);
-    // this.listProducts[prodIndex].stock-=1;
     this.calculate();
   }
 
@@ -242,12 +273,15 @@ export class UpdateSaleComponent implements OnInit {
   delItem(i:number)
   {
     this.listProductsForSale.splice(i,1);
+    this.t.controls.splice(i,1);
     if(this.listProductsForSale.length==0)
     {
       this.subtotal=0.00;
       this.costIVA=0.00;
       this.total=0.00;
       this.selectedItems=false;
+      this.t.reset();
+      this.dynamicForm.reset();
     }
     else
       this.calculate();
@@ -262,24 +296,21 @@ export class UpdateSaleComponent implements OnInit {
     return new Date(date);
   }
 
-  onEnter(event: KeyboardEvent,i,input) {
-    if(this.listProductsForSale[i].quantity!=input.value)
-    {
-      let posProdOriginalList = this.listProducts.findIndex((d)=>d.productID==this.listProductsForSale[i].productID);
-      // let quant:number = Number(this.listProductsForSale[i].quantity);
-      // this.listProducts[posProdOriginalList].stock=Number(this.listProducts[posProdOriginalList].stock)+Number(quant);
-      if(input.value<=this.listProducts[posProdOriginalList].stock)
-      {
-        this.listProductsForSale[i].quantity=input.value;
-        // this.listProducts[posProdOriginalList].stock=this.listProducts[posProdOriginalList].stock-input.value;
-      }
-      else
-      {
-        this.listProductsForSale[i].quantity=this.listProducts[posProdOriginalList].stock;
-      }
-      this.calculate();
-    }
-  }
+  // onEnter(event: KeyboardEvent,i,input) {
+  //   if(this.listProductsForSale[i].quantity!=input.value)
+  //   {
+  //     let posProdOriginalList = this.listProducts.findIndex((d)=>d.productID==this.listProductsForSale[i].productID);
+  //     if(input.value<=this.listProducts[posProdOriginalList].stock)
+  //     {
+  //       this.listProductsForSale[i].quantity=input.value;
+  //     }
+  //     else
+  //     {
+  //       this.listProductsForSale[i].quantity=this.listProducts[posProdOriginalList].stock;
+  //     }
+  //     this.calculate();
+  //   }
+  // }
 
   onReceiveClient($event)
   {
@@ -289,8 +320,13 @@ export class UpdateSaleComponent implements OnInit {
 
   registerClient()
   {
+    let cuants = [];
+    this.t.controls.forEach(element => {
+      cuants.push(element.get('quantity').value);
+    });
     sessionStorage.setItem('list',JSON.stringify(this.listProducts));
     sessionStorage.setItem('listProducts', JSON.stringify(this.listProductsForSale));
+    sessionStorage.setItem('dynamicQuants', JSON.stringify(cuants));
     this.router.navigate(['home/clients/insert-client']);
   }
 
@@ -329,9 +365,13 @@ export class UpdateSaleComponent implements OnInit {
 
   reset()
   {
-    this.saleForm.reset();
+    this.dynamicForm = this._formBuilder.group({
+      numberOfTickets: ['', Validators.required],
+      products: new FormArray([])
+    });
+    // this.t.reset();
+    // this.dynamicForm.reset();
     this.payForm.reset();
-    this.saleForm.get('quant').setValue(1);
     this.selectedClient=false;
     sessionStorage.removeItem('clientInfo');
     sessionStorage.removeItem('clientID');

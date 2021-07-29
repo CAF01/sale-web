@@ -31,7 +31,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentDate = new Date();
-    this.today = moment(this.currentDate).add(1, "days");
+    this.today = moment(this.currentDate).add(0, "days");
 
     var start = this.today;
     var end = this.today;

@@ -48,7 +48,7 @@ export class InsertReturnComponent implements OnInit {
     Feather.replace();
     moment().locale('es');
     this.SetValidatorSearch();
-    this.SetValidatorReturn();
+    // this.SetValidatorReturn();
     this.getReasons();
     this.dynamicForm = this._formBuilder.group({
       numberOfTickets: ['', Validators.required],
@@ -87,17 +87,17 @@ export class InsertReturnComponent implements OnInit {
       ]),
     });
   }
-  SetValidatorReturn() {
-    this.returnForm = this._formBuilder.group({
-      quantity: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(5),
-        Validators.min(1),
-        Validators.max(5000),
-      ]),
-      reasonID: new FormControl('', [Validators.required, Validators.min(1)]),
-    });
-  }
+  // SetValidatorReturn() {
+  //   this.returnForm = this._formBuilder.group({
+  //     quantity: new FormControl('', [
+  //       Validators.required,
+  //       Validators.maxLength(5),
+  //       Validators.min(1),
+  //       Validators.max(5000),
+  //     ]),
+  //     reasonID: new FormControl('', [Validators.required, Validators.min(1)]),
+  //   });
+  // }
 
   async getReasons() {
     var response = await this.clientService.getReasons().toPromise();

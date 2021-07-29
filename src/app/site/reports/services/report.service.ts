@@ -47,4 +47,11 @@ export class ReportService {
       responseType: "blob",params:params
     });
   }
+  downloadReportHistorial(request: StatusRequest): Observable<any> {
+    let params = new HttpParams().set('option',"5");
+    return this._http.post(
+      `${environment.url_api}${this.controller}/export-metrics`,request, {
+      responseType: "blob",params:params
+    });
+  }
 }

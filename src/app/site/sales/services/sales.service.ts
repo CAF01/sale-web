@@ -29,6 +29,13 @@ export class SalesService {
       `${environment.url_api}${this.controller}`
     );
   }
+  GetSalesByPage(page:number):Observable<PaginationListResponse<SalesInfo>>
+  {
+    let params = new HttpParams().set('skip',page.toString());
+    return this._http.get<PaginationListResponse<SalesInfo>>(
+      `${environment.url_api}${this.controller}`,{params:params}
+    );
+  }
 
   GetPendingPayments():Observable<PaginationListResponse<PendingPaymentInfo>>
   {

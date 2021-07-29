@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SecurityHelper } from 'src/app/site/core/helpers/security-helper';
 import { ValidateForm } from 'src/app/site/core/helpers/validate-formfields-helper';
 import { UserLogin } from 'src/app/site/users/models/request/user-login';
@@ -22,12 +23,15 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   activatedButton:boolean=true;
 
+  fieldTextType: boolean=false;
+
   validateForm = ValidateForm;
 
   constructor(
     private _formBuilder: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private toastr:ToastrService
   ) {
 
     if(SecurityHelper.getToken()){
@@ -51,14 +55,22 @@ export class LoginComponent implements OnInit {
       );
       this.userService.Login(userLogin).subscribe(
         (request) => {
-          SecurityHelper.setTokenStorage(request);
-          this.router.navigate(['/home/dash']);
-        },error=>
-        {
-          this.activatedButton=true;
-        }
-      );
-    } else {
+          if(request.userID>0)
+          {
+            SecurityHelper.setTokenStorage(request);
+            this.router.navigate(['/home/dash']);
+          }
+          else
+          {
+            this.toastr.error('Credenciales incorrectas, intenta de nuevo','Error');
+            this.loginForm.get('password').reset();
+            this.activatedButton=true;
+          }
+          
+        });
+    } 
+    else 
+    {
       this.formSubmitAttempt = false;
       this.validateForm.validateAllFormFields(this.loginForm);
     }
@@ -76,6 +88,10 @@ export class LoginComponent implements OnInit {
         Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,50}$/),
       ]),
     });
+  }
+
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
   }
 
   validationInput(field: string): boolean {

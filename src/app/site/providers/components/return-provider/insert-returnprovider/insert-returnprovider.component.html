@@ -64,7 +64,7 @@
                                                     <td class="text-end fw-bold" *ngIf="existReturned && Validando[i]?.changed">${{calcAmount(item?.unitPrice,Validando[i]?.realQuant)}}</td>
                                                     <td class="text-end fw-bold" *ngIf="!existReturned || Validando[i]?.changed==false">${{item.amount}}</td>
                                                     <td class="text-center fw-bold">
-                                                        <div class="form-check d-flex justify-content-center" *ngIf="((existReturned && Validando[i].realQuant>0) || !existReturned)">
+                                                        <div class="form-check d-flex justify-content-center" *ngIf="((existReturned && Validando[i].realQuant>0 && item.stock>0) || !existReturned)">
                                                             <input class="form-check-input" type="checkbox" [checked]="checkAll" (change)="onCheckboxChange($event,item)" id="{{item.contentSaleID}}">
                                                         </div>
                                                         <div class="form-check d-flex justify-content-center disableDiv" *ngIf="existReturned && Validando[i].realQuant==0">
@@ -104,7 +104,7 @@
                                                                 <th scope="col ">Producto</th>
                                                                 <th class="text-end" scope="col">Cantidad</th>
                                                                 <th class="text-end" scope="col">Devolución</th>
-                                                                <th class="text-end" scope="col">Razón <a href="javascript:void();" (click)="addReason()" placement="top" ngbTooltip="Nueva razón"><i class="fas fa-plus-square"></i></a></th>
+                                                                <th class="text-end" scope="col">Razón <a href="javascript:void(0);" (click)="addReason()" placement="top" ngbTooltip="Nueva razón"><i class="fas fa-plus-square"></i></a></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -147,10 +147,6 @@
                         </div>
 
                     </div>
-                    <!-- <div class="tab-pane fade" id="examplePill" role="tabpanel" aria-labelledby="example-tab">
-                        <h5 class="card-title">Example Pane</h5>
-                        <p class="card-text">...</p>
-                    </div> -->
                     <div class="tab-pane fade" id="historialPill" role="tabpanel" aria-labelledby="example-tab">
                         <h5 class="card-title">Productos devueltos</h5>
                         <div class="card-body p-2 p-md-3">

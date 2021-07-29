@@ -13,14 +13,10 @@
         </div>
     </div>
 </header>
-<!-- Main page content-->
 <div class="container-fluid px-4 mt-n10">
-    <!-- Wizard card example with navigation-->
     <div class="card">
         <div class="card-header border-bottom">
-            <!-- Wizard navigation-->
             <div class="nav nav-pills nav-justified flex-column flex-xl-row nav-wizard" id="cardTab" role="tablist">
-                <!-- Wizard navigation item 1-->
                 <a class="nav-item nav-link" [ngClass]="{'active':viewOne, 'disableDiv':!viewOne}" id="wizard1-tab" href="#wizard1" data-bs-toggle="tab" role="tab" aria-controls="wizard1" aria-selected="true">
                     <div class="wizard-step-icon">1</div>
                     <div class="wizard-step-text">
@@ -28,7 +24,6 @@
                         <div class="wizard-step-text-details">Añade los productos</div>
                     </div>
                 </a>
-                <!-- Wizard navigation item 2-->
                 <a class="nav-item nav-link disableDiv" [ngClass]="{'enabledDiv':selectedItems && viewTwo}" id="wizard2-tab" href="#wizard2" data-bs-toggle="tab" role="tab" aria-controls="wizard2" aria-selected="true">
                     <div class="wizard-step-icon">2</div>
                     <div class="wizard-step-text">
@@ -36,7 +31,6 @@
                         <div class="wizard-step-text-details">Selecciona al cliente</div>
                     </div>
                 </a>
-                <!-- Wizard navigation item 3-->
                 <a class="nav-item nav-link disableDiv" [ngClass]="{'enabledDiv':viewThree}" id="wizard3-tab" href="#wizard3" data-bs-toggle="tab" role="tab" aria-controls="wizard3" aria-selected="true">
                     <div class="wizard-step-icon">3</div>
                     <div class="wizard-step-text">
@@ -44,7 +38,6 @@
                         <div class="wizard-step-text-details">Detalles de pago</div>
                     </div>
                 </a>
-                <!-- Wizard navigation item 4-->
                 <a class="nav-item nav-link disableDiv" [ngClass]="{'enabledDiv':viewFour}" id="wizard4-tab" href="#wizard4" data-bs-toggle="tab" role="tab" aria-controls="wizard4" aria-selected="true">
                     <div class="wizard-step-icon">4</div>
                     <div class="wizard-step-text">
@@ -63,7 +56,7 @@
                                 <h2 class="text-primary">Selección de productos</h2>
                                 <app-search-products (onSubmit)="onReceive($event)"></app-search-products>
                             </div>
-                            <form [formGroup]="saleForm">
+                            <form [formGroup]="dynamicForm">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -76,8 +69,36 @@
                                         </tr>
                                     </thead>
                                     <tbody *ngIf="listProductsForSale">
-
-                                        <ng-container *ngFor="let item of listProductsForSale; let i = index">
+                                        <ng-container *ngFor="let ticket of t.controls; let i = index">
+                                            <tr class="border-bottom" [formGroup]="ticket">
+                                                <th scope="row">{{listProductsForSale[i].nameProduct}} - {{listProductsForSale[i].description}}</th>
+                                                <td class="text-center" style="padding: 1em !important;" scope="col">{{stock(i)}}</td>
+                                                <td class="text-center" style="padding: 1em !important;" scope="col">
+                                                    <div class="d-flex justify-content-between">
+                                                        <a href="javascript:void(0);" [ngStyle]="{'font-size': '20px'}" (click)="removeQuantity(i)">
+                                                            <i class="fas fa-minus"></i>
+                                                        </a>
+                                                        <ng-container>
+                                                            <input currencyMask class="form-control" id="{{i}}" formControlName="quantity" (ngModelChange)="validateQuantity(i)" style="width: 60px !important; text-align: center !important; padding: 1em !important;" [options]="{ allowNegative:false,align: 'center', max: '300',precision:0, prefix: '' } "
+                                                            />
+                                                        </ng-container>
+                                                        <a href="javascript:void(0);" [ngStyle]="{'font-size': '20px'}" (click)="addQuantity(i)">
+                                                            <i class="fas fa-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center" style="padding: 1em !important;" scope="col">${{listProductsForSale[i].price}}</td>
+                                                <td class="text-center" style="padding: 1em !important;" scope="col">${{amount(listProductsForSale[i].quantity,listProductsForSale[i].price)}}</td>
+                                                <td class="text-center" scope="col">
+                                                    <div class="d-flex justify-content-center">
+                                                        <a href="javascript:void(0);" class="redIcon" [ngStyle]="{'font-size': '20px'}" (click)="delItem(i)">
+                                                            <i class="fas fa-minus-circle"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                        <!-- <ng-container *ngFor="let item of listProductsForSale; let i = index">
                                             <tr>
                                                 <th scope="row">{{item.nameProduct}} - {{item.description}}</th>
                                                 <td class="text-center" style="padding: 1em !important;" scope="col">{{stock(i)}}</td>
@@ -90,7 +111,6 @@
                                                             <input currencyMask class="form-control" id="{{i}}" (keyup.enter)="onEnter($event,i,input)" #input value="{{item.quantity}}" style="width: 60px !important; text-align: center !important; padding: 1em !important;" [options]="{ allowNegative:false,align: 'center', max: '300',precision:0, prefix: '' } "
                                                             />
                                                         </ng-container>
-                                                        <!-- <label class="fw-bold">{{item?.quantity}}</label> -->
                                                         <a href="javascript:void(0);" [ngStyle]="{'font-size': '20px'}" (click)="addQuantity(i)">
                                                             <i class="fas fa-plus"></i>
                                                         </a>
@@ -106,7 +126,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        </ng-container>
+                                        </ng-container> -->
                                     </tbody>
                                 </table>
                             </form>
@@ -153,7 +173,6 @@
                     </div>
 
                 </div>
-                <!-- Wizard tab pane item 2-->
                 <div class="tab-pane py-5 py-xl-5 fade" id="wizard2" role="tabpanel" aria-labelledby="wizard2-tab">
                     <div class="row justify-content-center">
                         <div class="col-xxl-6 col-xl-8">
@@ -198,7 +217,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Wizard tab pane item 3-->
                 <div class="tab-pane py-5 py-xl-5 fade" id="wizard3" role="tabpanel" aria-labelledby="wizard3-tab">
                     <div class="row justify-content-center">
                         <div class="col-xxl-4 col-xl-6">
@@ -224,7 +242,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Wizard tab pane item 4-->
                 <div class="tab-pane py-2 py-xl-1 fade" id="wizard4" role="tabpanel" aria-labelledby="wizard4-tab">
                     <div class="row justify-content-center">
                         <div class="card-header p-2 p-md-3 border-bottom-0 bg-gradient-primary-to-secondary text-white-50">

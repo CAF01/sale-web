@@ -178,7 +178,7 @@ export class InsertReturnproviderComponent implements OnInit {
           let valQuant = this.Validando.find(d=>d.idProd==element.contentID);
           if(!this.contentToReturn.find(d=>d.contentID==element.contentID))
           {
-            if(valQuant.realQuant>0)
+            if(valQuant.realQuant>0 && element.stock>0)
             {
               this.t.push(this._formBuilder.group({quantity:[null, [Validators.required, Validators.min(1)]],
                 totalPrice: [null, [Validators.required, Validators.min(1)]],
@@ -199,7 +199,7 @@ export class InsertReturnproviderComponent implements OnInit {
         this.checks=[];
         this.contentSale.forEach(element => {
           let valQuant = this.Validando.find(d=>d.idProd==element.contentID);
-          if(valQuant.realQuant>0)
+          if(valQuant.realQuant>0 && element.stock>0)
           {
             this.t.push(this._formBuilder.group({quantity:[null, [Validators.required, Validators.min(1)]],
               totalPrice: [null, [Validators.required, Validators.min(1)]],
@@ -255,18 +255,17 @@ export class InsertReturnproviderComponent implements OnInit {
 
   async return() {
     let request : InsertReturnProviderRequest[]=[];
-    let i = 0;
-    while(i<this.contentToReturn.length)
-    {
+    this.contentToReturn.forEach((element,index) => {
       let item = new InsertReturnProviderRequest();
-      item.contentID=this.contentToReturn[i].contentID;
-      item.quantity=this.t.controls[i].get('quantity').value;
-      item.reasonID=this.t.controls[i].get('reasonID').value;
+      item.contentID=element.contentID;
+      item.quantity=this.t.controls[index].get('quantity').value;
+      item.reasonID=this.t.controls[index].get('reasonID').value;
       request.push(item);
-      i++;
-    }
-    var response = await this.providerService.newReturn(request).toPromise();
-    if (response) 
+      let prodOfContent = this.contentSale.findIndex(d=>d.contentID==element.contentID);
+      this.contentSale[prodOfContent].stock=(this.contentSale[prodOfContent].stock-item.quantity);
+    });
+    // var response = await this.providerService.newReturn(request).toPromise();
+    if (1>0) 
     {
       if (this.ListReturneds) 
       {
@@ -328,13 +327,32 @@ export class InsertReturnproviderComponent implements OnInit {
       if(this.Validando)
       {
         let index = this.contentSale.findIndex(d=>d.contentID==this.contentToReturn[i].contentID);
-        quantForm<=this.Validando[index].realQuant ? true : this.t.controls[i].get('quantity').setValue(this.Validando[index].realQuant);
+        if(quantForm <= this.Validando[index].realQuant && quantForm <=this.contentSale[index].stock)
+        {
+        }
+        else
+        {
+          if(quantForm>this.Validando[index].realQuant)
+            this.t.controls[i].get('quantity').setValue(this.Validando[index].realQuant);
+          if(quantForm>this.contentSale[index].stock)
+            this.t.controls[i].get('quantity').setValue(this.contentSale[index].stock);
+        }
         quantForm = this.t.controls[i].get('quantity').value;
         this.t.controls[i].get('totalPrice').setValue(parseFloat((quantForm*this.contentToReturn[i].unitPrice).toFixed(2)));
       }
       else
       {
-        quantForm<=this.contentToReturn[i].quantity ? true : this.t.controls[i].get('quantity').setValue(this.contentToReturn[i].quantity);
+        let index = this.contentSale.findIndex(d=>d.contentID==this.contentToReturn[i].contentID);
+        if(quantForm <= this.contentSale[index].stock && quantForm <= this.contentSale[index].quantity)
+        {
+        }
+        else
+        {
+          if(quantForm>this.contentSale[index].stock)
+            this.t.controls[i].get('quantity').setValue(this.contentSale[index].stock);
+          if(quantForm>this.contentSale[index].quantity)
+            this.t.controls[i].get('quantity').setValue(this.contentSale[index].quantity);
+        }
         quantForm = this.t.controls[i].get('quantity').value;
         this.t.controls[i].get('totalPrice').setValue(parseFloat((quantForm*this.contentToReturn[i].unitPrice).toFixed(2)));
       }

@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  Earns:number[]=[];
+  Earns:number[]=[0,0,0];
   barStructure:ChartSale[]=[];
   chartStructure: ChartSale[] = [];
 
