@@ -1,5 +1,5 @@
-# Punto de ventas
-
+# Punto de venta
+Proyecto dedicado al desarrollo de un **Sistema Web** que permita la **gestión de ventas** en negocios locales.
 
 ## Inicia sesión
 ![Sin título](https://user-images.githubusercontent.com/68396707/128079122-07bf3cf8-7beb-41e8-a59d-1c1d1facef22.png)
