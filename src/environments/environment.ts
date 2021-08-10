@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  url_base: 'https://localhost:44311/',
-  url_api: 'https://localhost:44311/api/'
+  production: true,
+  url_base: 'https://utp-sales.azurewebsites.net/',
+  url_api: 'https://utp-sales.azurewebsites.net/api/'
 };
 
 /*

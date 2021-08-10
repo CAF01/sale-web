@@ -85,7 +85,7 @@
                             </div>
                             <!-- Form Group (location)-->
                             <div class="col-md-6">
-                                <label class="medium mb-1 text-blue" for="brand">Marca <span style="color:red"> * </span></label>
+                                <label class="medium mb-1 text-blue" for="brand">Marca <span style="color:red"> * </span><a (click)="addBrand()" placement="top" ngbTooltip="Nueva marca"><i class="fas fa-plus-square"></i></a></label>
                                 <select id="brand" name="brand" class="form-control" formControlName="BrandID">
                                   
                                         <option *ngFor="let brand of brands?.data"  value="{{brand.brandID}}">

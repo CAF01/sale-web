@@ -61,14 +61,14 @@ export class InsertClientComponent implements OnInit {
   }
 
 
-  onSubmit(numbForm:number)
+  async onSubmit(numbForm:number)
   {
     if(numbForm==1)
     {
       if(this.clientForm.valid)
       {
-        this.findIfExistsPhone(this.clientForm.get('phone').value);
-        if(this.validatePhone>0)
+        await this.findIfExistsPhone(this.clientForm.get('phone').value);
+        if(this.validatePhone==2)
         {
           this.toastr.error('El teléfono ya se ha registrado anteriormente','Error');
           this.flag=false;

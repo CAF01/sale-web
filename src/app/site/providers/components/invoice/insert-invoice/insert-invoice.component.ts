@@ -200,6 +200,7 @@ export class InsertInvoiceComponent implements OnInit {
   async getProducts() {
     var response = await this.productService.getAvailableProducts().toPromise();
     this.products = response;
+    console.log(this.products);
     this.invoiceForm.get('productID').setValue(0);
   }
 
@@ -224,17 +225,18 @@ export class InsertInvoiceComponent implements OnInit {
   }
 
   calc() {
-    if (
-      this.invoiceForm.get('unitPrice').value &&
-      this.invoiceForm.get('quantity').value
-    ) {
-      let amount =
-        this.invoiceForm.get('unitPrice').value *
-        this.invoiceForm.get('quantity').value;
-      if (amount >= 1000000) {
+    if (this.invoiceForm.get('unitPrice').value>0 && this.invoiceForm.get('quantity').value>0) 
+    {
+      let amount =this.invoiceForm.get('unitPrice').value * this.invoiceForm.get('quantity').value;
+      if (amount >= 1000000) 
+      {
         this.toastr.info('La cantidad calculada supera $1,000,000');
       }
       this.invoiceForm.get('amount').setValue(amount.toFixed(2));
+    }
+    else
+    {
+      this.invoiceForm.get('amount').setValue(0.00);
     }
   }
   delItem(pos: number) {

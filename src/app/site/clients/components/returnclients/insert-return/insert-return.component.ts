@@ -26,6 +26,14 @@ export class modifing {
   idProd:number;
 };
 
+type UserSession = {
+  token:string,
+  email:string,
+  name:string,
+  userID:number,
+  changePassword:boolean
+  }; 
+
 @Component({
   selector: 'app-insert-return',
   templateUrl: './insert-return.component.html',
@@ -41,11 +49,13 @@ export class InsertReturnComponent implements OnInit {
   ) {}
 
   dynamicForm: FormGroup;
+  userSession:UserSession;
   existReturned:boolean=false;
   checks:any[]=[];
   checkallControl:any;
   ngOnInit(): void {
     Feather.replace();
+    this.userSession = JSON.parse(localStorage.getItem('token')) as UserSession;
     moment().locale('es');
     this.SetValidatorSearch();
     // this.SetValidatorReturn();
@@ -103,7 +113,6 @@ export class InsertReturnComponent implements OnInit {
     var response = await this.clientService.getReasons().toPromise();
     if (response) {
       this.reasons = response;
-      this.returnForm.get('reasonID').setValue(this.reasons[0].reasonID);
     } else {
       this.toastr.error('Fallo al cargar razones', 'Error');
     }
@@ -268,7 +277,7 @@ export class InsertReturnComponent implements OnInit {
     {
       let item = new InsertReturnClientRequest();
       item.contentSaleID=this.contentToReturn[i].contentSaleID;
-      item.userID = parseInt(localStorage.getItem('userid'));
+      item.userID = this.userSession.userID;
       item.quantity=this.t.controls[i].get('quantity').value;
       item.reasonID=this.t.controls[i].get('reasonID').value;
       request.push(item);
@@ -449,7 +458,6 @@ export class InsertReturnComponent implements OnInit {
   }
   reset()
   {
-    this.returnForm.reset();
     this.historial=false;
     this.saleInfo=null;
     this.ListReturneds=null;

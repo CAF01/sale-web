@@ -80,12 +80,12 @@
                                 </td>
                                 <td class="col-md-1 text-end fw-bold">
                                     <div class="">
-                                        <input currencyMask formControlName="quantity" class="form-control" id="quantity" [options]="{ allowNegative:false,align: 'center', max: '10000',precision:0, prefix: '' } " />
+                                        <input currencyMask formControlName="quantity" (ngModelChange)="calc()" class="form-control" id="quantity" [options]="{ allowNegative:false,align: 'center', max: '10000',precision:0, prefix: '' } " />
                                     </div>
                                 </td>
                                 <td class="co-md-3 text-end fw-bold">
                                     <div class="">
-                                        <input currencyMask formControlName="unitPrice" class="form-control" id="unitPrice" [options]="{ prefix: 'MX$ ', thousands: ',', decimal: '.', allowNegative:false,align: 'center', max: '100000.00' } " />
+                                        <input currencyMask formControlName="unitPrice" (ngModelChange)="calc()" class="form-control" id="unitPrice" [options]="{ prefix: 'MX$ ', thousands: ',', decimal: '.', allowNegative:false,align: 'center', max: '100000.00' } " />
                                     </div>
                                 </td>
                                 <td class="col-md-3 text-end fw-bold">

@@ -16,6 +16,7 @@ import { ProductService } from '../../../services/product.service';
 import { Toast, ToastrService } from 'ngx-toastr';
 import { InsertCategoryComponent } from 'src/app/site/catalogs/components/categories/insert-category/insert-category.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { InsertBrandComponent } from 'src/app/site/catalogs/components/brands/insert-brand/insert-brand.component';
 
 @Component({
   selector: 'app-new-product',
@@ -106,7 +107,25 @@ export class NewProductComponent implements OnInit {
 
     modal.result
       .then((result) => {
+        if (result) 
+        {
+          this.productForm.get('CategoryID').setValue(this.categories.data[this.categories.data.length-1].categoryID);
+        }
+      })
+      .catch((err) => {});
+  }
+  addBrand() {
+    let modal = this.modalService.open(InsertBrandComponent, {
+      centered: true,
+    });
+
+    modal.componentInstance.title = 'Insertar nueva Marca';
+    modal.componentInstance.brandList = this.brands;
+
+    modal.result
+      .then((result) => {
         if (result) {
+          this.productForm.get('BrandID').setValue(this.brands.data[this.brands.data.length-1].brandID);
         }
       })
       .catch((err) => {});

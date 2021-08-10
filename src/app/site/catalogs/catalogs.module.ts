@@ -22,6 +22,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { MomentModule } from 'ngx-moment';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
 import { UpdateBrandComponent } from './components/brands/update-brand/update-brand.component';
+import { InsertBrandComponent } from './components/brands/insert-brand/insert-brand.component';
 
 
 
@@ -43,7 +44,8 @@ import { UpdateBrandComponent } from './components/brands/update-brand/update-br
     InsertReasonreturnproviderComponent,
     UpdateReasonreturnproviderComponent,
     GetReasonreturnproviderComponent,
-    UpdateBrandComponent
+    UpdateBrandComponent,
+    InsertBrandComponent
   ],
   imports: [
     CommonModule,

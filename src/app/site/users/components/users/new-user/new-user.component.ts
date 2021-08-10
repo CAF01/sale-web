@@ -8,9 +8,6 @@ import { ValidateForm } from 'src/app/site/core/helpers/validate-formfields-help
 import { AddressInsertRequest } from '../../../models/request/addressinsertrequest';
 import { userInsertRequest } from '../../../models/request/userinsertrequest';
 import { UserService } from '../../../services/user.service';
-// import {AnimationOptions} from 'ngx-lottie';
-// import { AnimationItem } from 'lottie-web';
-// import { NgZone } from '@angular/core';
 import * as Feather from 'feather-icons';
 
 @Component({
@@ -19,11 +16,6 @@ import * as Feather from 'feather-icons';
   styleUrls: ['./new-user.component.scss'],
 })
 export class NewUserComponent implements OnInit {
-  // private animation : AnimationItem;
-  // options:AnimationOptions = 
-  // {
-  //   path:'assets/animations/1.json'
-  // }
   telephone:string;
   formSubmitAttempt: boolean;
   flag?: boolean;
@@ -48,23 +40,6 @@ export class NewUserComponent implements OnInit {
     this.SetValidatorsAddress();
     this.setTrueFlags();
   }
-
-  // created(animation:AnimationItem)
-  // {
-  //   console.log(animation);
-  //   this.animation=animation;
-  // }
-
-  // play()
-  // {
-  //   this.ngZone.runOutsideAngular(()=>this.animation.show());
-  //   this.ngZone.runOutsideAngular(()=>this.animation.play());
-  // }
-  // pause()
-  // {
-  //   this.ngZone.runOutsideAngular(()=>this.animation.hide());
-  //   this.ngZone.runOutsideAngular(()=>this.animation.pause());
-  // }
 
   setTrueFlags() {
     this.formSubmitAttempt = true;
@@ -112,10 +87,9 @@ export class NewUserComponent implements OnInit {
     {
       this.usersService.newUser(this.user).subscribe(response=>
         {
-          console.log(response)//alert toast
-          this.showSuccess();
           this.reset(1);
           this.Redirect("#wizard1");
+          this.showSuccess();
         }),
         (error=>{
             console.log(error)
@@ -124,11 +98,10 @@ export class NewUserComponent implements OnInit {
     if(this.userAddress!=undefined && this.addressSubmited && this.formSubmitAttempt && this.flag)
     {
       this.usersService.newUserWithAddress(this.user).subscribe(response=>{
-        console.log(response) //alert toast
-        this.showSuccess();
         this.reset(2);
         this.reset(1);
         this.Redirect("#wizard1");
+        this.showSuccess();
       }),
       (error=>{
         console.log(error)
@@ -193,7 +166,7 @@ export class NewUserComponent implements OnInit {
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,50}$/),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\u00f1\u00d1]{6,50}$/),
       ]),
     });
   }

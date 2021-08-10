@@ -8,6 +8,7 @@ import { NewAddressComponent } from './components/address/new-address/new-addres
 import { UpdateAddressComponent } from './components/address/update-address/update-address.component';
 import { MomentModule } from 'ngx-moment';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
+import { SetPasswordModalComponent } from './components/users/set-password-modal/set-password-modal.component';
 
 
 
@@ -18,7 +19,8 @@ import { SharedComponentsModule } from '../shared-components/shared-components.m
     UpdateUserComponent,
     ListUsersComponent,
     NewAddressComponent,
-    UpdateAddressComponent
+    UpdateAddressComponent,
+    SetPasswordModalComponent
   ],
   imports: [
     CommonModule,

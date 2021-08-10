@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SecurityHelper } from 'src/app/site/core/helpers/security-helper';
 import { ValidateForm } from 'src/app/site/core/helpers/validate-formfields-helper';
+import { HelperService } from 'src/app/site/core/services/helper.service';
 import { UserLogin } from 'src/app/site/users/models/request/user-login';
 import { UserService } from 'src/app/site/users/services/user.service';
 
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    private helperService:HelperService
   ) {
 
     if(SecurityHelper.getToken()){
@@ -42,11 +44,16 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.helperService.loadScript(
+      '../../../../assets/js/scripts.js'
+    ).subscribe(response=>
+      {});
     this.SetValidatorsLogin();
   }
 
   onSubmit() {
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid) 
+    {
       this.activatedButton=false;
       this.formSubmitAttempt = true;
       let userLogin = new UserLogin(
@@ -58,7 +65,7 @@ export class LoginComponent implements OnInit {
           if(request.userID>0)
           {
             SecurityHelper.setTokenStorage(request);
-            this.router.navigate(['/home/dash']);
+              this.router.navigate(['/home/dash']);
           }
           else
           {
@@ -66,8 +73,8 @@ export class LoginComponent implements OnInit {
             this.loginForm.get('password').reset();
             this.activatedButton=true;
           }
-          
         });
+        this.activatedButton=true;
     } 
     else 
     {
@@ -85,7 +92,7 @@ export class LoginComponent implements OnInit {
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,50}$/),
+        // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\u00f1\u00d1]{6,50}$/),
       ]),
     });
   }

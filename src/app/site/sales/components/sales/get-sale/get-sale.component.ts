@@ -32,9 +32,9 @@ export class GetSaleComponent implements OnInit {
     private saleService:SalesService) { }
 
   ngOnInit(): void {
+    this.initSiganR();
     this.getSales();
     moment().locale('es');
-    this.initSiganR();
     this.SetSearchForm();
   }
 
@@ -100,6 +100,7 @@ export class GetSaleComponent implements OnInit {
       .withUrl(`${environment.url_base}Sales`)
       .build();
     connection.on('SaleInsert', (data) => {
+      console.log(data);
       let Sale = data as SalesInfo;
       this.Sales.data.unshift(Sale);
     });

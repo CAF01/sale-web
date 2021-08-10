@@ -13,7 +13,7 @@ import { SecurityHelper } from '../helpers/security-helper';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuardServiceService implements CanActivate, CanActivateChild {
+export class AuthGuardServiceService implements CanActivateChild {
   constructor(private router: Router) {}
 
   canActivateChild(
@@ -26,8 +26,8 @@ export class AuthGuardServiceService implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree> {
     let token = SecurityHelper.getToken();
 
-
-    if(token){
+    if(token)
+    {
       return true;
     }
 
@@ -46,8 +46,8 @@ export class AuthGuardServiceService implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree> {
     let token = SecurityHelper.getToken();
 
-
-    if(token){
+    if (token) 
+    {
       return true;
     }
 

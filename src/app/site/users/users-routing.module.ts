@@ -4,6 +4,7 @@ import { ListUsersComponent } from './components/users/list-users/list-users.com
 import { NewUserComponent } from './components/users/new-user/new-user.component';
 import { MomentModule } from 'ngx-moment';
 import { UpdateUserComponent } from './components/users/update-user/update-user.component';
+import { UpdateAddressComponent } from './components/address/update-address/update-address.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,10 @@ const routes: Routes = [
     component: NewUserComponent /*, component: UsersComponent*/,
   },
   { path: 'list', component: ListUsersComponent },
-  {path:'update-user',component:UpdateUserComponent},
+  { path: 'update-user', component: UpdateUserComponent },
+  {
+    path:'test',component:UpdateAddressComponent
+  }
 ];
 
 @NgModule({

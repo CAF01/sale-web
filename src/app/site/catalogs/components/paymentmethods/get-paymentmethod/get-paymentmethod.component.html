@@ -30,7 +30,7 @@
                         <div class="card h-100 border-start-lg mb-1" [ngClass]="{'border-start-success': payment.status,'border-start-danger':!payment.status}">
                             <div class="card-body">
                                 <div class="h3 d-flex justify-content-between">{{payment.description}}
-                                    <div class="dropdown">
+                                    <div class="dropdown" *ngIf="payment.description!='EFECTIVO'">
                                         <button class="btn btn-transparent-dark btn-icon dropdown-toggle" placement="top" ngbTooltip="Acciones" id="{{i}}" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                         <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="{{i}}">
                                             <a class="dropdown-item" href="javascript:void(0);" (click)="SelectPayment(payment)">Actualizar</a>

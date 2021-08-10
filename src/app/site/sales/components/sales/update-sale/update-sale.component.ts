@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,6 +14,14 @@ import { InsertPendingPaymentRequest } from '../../../models/request/insertpendi
 import { InsertSaleRequest } from '../../../models/request/insertsalerequest';
 import { SalesService } from '../../../services/sales.service';
 
+type UserSession = {
+  token:string,
+  email:string,
+  name:string,
+  userID:number,
+  changePassword:boolean
+  }; 
+
 @Component({
   selector: 'app-update-sale',
   templateUrl: './update-sale.component.html',
@@ -21,6 +30,7 @@ import { SalesService } from '../../../services/sales.service';
 export class UpdateSaleComponent implements OnInit {
 
   dynamicForm: FormGroup;
+  userSession:UserSession;
 
   selectedItems:boolean=false;
   viewOne:boolean=true;
@@ -28,9 +38,9 @@ export class UpdateSaleComponent implements OnInit {
   viewThree: boolean=false;
   selectedClient:boolean=false;
   redirectHelper = RedirectHelper;
-  user:string=localStorage.getItem('name');
-  userID:number=parseInt(localStorage.getItem('userid'));
 
+  user:string;
+  userID:number;
   infoClient:client=new client();
   IVA: number = 16;
   listProductsForSale : InsertContentSaleRequest[] = [];
@@ -61,6 +71,9 @@ export class UpdateSaleComponent implements OnInit {
 
   ngOnInit(): void {
     this.SetValidatorsPay();
+    this.userSession= JSON.parse(localStorage.getItem('token')) as UserSession;
+    this.user=this.userSession.name;
+    this.userID=this.userSession.userID;
     moment().locale('es');
     this.formatDate(this.date);
     this.dynamicForm = this._formBuilder.group({
@@ -83,7 +96,7 @@ export class UpdateSaleComponent implements OnInit {
     if(this.payForm.get('pay').valid)
     {
       this.insertSaleRequest=new InsertSaleRequest();
-      this.insertSaleRequest.paymentMethodID=2;//Efectivo
+      this.insertSaleRequest.paymentMethodID=1;//Efectivo
       this.insertSaleRequest.clientID=this.infoClient.clientID;
       this.insertPendingPaymentRequest=new InsertPendingPaymentRequest();
       this.insertSaleRequest.userID=this.userID;

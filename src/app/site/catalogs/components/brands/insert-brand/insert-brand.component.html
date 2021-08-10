@@ -1,1 +1,27 @@
-<p>insert-brand works!</p>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+</div>
+<div class="modal-body">
+    <form [formGroup]="brandForm">
+        <div class="row justify-content-center">
+            <div class="row gx-3">
+                <div class="mb-3 col-md-6">
+                    <label class="medium mb-2">Nombre de marca</label>
+                    <input class="form-control" type="text" formControlName="name" />
+                    <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('name')" errorMsg="Este campo no puede quedar vacío">
+                    </app-field-error-display>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.close(false)">
+      Cerrar
+    </button>
+    <button type="button" class="btn btn-primary" (click)="Insert()">
+      Agregar
+    </button>
+
+</div>

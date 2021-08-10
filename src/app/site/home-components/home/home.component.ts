@@ -5,6 +5,14 @@ import { SecurityHelper } from '../../core/helpers/security-helper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../users/models/entitys/user';
 
+type UserSession = {
+  token:string,
+  email:string,
+  name:string,
+  userID:number,
+  changePassword:boolean
+  }; 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -18,6 +26,7 @@ export class HomeComponent implements OnInit {
     private _route: ActivatedRoute,
   ) { }
   user:User;
+  userToken:UserSession;
 
   ngOnInit(): void {
 
@@ -27,14 +36,10 @@ export class HomeComponent implements OnInit {
       Feather.replace();
     });
     this.user = new User();
-    this.user.userID=parseInt(localStorage.getItem('userid'));
-    this.user.firstName=localStorage.getItem('name');
-    this.user.email=localStorage.getItem('email');
-    // this._route.queryParams.subscribe((params) => {
-    //   if (params.user) {
-    //     this.user = JSON.parse(params.user) as User;
-    //   }
-    // });
+    this.userToken = JSON.parse(localStorage.getItem('token')) as UserSession;
+    this.user.userID=this.userToken.userID;
+    this.user.firstName=this.userToken.name;
+    this.user.email=this.userToken.email;
   }
 
   logout()

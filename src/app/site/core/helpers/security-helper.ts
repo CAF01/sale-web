@@ -1,37 +1,51 @@
 import { Router } from "@angular/router";
 import { User } from "../../users/models/entitys/user";
 
+type UserSession = {
+                    token:string,
+                    email:string,
+                    name:string,
+                    userID:number,
+                    changePassword:boolean
+                    }; 
+
 export class SecurityHelper {
   private static readonly TOKEN = 'token';
-  private static readonly EMAIL = 'email';
-  private static readonly NAME = 'name';
-  private static readonly USERID = 'userid';
 
   constructor( private router: Router){
 
   }
 
   public static setTokenStorage(token: User) {
-    localStorage.setItem(this.TOKEN, token.token);
-    localStorage.setItem(this.EMAIL,token.email);
-    localStorage.setItem(this.NAME,(token.firstName +' '+ token.lastName));
-    localStorage.setItem(this.USERID,token.userID.toString());
+    let obj : UserSession ={
+      token:token.token,
+      email:token.email,
+      name:token.firstName+' '+token.lastName,
+      userID:token.userID,
+      changePassword:token.changePassword
+    };
+    localStorage.setItem(this.TOKEN,JSON.stringify(obj));
   }
 
   public static getToken(): string {
-    let token = localStorage.getItem(this.TOKEN);
+    let token = JSON.parse(localStorage.getItem(this.TOKEN)) as UserSession;
     if (token) {
-      return token;
+      return token.token;
     }
 
     return null;
   }
 
+  public static SetStatusChangeToFalse()
+  {
+    let obj :UserSession;
+    obj = JSON.parse(localStorage.getItem(this.TOKEN)) as UserSession;
+    obj.changePassword=false;
+    localStorage.setItem(this.TOKEN,JSON.stringify(obj));
+  }
+
   public static deleteToken() {
     localStorage.removeItem(this.TOKEN);
-    localStorage.removeItem(this.EMAIL);
-    localStorage.removeItem(this.NAME);
-    localStorage.removeItem(this.USERID);
   }
 }
 //Guardar info usuario.

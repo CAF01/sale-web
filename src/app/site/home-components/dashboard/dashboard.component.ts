@@ -9,6 +9,17 @@ import { HubConnectionBuilder } from '@microsoft/signalr';
 import { environment } from 'src/environments/environment';
 import { SalesInfo } from '../../sales/models/entitys/salesinfo';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SetPasswordModalComponent } from '../../users/components/users/set-password-modal/set-password-modal.component';
+
+type UserSession = {
+  token:string,
+  email:string,
+  name:string,
+  userID:number,
+  changePassword:boolean
+  }; 
+
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +27,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  userInfo: UserSession;
   Earns:number[]=[0,0,0];
   barStructure:ChartSale[]=[];
   chartStructure: ChartSale[] = [];
@@ -61,7 +73,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private helperService: HelperService,
     private chartService: ChartService,
-    private router : Router
+    private router : Router,
+    private modalService : NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +83,11 @@ export class DashboardComponent implements OnInit {
       .subscribe((response) => {
         Feather.replace();
       });
+    this.userInfo = JSON.parse(localStorage.getItem('token')) as UserSession;
+    if(this.userInfo.changePassword)
+    {
+      this.openModal();
+    }
     this.getChartWeek();
     this.initSiganR();
     // this.GetDailyReport();
@@ -83,9 +101,13 @@ export class DashboardComponent implements OnInit {
     this.lineChartLabels = this.chartStructure.map((label) => label.x);
 
     var response = await this.chartService.getDailyReport(4).toPromise();
-    this.Earns[0]=response.earnDay;
-    this.Earns[1]=response.avgSale;
-    this.Earns[2]=response.earnYear;
+    if(response)
+    {
+      
+      response.earnDay > 0 ? this.Earns[0]=response.earnDay : this.Earns[0]=0.00;
+      response.avgSale > 0 ? this.Earns[1]=response.avgSale : this.Earns[1]=0.00;
+      response.earnYear > 0 ? this.Earns[2]=response.earnYear : this.Earns[2]=0.00;
+    }
 
     this.barStructure= await this.chartService.getChart(5).toPromise();
     this.lineChartDataProd=[
@@ -100,7 +122,6 @@ export class DashboardComponent implements OnInit {
       .build();
     connection.on('SaleInsert', (data) => {
       let Sale = data as SalesInfo;
-      console.log(Sale);
       this.Earns[0]+=Sale.payed;
       this.Earns[2]+=parseInt((Sale.payed).toFixed(0));
 
@@ -112,6 +133,24 @@ export class DashboardComponent implements OnInit {
   openGeneralReports()
   {
     this.router.navigate(['home/reports']);
+  }
+
+  openModal()
+  {
+    let modal = this.modalService.open(SetPasswordModalComponent, {
+      centered: true,
+      backdrop:'static',
+      keyboard:false
+    });
+
+    modal.componentInstance.userID=this.userInfo.userID;
+    
+    modal.result
+      .then((result) => {
+        if (result) 
+        {}
+      })
+      .catch((err) => {});
   }
 
   // async GetDailyReport()

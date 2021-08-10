@@ -70,14 +70,14 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="medium mb-1 text-blue" for="email">Correo electrónico <span style="color:red">*</span></label>
-                                    <input class="form-control" id="email" type="email" formControlName="email" placeholder="example@gmail.com" />
+                                    <input class="form-control" id="email" type="email" formControlName="email" placeholder="example@gmail.com" autocomplete="email" />
                                     <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('email')" errorMsg="Ingresa un correo electrónico válido">
                                     </app-field-error-display>
                                 </div>
                                 <div class="row gx-3">
                                     <div class="col-md-6 mb-md-0">
                                         <label class="medium mb-1 text-blue" for="password">Contraseña  <span style="color:red">* </span></label>
-                                        <input class="form-control" id="password" type="password" formControlName="password" placeholder="******" />
+                                        <input class="form-control" id="password" type="password" formControlName="password" placeholder="******" autocomplete="current-password" />
                                         <app-field-error-display *ngIf="!formSubmitAttempt" [displayError]="validationInput('password')" errorMsg="Ingresa una contraseña válida">
                                         </app-field-error-display>
                                         <small>Utiliza seis caracteres como mínimo con una combinación de letras y números</small>
@@ -216,7 +216,7 @@
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label class="medium mb-1 text-blue" for="postalCode">Código Postal <span style="color:red">*</span></label>
-                                        <input class="form-control" id="postalCode" type="number" formControlName="postalCode" placeholder="Ingresa tu C.P" value="78488" maxlength="5" />
+                                        <input class="form-control" id="postalCode" type="text" formControlName="postalCode" placeholder="Ingresa tu C.P" value="78488" maxlength="5" />
                                         <app-field-error-display *ngIf="!formAddressSubmitIsValid" [displayError]="validationInputAddress('postalCode')" errorMsg="Ingresa un código postal válido">
                                         </app-field-error-display>
                                     </div>

@@ -17,7 +17,8 @@ import { Router } from '@angular/router';
 export class InterceptorService implements HttpInterceptor {
   constructor(private helperService: HelperService, private router: Router) {}
 
-  private handleAuthError(err: HttpErrorResponse): Observable<any> {
+  private handleAuthError(err: HttpErrorResponse): Observable<any>
+   {
     //handle your auth error or rethrow
     if (err.status === 401 || err.status === 403) {
       SecurityHelper.deleteToken();
@@ -35,13 +36,16 @@ export class InterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     this.helperService.beginWorking();
 
-    if (request.url.includes('/login')) {
+    if (request.url.includes('/login')) 
+    {
       request = request.clone({
         headers: request.headers
           .set('Content-Disposition', 'multipart/form-data')
           .set('Accept', 'application/json'),
       });
-    } else {
+    } 
+    else 
+    {
       request = request.clone({
         headers: request.headers
           .set('Content-Disposition', 'multipart/form-data')
