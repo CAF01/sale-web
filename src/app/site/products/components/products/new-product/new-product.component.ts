@@ -54,25 +54,32 @@ export class NewProductComponent implements OnInit {
 
   }
 
-  onSubmit() {
-    if (this.productForm.valid) {
+  async onSubmit() {
+    if (this.productForm.valid && this.productForm.get('NormalPrice').value>0) 
+    {
       if(this.file)
-        this.uploadFile(this.file);
+        await this.uploadFile(this.file);
       this.ValidatedForm = true;
       this.product = this.productForm.value;
       this.product.ImageUrl = this.imageUrl;
       this.productService.newProduct(this.product).subscribe(
         (request) => {
-          this.toastr.success('Nuevo producto agregado', '¡Correcto!');
-          this.imageUrl = undefined;
-          this.productForm.reset();
-          this.file = undefined;
+          if(request>0)
+          {
+            this.toastr.success('Nuevo producto agregado', '¡Correcto!');
+            this.imageUrl = null;
+            this.productForm.reset();
+            this.file = null;
+          }
         },
-        (error) => {
-          console.log(error);
+        (error) => 
+        {
+          this.toastr.error('Error al añadir nuevo producto, verifique los campos','Error');
         }
       );
-    } else {
+    } 
+    else 
+    {
       this.ValidatedForm = false;
       this.validateForm.validateAllFormFields(this.productForm);
     }
@@ -82,18 +89,13 @@ export class NewProductComponent implements OnInit {
     this.file = file;
   }
 
-  uploadFile(file: File): void {
-    if (file) {
+  async uploadFile(file: File) {
+    if (file) 
+    {
       var formData = new FormData();
       formData.append('File', file, file.name);
-      this.productService.Upload(formData).subscribe(
-        (request) => {
-          this.imageUrl = request;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      let imageUrl=await this.productService.Upload(formData).toPromise();
+      this.imageUrl=imageUrl;
     }
   }
 
@@ -184,6 +186,11 @@ export class NewProductComponent implements OnInit {
         // Validators.min(1),
       ]),
     });
+
+    this.productForm.get('MinForWholeSale').setValue(0);
+    this.productForm.get('PricePerWholeSale').setValue(0);
+    this.productForm.get('MinStock').setValue(0);
+    this.productForm.get('MaxStock').setValue(0);
   }
 
 }

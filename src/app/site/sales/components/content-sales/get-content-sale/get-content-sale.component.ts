@@ -13,7 +13,6 @@ import { SalesService } from '../../../services/sales.service';
 export class GetContentSaleComponent implements OnInit {
 
   saleInfo : SalesInfo;
-  // providerInfo: ProviderInfo;
 
   contentSale : Array<ContentSaleInfo>;
   IVA=16;
@@ -43,24 +42,12 @@ export class GetContentSaleComponent implements OnInit {
     moment().locale('es');
   }
 
-  // getInfoProvider(id:number)
-  // {
-  //   this.providerService.getInfoProviderByID(id).subscribe(request=>
-  //     {
-  //       this.providerInfo=request;
-  //     },error=>
-  //     {
-  //       console.log(error);
-  //     });
-  // }
-
   async getContentSale(id:number)
   {
     var response = await this.saleService.getContentSaleByID(id).toPromise();
     if(response.length>0)
     {
       this.contentSale=response;
-      console.log(response);
     }
   }
 

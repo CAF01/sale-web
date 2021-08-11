@@ -15,10 +15,10 @@
                         <br />
                     </div>
                     <div class="d-flex justify-content-end" *ngIf="!provSelected">
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <label class="medium mb-2 text-white d-flex justify-content-end" for="provider">Proveedor&nbsp;</label>
                             <div class="d-flex justify-content-end col-md-12">
-                                <select id="provider" name="provider" class="form-control" formControlName="providerID">         
+                                <select id="provider" name="provider" class="form-select form-select-lg mb-3" placement="bottom" ngbTooltip="Seleccionar proveedor" formControlName="providerID">         
                                     <option *ngFor="let provider of providers; let i = index;"  value="{{i}}">
                                         <p>{{provider.companyName}}</p>
                                     </option>
@@ -30,65 +30,52 @@
             </div>
             <div class="card-body p-4 p-md-2">
                 <nav class="sidenav sidenav-light">
-                    <div class="sidenav-menu">
-                        <div class="nav">
-                            <div class="sidenav-menu-heading">
-                                <a href="javascript:void(0);" class="medium mb-2" placement="top" ngbTooltip="Abrir buscador de productos" (click)="searchProduct()"><span><i class="fas fa-search"></i></span>&nbsp; Busqueda de productos</a></div>
+                    <p class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-success" placement="top" ngbTooltip="Abrir buscador de productos" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                          Busqueda de productos &nbsp; <span><i class="fas fa-search"></i></span>
+                        </button>
+                    </p>
+                    <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                        <div class="card">
+                            <div class="card-body">
+                                <app-search-products class="col-8" (onSubmit)="onReceive($event)"></app-search-products>
+                            </div>
                         </div>
                     </div>
                 </nav>
-                <!-- <div class="d-flex justify-content-center">
-                    <div class="col-md-1">
-                        <a href="javascript:void(0);" style="font-size: 25px; color:indigo;" *ngIf="!isSearching" (click)="SetsearchStatus()">
-                            <i class="fas fa-search"></i>
-                        </a>
-                        <a href="javascript:void(0);" style="font-size: 25px; color:red;" *ngIf="isSearching" (click)="SetsearchStatus()">
-                            <i class="far fa-window-close"></i>
-                        </a>
-                    </div>
-                    <div class="col-md-3" *ngIf="isSearching">por nombre de producto:
-                        <input type="text" class="form-control" placeholder="Nombre de producto">
-                        <a href="javascript:void(0);" class="d-flex justifiy-content-end" (click)="byname()">Buscar</a>
-                    </div>
-                    <div class="col-md-1" *ngIf="isSearching"></div>
-                    <div class="col-md-3" *ngIf="isSearching">por código:
-                        <input type="text" class="form-control" placeholder="Código">
-                        <a href="javascript:void(0);" class="d-flex justifiy-content-end" (click)="bycode()">Buscar</a>
-                    </div>
-                </div> -->
                 <div class="table-responsive">
                     <table class="table table-borderless mb-0">
                         <thead class="border-bottom">
-                            <tr class="small text-uppercase text-muted ">
-                                <th scope="col ">Producto adquirido</th>
-                                <th class="text-end" scope="col">Cantidad</th>
-                                <th class="text-end" scope="col">Precio U.</th>
-                                <th class="text-end" scope="col">Importe</th>
-                                <th class="text-end" scope="col">Acciones</th>
+                            <tr class="small text-uppercase text-primary ">
+                                <th class="text-start" scope="col">Producto adquirido</th>
+                                <th class="text-center" scope="col">Cantidad</th>
+                                <th class="text-center" scope="col">Precio U.</th>
+                                <th class="text-center" scope="col">Importe</th>
+                                <th class="text-center" scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="border-bottom">
-                                <td class="col-md-4 text-end fw-bold">
+                                <td class="col-md-5 text-end fw-bold">
                                     <div *ngIf="products">
-                                        <select id="product" name="product" class="form-control " formControlName="productID">         
+                                        <select id="product" name="product" class="form-select" formControlName="productID">         
                                             <option *ngFor="let product of products; let i=index"  value="{{i}}">
                                                 <p>{{product.productName}} - {{product.model}}</p>
                                             </option>
                                         </select>
                                     </div>
                                 </td>
-                                <td class="col-md-1 text-end fw-bold">
+                                <td class="col-md-2 text-end fw-bold">
                                     <div class="">
                                         <input currencyMask formControlName="quantity" (ngModelChange)="calc()" class="form-control" id="quantity" [options]="{ allowNegative:false,align: 'center', max: '10000',precision:0, prefix: '' } " />
                                     </div>
                                 </td>
-                                <td class="co-md-3 text-end fw-bold">
+                                <td class="col-md-2 text-end fw-bold">
                                     <div class="">
                                         <input currencyMask formControlName="unitPrice" (ngModelChange)="calc()" class="form-control" id="unitPrice" [options]="{ prefix: 'MX$ ', thousands: ',', decimal: '.', allowNegative:false,align: 'center', max: '100000.00' } " />
                                     </div>
                                 </td>
-                                <td class="col-md-3 text-end fw-bold">
+                                <td class="col-md-2 text-end fw-bold">
                                     <div class="">
                                         <input currencyMask formControlName="amount" class="form-control" id="amount" [options]="{ prefix: 'MX$ ', thousands: ',', decimal: '.', allowNegative:false,align: 'center', max: '1000000.00' } " [attr.disabled]="true" />
                                     </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HubConnectionBuilder } from '@microsoft/signalr';
@@ -15,7 +15,7 @@ import { SalesService } from '../../../services/sales.service';
   templateUrl: './get-sale.component.html',
   styleUrls: ['./get-sale.component.scss']
 })
-export class GetSaleComponent implements OnInit {
+export class GetSaleComponent implements OnInit,OnDestroy {
 
   validateForm = ValidateForm;
   
@@ -24,6 +24,10 @@ export class GetSaleComponent implements OnInit {
   page: number = 1;
 
   Sales : PaginationListResponse<SalesInfo> | undefined;
+
+  connection = new HubConnectionBuilder()
+      .withUrl(`${environment.url_base}Sales`)
+      .build();
 
   constructor(
     private router: Router,
@@ -96,16 +100,17 @@ export class GetSaleComponent implements OnInit {
 
 
   initSiganR() {
-    let connection = new HubConnectionBuilder()
-      .withUrl(`${environment.url_base}Sales`)
-      .build();
-    connection.on('SaleInsert', (data) => {
+    this.connection.on('SaleInsert', (data) => {
       console.log(data);
       let Sale = data as SalesInfo;
       this.Sales.data.unshift(Sale);
     });
 
-    connection.start().then();
+    this.connection.start().then();
+  }
+  ngOnDestroy():void
+  {
+    this.connection.stop();
   }
 
   pageChange(page: any) {

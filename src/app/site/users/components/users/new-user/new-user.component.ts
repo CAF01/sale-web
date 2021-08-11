@@ -31,7 +31,6 @@ export class NewUserComponent implements OnInit {
 
   redirectHelper = RedirectHelper;
   validateForm = ValidateForm;
-  // private ngZone:NgZone
   constructor(private _formBuilder: FormBuilder,private usersService: UserService,private toastr: ToastrService) {}
 
   ngOnInit(): void {
@@ -81,31 +80,28 @@ export class NewUserComponent implements OnInit {
     }
   }
 
-  InsertUser()
+  async InsertUser()
   {
     if (this.userAddress==undefined && !this.addressSubmited) 
     {
-      this.usersService.newUser(this.user).subscribe(response=>
-        {
-          this.reset(1);
-          this.Redirect("#wizard1");
-          this.showSuccess();
-        }),
-        (error=>{
-            console.log(error)
-          });
+      let response = await this.usersService.newUser(this.user).toPromise();
+      if(response>0)
+      {
+        this.reset(1);
+        this.Redirect("#wizard1");
+        this.toastr.success('Muy bien!', 'Nuevo usuario agregado!');
+      }
     }
     if(this.userAddress!=undefined && this.addressSubmited && this.formSubmitAttempt && this.flag)
     {
-      this.usersService.newUserWithAddress(this.user).subscribe(response=>{
+      let response = await this.usersService.newUserWithAddress(this.user).toPromise();
+      if(response>0)
+      {
         this.reset(2);
         this.reset(1);
         this.Redirect("#wizard1");
-        this.showSuccess();
-      }),
-      (error=>{
-        console.log(error)
-      });
+        this.toastr.success('Muy bien!', 'Nuevo usuario agregado!');
+      }
     }
   }
 
@@ -200,10 +196,5 @@ export class NewUserComponent implements OnInit {
       ]),
     });
   }
-  showSuccess() {
-    this.toastr.toastrConfig.timeOut=30;
-    this.toastr.toastrConfig.extendedTimeOut=60;
-    this.toastr.toastrConfig.progressBar = true;
-    this.toastr.success('Muy bien!', 'Nuevo usuario agregado!');
-  }
+  
 }

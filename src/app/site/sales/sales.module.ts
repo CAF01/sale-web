@@ -14,7 +14,6 @@ import { SharedComponentsModule } from '../shared-components/shared-components.m
 import { MomentModule } from 'ngx-moment';
 import { GetPendingPaymentsComponent } from './components/pending-payment/get-pending-payments/get-pending-payments.component';
 import { NgxCurrencyModule } from 'ngx-currency';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({

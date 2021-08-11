@@ -49,30 +49,19 @@ export class GetContentInvoiceComponent implements OnInit {
     moment().locale('es');
   }
 
-  getInfoProvider(id:number)
+  async getInfoProvider(id:number)
   {
-    this.providerService.getInfoProviderByID(id).subscribe(request=>
-      {
-        this.providerInfo=request;
-      },error=>
-      {
-        console.log(error);
-      });
+    let request = await this.providerService.getInfoProviderByID(id).toPromise();
+    this.providerInfo=request;
   }
 
-  getContentInvoice(id:number)
+  async getContentInvoice(id:number)
   {
-    this.providerService.getContentInvoice(id).subscribe(request=>
-      {
-        this.contentInvoice=request;
-        this.Subtotal=this.contentInvoice.data[0].total;
-        this.CostIVA=this.Subtotal*(this.IVA/100);
-        this.Total=this.Subtotal+this.CostIVA;
-      },
-      error=>
-      {
-        console.log(error);
-      });
+    let request = await this.providerService.getContentInvoice(id).toPromise();
+    this.contentInvoice=request;
+    this.Subtotal= parseFloat(this.contentInvoice.data[0].total.toFixed(2));
+    this.CostIVA=parseFloat((this.Subtotal*(this.IVA/100)).toFixed(2));
+    this.Total=parseFloat((this.Subtotal+this.CostIVA).toFixed(2));
   }
 
   formatDate(date: Date) {

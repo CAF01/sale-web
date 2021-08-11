@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PaginationListResponse } from 'src/app/site/core/models/pagination-list-response';
 import { ProductInfo } from '../../../models/productInfo';
@@ -16,7 +16,7 @@ import { AlertModalComponent } from 'src/app/site/shared-components/alert-modal/
   templateUrl: './all-products.component.html',
   styleUrls: ['./all-products.component.scss']
 })
-export class AllProductsComponent implements OnInit {
+export class AllProductsComponent implements OnInit, OnDestroy {
   products: PaginationListResponse<ProductInfo> | undefined;
 
   page: number = 1;
@@ -24,6 +24,9 @@ export class AllProductsComponent implements OnInit {
   thereBrand:boolean=false;
   seeAll:boolean=true;
   statusUsers?: boolean = undefined;
+  connection = new HubConnectionBuilder()
+      .withUrl(`${environment.url_base}Products`)
+      .build();
 
   constructor(
     private productService: ProductService,
@@ -48,6 +51,8 @@ export class AllProductsComponent implements OnInit {
     });
     this.initSiganR();
   }
+
+
 
   back()
   {
@@ -79,11 +84,7 @@ export class AllProductsComponent implements OnInit {
   }
 
   initSiganR() {
-    let connection = new HubConnectionBuilder()
-      .withUrl(`${environment.url_base}Products`)
-      .build();
-
-    connection.on('NewProduct', (data) => {
+    this.connection.on('NewProduct', (data) => {
       let product = data as ProductInfo;
       
       this.products.data.unshift(product);
@@ -91,7 +92,12 @@ export class AllProductsComponent implements OnInit {
       this.toastr.info(product.productName,"Nuevo producto registrado.");
     });
 
-    connection.start().then();
+    this.connection.start().then();
+  }
+
+  ngOnDestroy():void
+  {
+    this.connection.stop();
   }
 
   edit(product: ProductInfo) {

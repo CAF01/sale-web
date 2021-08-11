@@ -16,11 +16,6 @@ import { NewPaymentHistorialComponent } from '../../payment-historial/new-paymen
 })
 export class GetPendingPaymentsComponent implements OnInit {
 
-  // validateForm = ValidateForm;
-  
-  // searchForm:FormGroup;
-
-  // page: number = 1;
   status:boolean=true;
 
   Payments : PaginationListResponse<PendingPaymentInfo> | undefined;
@@ -34,9 +29,6 @@ export class GetPendingPaymentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPendingPayments();
-    // moment().locale('es');
-    // this.initSiganR();
-    // this.SetSearchForm();
   }
 
   SetStat(val:number)
@@ -93,74 +85,4 @@ export class GetPendingPaymentsComponent implements OnInit {
     return parseFloat((indeb-payed).toFixed(2));
   }
 
-  // formatDate(date: Date) {
-  //   return new Date(date);
-  // }
-
-  // openSale(sale:SalesInfo)
-  // {
-  //   this.router.navigate(['home/sales/sale'], {
-  //     queryParams: { sale: JSON.stringify(sale) },
-  //     skipLocationChange: true, //skip location para ocultar el json de la URL
-  //   });
-  // }
-
-  // onEnter(event: KeyboardEvent) {
-  //   this.onSearch();
-  // }
-  
-  // onSearch()
-  // {
-  //   if(this.searchForm.valid)
-  //   {
-  //     this.saleService.getSaleByID(this.searchForm.get('saleID').value).subscribe(request=>
-  //       {
-  //         this.openSale(request);
-  //       },error=>
-  //       {
-  //         this.toastr.error('El número de referencia no existe','Error');
-  //       });
-  //   }
-  //   else
-  //   {
-  //     this.validateForm.validateAllFormFields(this.searchForm);
-  //   }
-  // }
-
-
-  // SetSearchForm() {
-  //   this.searchForm = this._formBuilder.group({
-  //     saleID: new FormControl('', [Validators.required,Validators.pattern(/^\d+$/)]),
-  //   });
-  // }
-
-  // validationInputInvoice(field: string): boolean {
-  //   return this.searchForm.get(field).errors != undefined;
-  // }
-
-
-  // initSiganR() {
-  //   let connection = new HubConnectionBuilder()
-  //     .withUrl(`${environment.url_base}Invoices`)
-  //     .build();
-
-  //   connection.on('SendInvoice', (data) => {
-  //     let Invoice = data as InvoiceInfo;
-  //     this.Invoices.data.unshift(Invoice);
-
-  //     this.toastr.info("Folio:"+Invoice.invoiceID,"Nueva factura registrada.");
-  //   });
-
-  //   connection.start().then();
-  // }
-
-  // pageChange(page: any) {
-  //   this.providerService
-  //     .getInvoiceByPage((page - 1) * this.Invoices.pageSize)
-  //     .subscribe((response) => {
-  //       this.Invoices = response;
-  //     });
-
-
-  // }
 }

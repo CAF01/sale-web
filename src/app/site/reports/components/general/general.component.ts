@@ -5,7 +5,6 @@ import { ReportService } from '../../services/report.service';
 import { StatusRequest } from '../../models/request/statusrequest';
 import { ChartService } from 'src/app/site/core/services/chart.service';
 import { RangeDate } from 'src/app/site/core/helpers/rangeDate';
-import { error } from 'protractor';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -111,8 +110,15 @@ export class GeneralComponent implements OnInit {
     let request = new StatusRequest();
     request.startdate=new Date();
     this.reportService.downloadReportSaleYear(request).subscribe((file) => {
-      if (file) {
+      if (file) 
+      {
         saveAs(file, "Ventas_anual");
+      }
+    },error=>
+    {
+      if (error.status==404)
+      {
+        this.toastr.error('No hay información disponible');
       }
     });
   }
@@ -124,6 +130,12 @@ export class GeneralComponent implements OnInit {
       if (file) {
         saveAs(file, "Productividad");
       }
+    },error=>
+    {
+      if (error.status==404)
+      {
+        this.toastr.error('No hay información disponible');
+      }
     });
   }
   generateReportPendings()
@@ -132,6 +144,12 @@ export class GeneralComponent implements OnInit {
     this.reportService.downloadReportPendings(request).subscribe((file) => {
       if (file) {
         saveAs(file, "Pagos_pendientes");
+      }
+    },error=>
+    {
+      if (error.status==404)
+      {
+        this.toastr.error('No hay información disponible');
       }
     });
   }

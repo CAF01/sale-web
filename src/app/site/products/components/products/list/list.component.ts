@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PaginationListResponse } from 'src/app/site/core/models/pagination-list-response';
 import { ProductInfo } from '../../../models/productInfo';
 import { ProductService } from '../../../services/product.service';
@@ -12,12 +12,15 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit,OnDestroy {
   products: PaginationListResponse<ProductInfo> | undefined;
 
   page: number = 1;
 
   statusUsers?: boolean = undefined;
+  connection = new HubConnectionBuilder()
+      .withUrl(`${environment.url_base}Products`)
+      .build();
 
   constructor(
     private productService: ProductService,
@@ -45,11 +48,7 @@ export class ListComponent implements OnInit {
 
 
   initSiganR() {
-    let connection = new HubConnectionBuilder()
-      .withUrl(`${environment.url_base}Products`)
-      .build();
-
-    connection.on('NewProduct', (data) => {
+    this.connection.on('NewProduct', (data) => {
       let product = data as ProductInfo;
       
       this.products.data.unshift(product);
@@ -57,7 +56,12 @@ export class ListComponent implements OnInit {
       this.toastr.info(product.productName,"Nuevo producto registrado.");
     });
 
-    connection.start().then();
+    this.connection.start().then();
+  }
+
+  ngOnDestroy():void
+  {
+    this.connection.stop();
   }
 
 

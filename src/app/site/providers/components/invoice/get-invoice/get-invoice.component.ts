@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PaginationListResponse } from 'src/app/site/core/models/pagination-list-response';
 import { InvoiceInfo } from '../../../models/entitys/invoiceinfo';
 import { ProviderService } from '../../../services/provider.service';
@@ -16,13 +16,16 @@ import { ValidateForm } from 'src/app/site/core/helpers/validate-formfields-help
   templateUrl: './get-invoice.component.html',
   styleUrls: ['./get-invoice.component.scss']
 })
-export class GetInvoiceComponent implements OnInit {
+export class GetInvoiceComponent implements OnInit,OnDestroy {
 
   validateForm = ValidateForm;
   
   searchForm:FormGroup;
 
   page: number = 1;
+  connection = new HubConnectionBuilder()
+      .withUrl(`${environment.url_base}Invoices`)
+      .build();
 
   Invoices : PaginationListResponse<InvoiceInfo> | undefined;
 
@@ -98,18 +101,20 @@ export class GetInvoiceComponent implements OnInit {
 
 
   initSiganR() {
-    let connection = new HubConnectionBuilder()
-      .withUrl(`${environment.url_base}Invoices`)
-      .build();
 
-    connection.on('SendInvoice', (data) => {
+    this.connection.on('SendInvoice', (data) => {
       let Invoice = data as InvoiceInfo;
       this.Invoices.data.unshift(Invoice);
 
       this.toastr.info("Folio:"+Invoice.invoiceID,"Nueva factura registrada.");
     });
 
-    connection.start().then();
+    this.connection.start().then();
+  }
+  
+  ngOnDestroy():void
+  {
+    this.connection.stop();
   }
 
   pageChange(page: any) {

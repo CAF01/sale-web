@@ -23,8 +23,8 @@ import { InsertInvoiceRequest } from '../../../models/request/insertinvoicereque
   styleUrls: ['./insert-invoice.component.scss'],
 })
 export class InsertInvoiceComponent implements OnInit {
-  providers: ProviderInfo[];
-  products: ProductInfo[];
+  providers: ProviderInfo[]=[];
+  products: ProductInfo[]=[];
 
   listContentInvoice: Array<InsertContentRequest>;
   BackuplistContentInvoice: Array<InsertContentRequest>;
@@ -32,6 +32,7 @@ export class InsertInvoiceComponent implements OnInit {
   provSelected: boolean = false;
   provID: number;
   BackupProvID: number;
+  isCollapsed = true;
 
   ProviderInfo: ProviderInfo;
 
@@ -56,6 +57,24 @@ export class InsertInvoiceComponent implements OnInit {
     this.SetValidatorInvoice();
     this.getProviders();
     this.getProducts();
+  }
+
+  onReceive($event)
+  {
+    let receivedProd=$event as ProductInfo;
+    if(this.products[0]!=null)
+    {
+      let product = this.products.findIndex((d)=>d.productID==receivedProd.productID);
+      this.products.splice(product,1);
+      this.products.unshift(receivedProd);
+      this.invoiceForm.get('productID').setValue(0);
+    }
+    else
+    {
+      this.products.push(receivedProd);
+      this.invoiceForm.get('productID').setValue(0);
+    }
+    this.toastr.success('Producto agregado a la lista','Correcto!');
   }
 
   onSubmit() {
@@ -98,14 +117,15 @@ export class InsertInvoiceComponent implements OnInit {
     }
   }
 
-  saveInvoice() {
+  async saveInvoice() {
     let invoice = new InsertInvoiceRequest();
     invoice.providerID = this.provID;
     invoice.products = this.listContentInvoice;
     invoice.providerName = this.ProviderInfo.companyName;
     
-    this.providerService.insertInvoice(invoice).subscribe(
-      (request) => {
+    let response = await this.providerService.insertInvoice(invoice).toPromise();
+    if (response>0)
+      {
         this.BackuplistContentInvoice = undefined;
         this.BackupProvID = undefined;
         this.SetValidatorInvoice();
@@ -117,11 +137,9 @@ export class InsertInvoiceComponent implements OnInit {
         this.ProviderInfo = undefined;
         this.invoiceForm.get('providerID').setValue(0);
         this.invoiceForm.get('productID').setValue(0);
-      },
-      (error) => {
-        console.log(error);
+        this.isCollapsed = false;
+        this.toastr.success('Entrada registrada correctamente','Correcto');
       }
-    );
   }
 
   cancel() {
@@ -161,27 +179,27 @@ export class InsertInvoiceComponent implements OnInit {
     }
   }
 
-  searchProduct() {
-    let modal = this.modalService.open(SearchModalComponent, {
-      centered: true,
-    });
+  // searchProduct() {
+  //   let modal = this.modalService.open(SearchModalComponent, {
+  //     centered: true,
+  //   });
 
-    modal.componentInstance.products = this.products;
+  //   modal.componentInstance.products = this.products;
 
-    modal.result
-      .then((result) => {
-        if (result) {
-          this.toastr.success('Producto agregado a la lista actual', 'Listo');
-          let duplicateProd = this.products.findIndex(prod=>prod.productID==this.products[this.products.length-1].productID);
-          if(duplicateProd<this.products.length-1)
-          {
-            this.products.splice(duplicateProd,1);
-          }
-          this.invoiceForm.get('productID').setValue(this.products.length - 1);
-        }
-      })
-      .catch((err) => {});
-  }
+  //   modal.result
+  //     .then((result) => {
+  //       if (result) {
+  //         this.toastr.success('Producto agregado a la lista actual', 'Listo');
+  //         let duplicateProd = this.products.findIndex(prod=>prod.productID==this.products[this.products.length-1].productID);
+  //         if(duplicateProd<this.products.length-1)
+  //         {
+  //           this.products.splice(duplicateProd,1);
+  //         }
+  //         this.invoiceForm.get('productID').setValue(this.products.length - 1);
+  //       }
+  //     })
+  //     .catch((err) => {});
+  // }
 
   validationInputInvoice(field: string): boolean {
     return this.invoiceForm.get(field).errors != undefined;
@@ -200,7 +218,6 @@ export class InsertInvoiceComponent implements OnInit {
   async getProducts() {
     var response = await this.productService.getAvailableProducts().toPromise();
     this.products = response;
-    console.log(this.products);
     this.invoiceForm.get('productID').setValue(0);
   }
 
@@ -217,6 +234,7 @@ export class InsertInvoiceComponent implements OnInit {
       ]),
     });
     this.invoiceForm.get('amount').setValue(0);
+    this.invoiceForm.get('quantity').setValue(1);
   }
 
   SetValidatorWithProv(prov: number) {
@@ -228,9 +246,9 @@ export class InsertInvoiceComponent implements OnInit {
     if (this.invoiceForm.get('unitPrice').value>0 && this.invoiceForm.get('quantity').value>0) 
     {
       let amount =this.invoiceForm.get('unitPrice').value * this.invoiceForm.get('quantity').value;
-      if (amount >= 1000000) 
+      if (amount >= 10000000) 
       {
-        this.toastr.info('La cantidad calculada supera $1,000,000');
+        this.toastr.info('La cantidad calculada supera $10,000,000');
       }
       this.invoiceForm.get('amount').setValue(amount.toFixed(2));
     }

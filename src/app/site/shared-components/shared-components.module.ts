@@ -4,8 +4,8 @@ import { SharedComponentsRoutingModule } from './shared-components-routing.modul
 import { FieldErrorDisplayComponentComponent } from './field-error-display-component/field-error-display-component.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DisplayLottieComponent } from './display-lottie/display-lottie.component';
-import { LottieModule } from 'ngx-lottie';
-import player from 'lottie-web';
+// import { LottieModule } from 'ngx-lottie';
+// import player from 'lottie-web';
 import { AlertModalComponent } from './alert-modal/alert-modal.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SearchModalComponent } from './search-modal/search-modal.component';
@@ -19,10 +19,10 @@ import { CalendarComponent } from './calendar/calendar.component';
 
 
 
-export function playerFactory()
-{
-  return player;
-}
+// export function playerFactory()
+// {
+//   return player;
+// }
 
 
 @NgModule({
@@ -43,7 +43,7 @@ export function playerFactory()
     SharedComponentsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    LottieModule.forRoot({player:playerFactory}),
+    // LottieModule.forRoot({player:playerFactory}),
     NgbModule,
     NgxCurrencyModule
     
@@ -52,7 +52,7 @@ export function playerFactory()
     FieldErrorDisplayComponentComponent,
     FormsModule,
     ReactiveFormsModule,
-    DisplayLottieComponent,
+    // DisplayLottieComponent,
     AlertModalComponent,
     FileUploadComponent,
     NgbModule,
